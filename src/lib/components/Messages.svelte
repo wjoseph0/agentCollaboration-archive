@@ -1,0 +1,156 @@
+<script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+	import { currentUser, pb } from '$lib/pocketbase';
+	import { filter } from '$lib/bad-words';
+
+	let newMessage: string;
+	let messages: any[] = [];
+
+	onMount(async () => {
+		// Get initial messages
+		const resultList = await pb.collection('messages').getList(1, 50, {
+			sort: 'created',
+			expand: 'user'
+		});
+		messages = resultList.items;
+
+		// Subscribe to realtime messages
+		await pb.collection('messages').subscribe('*', async ({ action, record }) => {
+			if (action === 'create') {
+				// Fetch associated user
+				const user = await pb.collection('users').getOne(record.user);
+				record.expand = { user };
+				messages = [...messages, record];
+			}
+			if (action === 'delete') {
+				messages = messages.filter((m) => m.id !== record.id);
+			}
+		});
+	});
+
+	// Unsubscribe from realtime messages
+	onDestroy(() => {
+		pb.collection('messages').unsubscribe();
+	});
+
+	async function sendMessage() {
+		const data = {
+			text: filter.clean(newMessage),
+			user: $currentUser?.id
+		};
+		await pb.collection('messages').create(data);
+		newMessage = '';
+	}
+
+	const checkMsgOwner = (message: any, currentUser: any) => {
+		if (message.user === currentUser?.id) {
+			return 'myMsg';
+		}
+		return 'msg';
+	};
+</script>
+
+<div class="messages">
+	{#each messages as message (message.id)}
+		<div class={checkMsgOwner(message, $currentUser)}>
+			<div>
+				<img
+					class="avatar"
+					src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
+					alt="avatar"
+					width="40px"
+				/>
+				<small>
+					@{message.expand?.user?.username}
+				</small>
+			</div>
+
+			<p class="msg-text">{message.text}</p>
+		</div>
+	{/each}
+</div>
+
+<form on:submit|preventDefault={sendMessage}>
+	<input placeholder="Message" type="text" bind:value={newMessage} required />
+	<button type="submit">Send</button>
+</form>
+
+<style>
+	.messages {
+		display: flex;
+		flex-direction: column;
+	}
+	.msg,
+	.myMsg {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+		gap: 10px;
+		background-color: lightcyan;
+		color: darkslategray;
+		border-radius: 40px;
+		padding: 10px;
+		margin: 10px;
+		width: fit-content;
+		max-width: 100vw;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	.myMsg {
+		align-self: flex-end;
+		background-color: rgba(224, 255, 255, 0.95);
+		border-bottom-right-radius: 0px;
+		padding-left: 20px;
+	}
+
+	.msg {
+		border-bottom-left-radius: 0px;
+	}
+
+	.msg div,
+	.myMsg div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.msg-text {
+		padding-left: 30px;
+		padding-right: 25px;
+	}
+
+	form {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100vw;
+	}
+
+	input {
+		margin-top: 5px;
+		margin-bottom: 5px;
+		border-radius: 10px;
+		border: none;
+		padding: 10px;
+		width: 500px;
+		max-width: 100vw;
+	}
+
+	button {
+		height: 80%;
+		width: 80px;
+		background-color: lightcyan;
+		border: none;
+		border-radius: 10px;
+	}
+
+	button:hover {
+		background-color: rgba(224, 255, 255, 0.9);
+	}
+
+	input:focus {
+		outline: none;
+	}
+</style>
