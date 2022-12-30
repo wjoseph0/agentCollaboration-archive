@@ -29,7 +29,7 @@
 		height: 100vh;
 		display: grid;
 		grid-template-columns: 100vw;
-		grid-template-rows: 20vh auto 10vh;
+		grid-template-rows: auto auto 10vh;
 	}
 
 	header {
