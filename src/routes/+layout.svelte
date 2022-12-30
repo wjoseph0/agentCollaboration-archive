@@ -26,7 +26,7 @@
 <style>
 	.grid-container {
 		width: 100vw;
-		height: 105vh;
+		height: 100vh;
 		display: grid;
 		align-items: center;
 		justify-items: center;
@@ -71,7 +71,7 @@
 	}
 
 	main {
-		height: 90vh;
+		height: 85vh;
 	}
 
 	footer {
