@@ -68,6 +68,7 @@
 			<p class="msg-text">{message.text}</p>
 		</div>
 	{/each}
+	<div id="anchor"><p /></div>
 </div>
 
 <form on:submit|preventDefault={sendMessage}>
@@ -85,6 +86,17 @@
 		max-width: 100vw;
 		overflow-y: auto;
 	}
+
+	.messages * {
+		overflow-anchor: none;
+	}
+
+	#anchor {
+		overflow-anchor: auto;
+		height: 1px;
+		width: 1px;
+	}
+
 	.msg,
 	.myMsg {
 		display: flex;
