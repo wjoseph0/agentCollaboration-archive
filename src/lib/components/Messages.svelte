@@ -80,8 +80,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+		height: 100%;
 		width: 580px;
 		max-width: 100vw;
+		overflow-y: auto;
 	}
 	.msg,
 	.myMsg {
@@ -130,11 +132,11 @@
 		align-items: center;
 		width: 100vw;
 		margin-top: 30px;
+		margin-bottom: 30px;
 	}
 
 	input {
 		margin-top: 5px;
-		margin-bottom: 5px;
 		border-radius: 10px;
 		border: none;
 		padding: 10px;
@@ -143,6 +145,7 @@
 	}
 
 	button {
+		margin-top: 5px;
 		height: 80%;
 		width: 80px;
 		background-color: lightcyan;

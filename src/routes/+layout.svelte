@@ -26,25 +26,33 @@
 <style>
 	.grid-container {
 		width: 100vw;
-		height: 100vh;
+		height: 105vh;
 		display: grid;
+		align-items: center;
+		justify-items: center;
 		grid-template-columns: 100vw;
-		grid-template-rows: auto auto 10vh;
+		background-color: darkslategray;
 	}
 
 	header {
 		font-family: Arial, Helvetica, sans-serif;
 		color: lightcyan;
-		background-color: darkslategray;
-		display: grid;
-		grid-template-columns: 100vw;
-		grid-template-rows: auto;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		height: 10vh;
+		width: 500px;
+		max-width: 100vw;
 	}
 	header div {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		height: 10vh;
+		width: 250px;
+		max-width: 50vw;
 	}
 
 	header a {
@@ -56,10 +64,17 @@
 	footer {
 		font-family: Arial, Helvetica, sans-serif;
 		color: lightcyan;
-		background-color: darkslategray;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+	}
+
+	main {
+		height: 90vh;
+	}
+
+	footer {
+		height: 5vh;
 	}
 </style>
