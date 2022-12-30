@@ -79,6 +79,9 @@
 	.messages {
 		display: flex;
 		flex-direction: column;
+		align-items: flex-start;
+		width: 580px;
+		max-width: 100vw;
 	}
 	.msg,
 	.myMsg {
@@ -126,6 +129,7 @@
 		justify-content: center;
 		align-items: center;
 		width: 100vw;
+		margin-top: 30px;
 	}
 
 	input {
