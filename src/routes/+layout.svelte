@@ -17,7 +17,7 @@
 	</main>
 
 	<footer>
-		<a href="https://github.com/wjoseph0/open-agent">
+		<a href="https://github.com/wjoseph0/sveltekit-agent-software">
 			<img src={GitHublogo} alt="Link to GitHub repo" />
 		</a>
 	</footer>
