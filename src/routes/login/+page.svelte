@@ -6,8 +6,17 @@
 	let password: string;
 
 	export const login = async () => {
-		await pb.collection('users').authWithPassword(username, password);
-		goto('/app');
+		try {
+			await pb.collection('users').authWithPassword(username, password);
+			goto('/app');
+		} catch (error) {
+			try {
+				await pb.collection('agents').authWithPassword(username, password);
+				goto('/app');
+			} catch (error) {
+				console.error(error);
+			}
+		}
 	};
 </script>
 
