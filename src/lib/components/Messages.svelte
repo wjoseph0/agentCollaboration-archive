@@ -56,12 +56,12 @@
 			<div>
 				<img
 					class="avatar"
-					src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
+					src={`https://avatars.dicebear.com/api/identicon/${message.expand.user.username}.svg`}
 					alt="avatar"
 					width="40px"
 				/>
 				<small>
-					@{message.expand?.user?.username}
+					@{message.expand.user.username}
 				</small>
 			</div>
 

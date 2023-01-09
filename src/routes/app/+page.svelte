@@ -2,12 +2,12 @@
 	import Messages from '$lib/components/Messages.svelte';
 </script>
 
-<div>
+<div class="container">
 	<Messages />
 </div>
 
 <style>
-	div {
+	.container {
 		display: flex;
 		flex-direction: column;
 		justify-items: center;
