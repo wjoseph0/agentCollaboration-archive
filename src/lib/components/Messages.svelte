@@ -148,7 +148,6 @@
 		height: 5rem;
 		width: 580px;
 		max-width: 100vw;
-		margin-top: 1em;
 	}
 
 	input {
