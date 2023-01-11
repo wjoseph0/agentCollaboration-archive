@@ -15,18 +15,12 @@
 	<main>
 		<slot />
 	</main>
-
-	<footer>
-		<a href="https://github.com/wjoseph0/sveltekit-agent-software">
-			<img src={GitHublogo} alt="Link to GitHub repo" />
-		</a>
-	</footer>
 </div>
 
 <style>
 	.grid-container {
-		width: 100vw;
-		height: 100vh;
+		width: 1fr;
+		height: 1fr;
 		display: grid;
 		align-items: center;
 		justify-items: center;
@@ -60,21 +54,13 @@
 		color: lightcyan;
 	}
 
-	main,
-	footer {
+	main {
+		height: 90vh;
 		font-family: Arial, Helvetica, sans-serif;
 		color: lightcyan;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-	}
-
-	main {
-		height: 85vh;
-	}
-
-	footer {
-		height: 5vh;
 	}
 </style>
