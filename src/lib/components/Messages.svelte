@@ -85,6 +85,8 @@
 		width: 580px;
 		max-width: 100vw;
 		overflow-y: auto;
+		background-color: rgb(60, 100, 100);
+		border-radius: 1rem;
 	}
 
 	.messages * {
@@ -142,7 +144,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 100vw;
+		width: 580px;
+		max-width: 100vw;
 		margin-top: 30px;
 		margin-bottom: 30px;
 	}
@@ -150,18 +153,23 @@
 	input {
 		margin-top: 5px;
 		border-radius: 10px;
-		border: none;
-		padding: 10px;
+		border: 0;
+		padding: 1.5em;
 		width: 500px;
 		max-width: 100vw;
+		font-size: 0.9rem;
 	}
 
 	button {
 		margin-top: 5px;
-		height: 80%;
+		height: 90%;
 		width: 80px;
+		padding: 1.5em;
 		background-color: lightcyan;
-		border: none;
+		color: darkslategray;
+		font-weight: 600;
+		font-size: 0.9rem;
+		border: 0;
 		border-radius: 10px;
 	}
 

@@ -19,8 +19,8 @@
 
 <style>
 	.grid-container {
-		width: 1fr;
-		height: 1fr;
+		width: 100vw;
+		height: 100vh;
 		display: grid;
 		align-items: center;
 		justify-items: center;
@@ -36,7 +36,7 @@
 		align-items: center;
 		justify-content: center;
 		height: 10vh;
-		width: 500px;
+		width: 580px;
 		max-width: 100vw;
 	}
 	header div {
@@ -45,13 +45,17 @@
 		justify-content: center;
 		align-items: center;
 		height: 10vh;
-		width: 250px;
+		width: 290px;
 		max-width: 50vw;
 	}
 
 	header a {
 		text-decoration: none;
 		color: lightcyan;
+	}
+
+	header h1 {
+		font-size: 1.5rem;
 	}
 
 	main {
