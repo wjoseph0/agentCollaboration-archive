@@ -8,7 +8,7 @@
 	};
 </script>
 
-<p>Hello, {$currentUser?.fname}</p>
+<p>{$currentUser?.username}</p>
 <button on:click={signOut}>Sign Out</button>
 
 <style>
