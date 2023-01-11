@@ -10,12 +10,7 @@
 			await pb.collection('users').authWithPassword(username, password);
 			goto('/app');
 		} catch (error) {
-			try {
-				await pb.collection('agents').authWithPassword(username, password);
-				goto('/app');
-			} catch (error) {
-				console.error(error);
-			}
+			console.error(error);
 		}
 	};
 </script>
@@ -52,8 +47,9 @@
 		border-radius: 10px;
 	}
 
-	button:hover {
+	button:is(:hover, :focus) {
 		background-color: rgba(224, 255, 255, 0.9);
+		cursor: pointer;
 	}
 
 	input:focus {

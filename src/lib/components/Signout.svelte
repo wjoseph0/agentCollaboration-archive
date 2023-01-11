@@ -23,7 +23,8 @@
 		border-radius: 10px;
 	}
 
-	button:hover {
+	button:is(:hover, :focus) {
 		background-color: rgba(224, 255, 255, 0.9);
+		cursor: pointer;
 	}
 </style>
