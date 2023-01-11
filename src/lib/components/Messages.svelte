@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { filter } from '$lib/bad-words';
+	import sendIcon from '$lib/assets/direct.png';
 
 	let newMessage: string;
 	let messages: any[] = [];
@@ -73,7 +74,7 @@
 
 <form on:submit|preventDefault={sendMessage}>
 	<input placeholder="Message" type="text" bind:value={newMessage} required />
-	<button type="submit">Send</button>
+	<button type="submit"><img src={sendIcon} alt="Send" /></button>
 </form>
 
 <style>
@@ -144,25 +145,23 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		height: 5rem;
 		width: 580px;
 		max-width: 100vw;
-		margin-top: 30px;
-		margin-bottom: 30px;
+		margin-top: 1em;
 	}
 
 	input {
-		margin-top: 5px;
+		height: 100%;
 		border-radius: 10px;
 		border: 0;
-		padding: 1.5em;
+		padding: 0 1.5em;
 		width: 500px;
-		max-width: 100vw;
 		font-size: 0.9rem;
 	}
 
 	button {
-		margin-top: 5px;
-		height: 90%;
+		height: 100%;
 		width: 80px;
 		padding: 1.5em;
 		background-color: lightcyan;
@@ -171,6 +170,11 @@
 		font-size: 0.9rem;
 		border: 0;
 		border-radius: 10px;
+	}
+
+	button img {
+		height: 100%;
+		width: auto;
 	}
 
 	button:is(:hover, :focus) {
