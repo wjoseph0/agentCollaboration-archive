@@ -1,9 +1,9 @@
-<script lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
 
-	let username: string;
-	let password: string;
+	let username;
+	let password;
 
 	export const login = async () => {
 		try {

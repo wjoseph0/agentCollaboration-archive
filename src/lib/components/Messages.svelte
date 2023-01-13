@@ -1,11 +1,11 @@
-<script lang="ts">
+<script>
 	import { onMount, onDestroy } from 'svelte';
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { filter } from '$lib/bad-words';
 	import sendIcon from '$lib/assets/direct.png';
 
-	let newMessage: string;
-	let messages: any[] = [];
+	let newMessage = '';
+	let messages = [];
 
 	onMount(async () => {
 		// Get initial messages
@@ -43,7 +43,7 @@
 		newMessage = '';
 	}
 
-	const checkMsgOwner = (message: any, currentUser: any) => {
+	const checkMsgOwner = (message, currentUser) => {
 		if (message.user === currentUser?.id) {
 			return 'myMsg';
 		}

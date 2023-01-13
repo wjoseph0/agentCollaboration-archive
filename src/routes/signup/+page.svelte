@@ -1,12 +1,12 @@
-<script lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
 
-	let username: string;
-	let password: string;
-	let fname: string;
-	let lname: string;
-	let email: string;
+	let username;
+	let password;
+	let fname;
+	let lname;
+	let email;
 
 	const signUp = async () => {
 		try {
