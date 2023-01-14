@@ -4,6 +4,7 @@
 	"name": "Open Agent",
 	"short_name": "Open Agent",
 	"description": "Real Estate communication software.",
+	"orientation": "portrait",
 	"display": "standalone",
 	"start_url": "/",
 	"icons": [
