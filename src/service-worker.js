@@ -44,7 +44,7 @@ self.addEventListener('fetch', (event) => {
 
     // for everything else, try the network first, but
     // fall back to the cache if we're offline
-    /* try {
+    try {
       const response = await fetch(event.request);
 
       if (response.status === 200) {
@@ -54,7 +54,7 @@ self.addEventListener('fetch', (event) => {
       return response;
     } catch {
       return cache.match(event.request);
-    } */
+    }
   }
 
   event.respondWith(respond());
