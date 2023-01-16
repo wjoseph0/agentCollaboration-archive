@@ -1,4 +1,5 @@
 <script>
+	import '@picocss/pico';
 	import Signout from '$lib/components/Signout.svelte';
 	import { currentUser } from '$lib/pocketbase';
 </script>
