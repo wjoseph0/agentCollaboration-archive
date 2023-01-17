@@ -8,3 +8,9 @@
 		<li><a href="/app/account">Account</a></li>
 	</ul>
 </nav>
+
+<style>
+	.container {
+		height: 10vh;
+	}
+</style>

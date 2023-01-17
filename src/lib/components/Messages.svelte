@@ -33,16 +33,18 @@
 </script>
 
 {#each messages as message (message.id)}
-	<img
-		class="avatar"
-		src={`https://avatars.dicebear.com/api/identicon/${message.expand.user.username}.svg`}
-		alt="avatar"
-		width="40px"
-	/>
-	<small>
-		{message.expand.user.fname}
-		{message.expand.user.lname}
-	</small>
+	<section>
+		<img
+			class="avatar"
+			src={`https://avatars.dicebear.com/api/identicon/${message.expand.user.username}.svg`}
+			alt="avatar"
+			width="40px"
+		/>
+		<small>
+			{message.expand.user.fname}
+			{message.expand.user.lname}
+		</small>
 
-	<p class="msg-text">{message.text}</p>
+		<p class="msg-text">{message.text}</p>
+	</section>
 {/each}
