@@ -1,7 +1,6 @@
 <script>
 	import Signout from '$lib/components/Signout.svelte';
 	import { currentUser } from '$lib/pocketbase';
-	console.log(currentUser);
 </script>
 
 <main class="container">
