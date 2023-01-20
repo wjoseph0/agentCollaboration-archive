@@ -34,7 +34,7 @@
 		<input placeholder="First Name" type="text" bind:value={fname} required />
 		<input placeholder="Last Name" type="text" bind:value={lname} required />
 		<input placeholder="Username" type="text" bind:value={username} required />
-		<input placeholder="Password" type="password" bind:value={password} required />
+		<input placeholder="Password" type="password" bind:value={password} minlength="8" required />
 		<input placeholder="Email" type="email" bind:value={email} required />
 		<button type="submit">Signup</button>
 	</form>
