@@ -2,24 +2,22 @@
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
 
-	let username;
-	let password;
-	let fname;
-	let lname;
-	let email;
+	let fname = '';
+	let lname = '';
+	let email = '';
+	let password = '';
 
 	const signUp = async () => {
 		try {
 			const data = {
-				username,
-				password,
-				passwordConfirm: password,
 				fname: fname,
 				lname: lname,
-				email: email
+				email: email,
+				password: password,
+				passwordConfirm: password
 			};
 			await pb.collection('users').create(data);
-			await pb.collection('users').authWithPassword(username, password);
+			await pb.collection('users').authWithPassword(email, password);
 			goto('/app');
 		} catch (err) {
 			console.error(err);
@@ -33,10 +31,9 @@
 	<form on:submit|preventDefault={signUp}>
 		<input placeholder="First Name" type="text" bind:value={fname} required />
 		<input placeholder="Last Name" type="text" bind:value={lname} required />
-		<input placeholder="Username" type="text" bind:value={username} required />
-		<input placeholder="Password" type="password" bind:value={password} minlength="8" required />
 		<input placeholder="Email" type="email" bind:value={email} required />
-		<button type="submit">Signup</button>
+		<input placeholder="Password" type="password" bind:value={password} minlength="8" required />
+		<button>Signup</button>
 	</form>
 
 	<a href="/login">I have an account!</a>
