@@ -16,7 +16,7 @@
 </script>
 
 <main class="container">
-	<h2>Login</h2>
+	<h1>Login</h1>
 
 	<form on:submit|preventDefault={login}>
 		<input placeholder="Email" type="text" bind:value={email} required />

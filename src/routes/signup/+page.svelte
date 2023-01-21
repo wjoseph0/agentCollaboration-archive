@@ -26,7 +26,7 @@
 </script>
 
 <main class="container">
-	<h2>Create an account</h2>
+	<h1>Create an account</h1>
 
 	<form on:submit|preventDefault={signUp}>
 		<input placeholder="First Name" type="text" bind:value={fname} required />
