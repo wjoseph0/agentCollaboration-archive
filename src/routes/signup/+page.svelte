@@ -13,6 +13,7 @@
 				fname: fname,
 				lname: lname,
 				email: email,
+				emailVisibility: true,
 				password: password,
 				passwordConfirm: password
 			};
