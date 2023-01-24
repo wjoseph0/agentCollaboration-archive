@@ -3,27 +3,33 @@
 	import { pb } from '$lib/pocketbase';
 
 	let messages = [];
+	export let receiver;
+
+	let filter = `sender.email = "${receiver}" || receiver.email = "${receiver}"`;
 
 	onMount(async () => {
 		// Get initial messages
 		const resultList = await pb.collection('messages').getList(1, 50, {
 			sort: 'created',
-			expand: 'user'
+			expand: 'sender',
+			filter: filter
 		});
 		messages = resultList.items;
 
 		// Subscribe to realtime messages
-		await pb.collection('messages').subscribe('*', async ({ action, record }) => {
-			if (action === 'create') {
-				// Fetch associated user
-				const user = await pb.collection('users').getOne(record.user);
-				record.expand = { user };
-				messages = [...messages, record];
-			}
-			if (action === 'delete') {
-				messages = messages.filter((m) => m.id !== record.id);
-			}
-		});
+		await pb
+			.collection('messages')
+			.subscribe('*', async ({ action, record }) => {
+				if (action === 'create') {
+					// Fetch associated user
+					const sender = await pb.collection('users').getOne(record.sender);
+					record.expand = { sender };
+					messages = [...messages, record];
+				}
+				if (action === 'delete') {
+					messages = messages.filter((m) => m.id !== record.id);
+				}
+			});
 	});
 
 	// Unsubscribe from realtime messages
@@ -36,13 +42,13 @@
 	<section>
 		<img
 			class="avatar"
-			src={`https://avatars.dicebear.com/api/identicon/${message.expand.user.username}.svg`}
+			src={`https://avatars.dicebear.com/api/identicon/${message.expand.sender.id}.svg`}
 			alt="avatar"
 			width="40px"
 		/>
 		<small>
-			{message.expand.user.fname}
-			{message.expand.user.lname}
+			{message.expand.sender.fname}
+			{message.expand.sender.lname}
 		</small>
 
 		<p class="msg-text">{message.text}</p>
