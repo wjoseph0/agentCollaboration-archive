@@ -1,5 +1,5 @@
 <script>
-	import { pb } from '$lib/pocketbase';
+	import { currentUser, pb } from '$lib/pocketbase';
 
 	let userEmail = '';
 	let user = {};
@@ -29,7 +29,9 @@
 		<p>{user.fname}</p>
 		<p>{user.lname}</p>
 		<p>{user.email}</p>
-		<button>Message</button>
+		{#if user.email !== $currentUser.email}
+			<a href="/app/chat/{user.email}"><button>Message</button></a>
+		{/if}
 	</section>
 {/if}
 
