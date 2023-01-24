@@ -6,7 +6,9 @@
 
 	const searchForUser = async () => {
 		try {
-			user = await pb.collection('users').getFirstListItem(`email="${userEmail}"`);
+			user = await pb
+				.collection('users')
+				.getFirstListItem(`email="${userEmail}"`);
 		} catch {
 			user = { noneFound: true };
 		}
@@ -15,11 +17,10 @@
 
 <section>
 	<input
-		type="text"
+		type="email"
 		placeholder="Search email"
-		on:keyup={searchForUser}
 		bind:value={userEmail}
-		required
+		on:keyup={searchForUser}
 	/>
 </section>
 
