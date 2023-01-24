@@ -1,13 +1,22 @@
 <script>
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { filter } from '$lib/bad-words';
+	import { onMount } from 'svelte';
 
 	let newMessage = '';
+	export let receiver;
+
+	onMount(async () => {
+		receiver = await pb
+			.collection('users')
+			.getFirstListItem(`email="${receiver}"`);
+	});
 
 	async function sendMessage() {
 		const data = {
 			text: filter.clean(newMessage),
-			user: $currentUser?.id
+			sender: $currentUser?.id,
+			receiver: receiver.id
 		};
 		await pb.collection('messages').create(data);
 		newMessage = '';
