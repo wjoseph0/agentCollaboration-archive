@@ -8,4 +8,4 @@
 	};
 </script>
 
-<button on:click={signOut}>Sign Out</button>
+<button class="secondary" on:click={signOut}>Sign Out</button>
