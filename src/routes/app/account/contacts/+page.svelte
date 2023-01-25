@@ -4,4 +4,8 @@
 
 <main class="container">
 	<FindUser />
+
+	<section>
+		<h1>My Contacts</h1>
+	</section>
 </main>

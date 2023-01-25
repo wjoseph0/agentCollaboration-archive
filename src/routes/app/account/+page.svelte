@@ -13,7 +13,7 @@
 	</section>
 
 	<section>
-		<a href="/app/account/new"><button>Contacts</button></a>
+		<a href="/app/account/contacts"><button>Contacts</button></a>
 	</section>
 
 	<section>
