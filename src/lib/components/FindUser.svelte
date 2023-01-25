@@ -16,13 +16,11 @@
 </script>
 
 <section>
-	<!-- svelte-ignore a11y-autofocus -->
 	<input
 		type="email"
 		placeholder="Search email"
 		bind:value={userEmail}
 		on:keyup={searchForUser}
-		autofocus
 	/>
 </section>
 
