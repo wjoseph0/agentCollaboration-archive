@@ -7,9 +7,8 @@
 	<section>
 		<UploadFile />
 	</section>
-
-	<h1>My Files</h1>
-	<section class="grid">
+	<h1>Files</h1>
+	<section>
 		<Files />
 	</section>
 </main>
