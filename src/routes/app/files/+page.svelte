@@ -7,8 +7,8 @@
 	<section>
 		<UploadFile />
 	</section>
-	<h1>Files</h1>
 	<section>
+		<h1>Files</h1>
 		<Files />
 	</section>
 </main>
