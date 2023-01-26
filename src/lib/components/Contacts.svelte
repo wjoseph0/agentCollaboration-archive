@@ -45,6 +45,4 @@
 	</section>
 {/each}
 
-{#if ($contacts = [])}
-	<a href="/app/account/contacts/new">Add contacts</a>
-{/if}
+<a href="/app/account/contacts/new">Add Contact</a>
