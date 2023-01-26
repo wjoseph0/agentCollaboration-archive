@@ -10,6 +10,9 @@
 			expand: 'contacts'
 		});
 		contacts.set(user.expand.contacts);
+		if ($contacts === undefined) {
+			contacts.set([]);
+		}
 
 		pb.collection('users').subscribe($currentUser?.id, async (e) => {
 			if (e.action === 'update') {
@@ -41,3 +44,7 @@
 		</a>
 	</section>
 {/each}
+
+{#if ($contacts = [])}
+	<a href="/app/account/contacts">Add contacts</a>
+{/if}
