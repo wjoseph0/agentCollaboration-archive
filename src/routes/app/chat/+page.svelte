@@ -1,3 +1,5 @@
 <main class="container">
-	<h1>Chat</h1>
+	<section>
+		<h1>Chat</h1>
+	</section>
 </main>
