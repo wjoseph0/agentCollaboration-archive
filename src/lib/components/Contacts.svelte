@@ -4,19 +4,19 @@
 
 	let contacts = [];
 	onMount(async () => {
-		const user = await pb.collection('users').getOne($currentUser.id, {
+		const user = await pb.collection('users').getOne($currentUser?.id, {
 			expand: 'contacts'
 		});
 		contacts = user.expand.contacts;
 
-		pb.collection('users').subscribe($currentUser.id, async (record) => {
+		pb.collection('users').subscribe($currentUser?.id, async (record) => {
 			record.expand = 'contacts';
 			console.log(record);
 		});
 	});
 
 	onDestroy(() => {
-		pb.collection('users').unsubscribe($currentUser.id);
+		pb.collection('users').unsubscribe($currentUser?.id);
 	});
 </script>
 
