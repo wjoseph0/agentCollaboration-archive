@@ -1,6 +1,6 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	let contacts = [];
 	onMount(async () => {
@@ -8,6 +8,15 @@
 			expand: 'contacts'
 		});
 		contacts = user.expand.contacts;
+
+		pb.collection('users').subscribe($currentUser.id, async (record) => {
+			record.expand = 'contacts';
+			console.log(record);
+		});
+	});
+
+	onDestroy(() => {
+		pb.collection('users').unsubscribe($currentUser.id);
 	});
 </script>
 
@@ -18,5 +27,6 @@
 		alt="avatar"
 		width="40px"
 	/>
+	<small>{contact.id}</small>
 	<small>{contact.fname} {contact.lname} | {contact.email}</small>
 {/each}
