@@ -1,9 +1,7 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
-	import { writable } from 'svelte/store';
-
-	export const contacts = writable([]);
+	import { contacts } from '$lib/contacts';
 
 	onMount(async () => {
 		const user = await pb.collection('users').getOne($currentUser?.id, {
