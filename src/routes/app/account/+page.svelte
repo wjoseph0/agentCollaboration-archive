@@ -13,6 +13,10 @@
 	</section>
 
 	<section>
+		<a href="/app/account/contacts"><button>Contacts</button></a>
+	</section>
+
+	<section>
 		<Signout />
 	</section>
 </main>
