@@ -30,12 +30,14 @@
 
 {#each $contacts as contact}
 	<section>
-		<img
-			class="avatar"
-			src={`https://avatars.dicebear.com/api/identicon/${contact.id}.svg`}
-			alt="avatar"
-			width="40px"
-		/>
-		<small>{contact.fname} {contact.lname} | {contact.email}</small>
+		<a href="/app/chat/{contact.email}">
+			<img
+				class="avatar"
+				src={`https://avatars.dicebear.com/api/identicon/${contact.id}.svg`}
+				alt="avatar"
+				width="40px"
+			/>
+			<small>{contact.fname} {contact.lname} | {contact.email}</small>
+		</a>
 	</section>
 {/each}
