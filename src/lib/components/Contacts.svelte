@@ -1,32 +1,41 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
+	import { writable } from 'svelte/store';
 
-	let contacts = [];
+	export const contacts = writable([]);
+
 	onMount(async () => {
 		const user = await pb.collection('users').getOne($currentUser?.id, {
 			expand: 'contacts'
 		});
-		contacts = user.expand.contacts;
+		contacts.set(user.expand.contacts);
 
-		pb.collection('users').subscribe($currentUser?.id, async (record) => {
-			record.expand = 'contacts';
-			console.log(record);
+		pb.collection('users').subscribe($currentUser?.id, async (e) => {
+			if (e.action === 'update') {
+				contacts.set([]);
+				for (let i = 0; i < e.record.contacts.length; i++) {
+					const contactID = e.record.contacts[i];
+					const user = await pb.collection('users').getOne(contactID);
+					contacts.set([...$contacts, user]);
+				}
+			}
 		});
 	});
 
 	onDestroy(() => {
-		pb.collection('users').unsubscribe($currentUser?.id);
+		pb.collection('users').unsubscribe();
 	});
 </script>
 
-{#each contacts as contact}
-	<img
-		class="avatar"
-		src={`https://avatars.dicebear.com/api/identicon/${contact.id}.svg`}
-		alt="avatar"
-		width="40px"
-	/>
-	<small>{contact.id}</small>
-	<small>{contact.fname} {contact.lname} | {contact.email}</small>
+{#each $contacts as contact}
+	<section>
+		<img
+			class="avatar"
+			src={`https://avatars.dicebear.com/api/identicon/${contact.id}.svg`}
+			alt="avatar"
+			width="40px"
+		/>
+		<small>{contact.fname} {contact.lname} | {contact.email}</small>
+	</section>
 {/each}
