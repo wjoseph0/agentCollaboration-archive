@@ -46,5 +46,5 @@
 {/each}
 
 {#if ($contacts = [])}
-	<a href="/app/account/contacts">Add contacts</a>
+	<a href="/app/account/contacts/new">Add contacts</a>
 {/if}
