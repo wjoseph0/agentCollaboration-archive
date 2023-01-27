@@ -3,5 +3,8 @@
 </script>
 
 <main class="container">
-	<FindUser />
+	<section>
+		<h1>Add Contact</h1>
+		<FindUser />
+	</section>
 </main>

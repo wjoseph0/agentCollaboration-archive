@@ -4,7 +4,7 @@
 
 <main class="container">
 	<section>
-		<h1>Chat</h1>
+		<h1>Contacts</h1>
 		<Contacts />
 	</section>
 </main>
