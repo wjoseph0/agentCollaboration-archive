@@ -29,6 +29,10 @@
 	});
 </script>
 
+<section>
+	<a href="/app/account/contacts/new">Add Contact</a>
+</section>
+
 {#each $contacts as contact}
 	<section>
 		<a href="/app/chat/{contact.email}">
@@ -42,5 +46,3 @@
 		</a>
 	</section>
 {/each}
-
-<a href="/app/account/contacts/new">Add Contact</a>

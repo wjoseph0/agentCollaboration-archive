@@ -49,6 +49,20 @@
 			user = undefined;
 		}
 	};
+
+	const addToContacts = async () => {
+		let contactsArr = [];
+		await contacts.set([...$contacts, user]);
+		for (let i = 0; i < $contacts.length; i++) {
+			const contact = $contacts[i];
+			contactsArr.push(contact.id);
+		}
+		const data = {
+			contacts: contactsArr
+		};
+		await pb.collection('users').update($currentUser.id, data);
+		window.location.assign('/app/chat');
+	};
 </script>
 
 <section>
@@ -70,7 +84,7 @@
 		{:else if $currentUser.email === user.email}
 			<button disabled>Hey that's me!</button>
 		{:else}
-			<button>Add to contacts</button>
+			<button on:click={addToContacts}>Add to contacts</button>
 		{/if}
 	</section>
 {/if}
