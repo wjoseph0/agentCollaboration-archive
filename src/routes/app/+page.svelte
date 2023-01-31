@@ -1,4 +1,9 @@
+<script>
+	import BuyerRoadmap from '$lib/components/BuyerRoadmap.svelte';
+</script>
+
 <main class="container">
-	<h1>Welcome to OpenAgent</h1>
-	<p>Your place to collaborate.</p>
+	<section>
+		<BuyerRoadmap />
+	</section>
 </main>
