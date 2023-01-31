@@ -1,5 +1,3 @@
-<h1>Buyer Journey</h1>
-
 <form>
 	<section>
 		<input id="1" type="checkbox" />
