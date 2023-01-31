@@ -27,5 +27,9 @@
 </script>
 
 {#each files as file}
-	<p>{file.name}</p>
+	<a
+		href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
+	>
+		<p>{file.name}</p>
+	</a>
 {/each}
