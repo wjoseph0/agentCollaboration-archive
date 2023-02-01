@@ -3,7 +3,7 @@
 </script>
 
 <main class="container">
-	<h1>Buyer Journey</h1>
+	<h1>Buyer Roadmap</h1>
 	<section>
 		<BuyerRoadmap />
 	</section>
