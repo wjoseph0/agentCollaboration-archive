@@ -3,8 +3,13 @@
 </script>
 
 <main class="container">
-	<section>
-		<h1>Chat</h1>
-		<Contacts />
-	</section>
+	<h1>Chat</h1>
+	<Contacts />
 </main>
+
+<style>
+	main {
+		height: 90vh;
+		display: grid;
+	}
+</style>

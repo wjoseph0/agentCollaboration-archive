@@ -39,7 +39,7 @@
 </script>
 
 {#each messages as message (message.id)}
-	<section>
+	<div>
 		<img
 			class="avatar"
 			src={`https://avatars.dicebear.com/api/identicon/${message.expand.sender.id}.svg`}
@@ -52,5 +52,5 @@
 		</small>
 
 		<p class="msg-text">{message.text}</p>
-	</section>
+	</div>
 {/each}

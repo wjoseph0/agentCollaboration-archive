@@ -33,16 +33,44 @@
 	<a href="/app/account/contacts/new">Add Contact</a>
 </section>
 
-{#each $contacts as contact}
-	<section>
-		<a href="/app/chat/{contact.email}">
-			<img
-				class="avatar"
-				src={`https://avatars.dicebear.com/api/identicon/${contact.id}.svg`}
-				alt="avatar"
-				width="40px"
-			/>
-			<small>{contact.fname} {contact.lname} | {contact.email}</small>
-		</a>
-	</section>
-{/each}
+<section id="contacts">
+	{#each $contacts as contact}
+		<section>
+			<a href="/app/chat/{contact.email}">
+				<img
+					class="avatar"
+					src={`https://avatars.dicebear.com/api/identicon/${contact.id}.svg`}
+					alt="avatar"
+					width="40px"
+				/>
+				<small>{contact.fname} {contact.lname} | {contact.email}</small>
+			</a>
+		</section>
+	{/each}
+</section>
+
+<style>
+	#contacts {
+		overflow-y: scroll;
+	}
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 1px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: hsl(205deg, 16%, 77%);
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+</style>
