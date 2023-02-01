@@ -27,3 +27,10 @@
 	<input placeholder="Message" type="text" bind:value={newMessage} required />
 	<button type="submit">Send</button>
 </form>
+
+<style>
+	form {
+		display: grid;
+		grid-template-columns: 9fr 1fr;
+	}
+</style>
