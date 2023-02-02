@@ -15,7 +15,7 @@
 </script>
 
 {#if user}
-	{#if user.agent}
+	{#if user.agent && !user.isAgent}
 		<main class="container" id="user">
 			<section id="messages">
 				<Messages recipient={user.expand.agent} />
