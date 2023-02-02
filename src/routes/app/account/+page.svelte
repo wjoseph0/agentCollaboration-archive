@@ -1,8 +1,19 @@
 <script>
 	import Signout from '$lib/components/Signout.svelte';
 	import { pb, currentUser } from '$lib/pocketbase';
+	import { onMount } from 'svelte';
 
 	let modalVisible = false;
+
+	onMount(async () => {
+		const expandedCurrentUser = await pb
+			.collection('users')
+			.getOne($currentUser.id, {
+				expand: 'agent'
+			});
+
+		await currentUser.set(expandedCurrentUser);
+	});
 
 	function toggleModal() {
 		if (modalVisible === true) {
@@ -26,7 +37,9 @@
 
 		const updatedRecord = await pb
 			.collection('users')
-			.update($currentUser.id, data);
+			.update($currentUser.id, data, {
+				expand: 'agent'
+			});
 
 		await currentUser.set(updatedRecord);
 
@@ -36,19 +49,40 @@
 
 <main class="container">
 	<section>
-		<p>{$currentUser?.fname} {$currentUser?.lname}</p>
+		<img
+			class="avatar"
+			src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.id}.svg`}
+			alt="avatar"
+			width="120px"
+		/>
+		<p>
+			{$currentUser?.fname}
+			{$currentUser?.lname} <br />
+			{$currentUser?.email}
+		</p>
 	</section>
 
-	<section>
-		<p>{$currentUser?.email}</p>
-	</section>
+	<section />
+
+	{#if $currentUser?.agent && !$currentUser?.isAgent}
+		<section>
+			<h3>My Agent</h3>
+			<img
+				class="avatar"
+				src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.expand?.agent?.id}.svg`}
+				alt="avatar"
+				width="50px"
+			/>
+			<p>
+				{$currentUser?.expand?.agent?.fname}
+				{$currentUser?.expand?.agent?.lname} <br />
+				{$currentUser?.expand?.agent?.email}
+			</p>
+		</section>
+	{/if}
 
 	<section>
-		<p>{$currentUser?.isAgent}</p>
-	</section>
-
-	<section>
-		{#if $currentUser.isAgent}
+		{#if $currentUser?.isAgent}
 			<button on:click={toggleModal}>Switch to Client</button>
 		{:else}
 			<button on:click={toggleModal}>Switch to Agent</button>
@@ -93,3 +127,25 @@
 		</article>
 	</dialog>
 {/if}
+
+<style>
+	/* width */
+	::-webkit-scrollbar {
+		width: 1px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #11191f;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: hsl(205deg, 16%, 77%);
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: rgb(185, 185, 185);
+	}
+</style>
