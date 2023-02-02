@@ -5,7 +5,7 @@
 	let messages = [];
 	export let recipient;
 	let filter = `(user = "${recipient.id}") || (recipient = "${recipient.id}") `;
-	console.log(recipient.id);
+
 	onMount(async () => {
 		// Get initial messages
 		const resultList = await pb.collection('messages').getList(1, 50, {
@@ -14,7 +14,6 @@
 			filter: filter
 		});
 		messages = resultList.items;
-		console.log(messages);
 
 		// Subscribe to realtime messages
 		await pb
