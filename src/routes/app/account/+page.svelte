@@ -2,6 +2,7 @@
 	import Signout from '$lib/components/Signout.svelte';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
+	import FindUser from '$lib/components/FindUser.svelte';
 
 	let modalVisible = false;
 
@@ -58,7 +59,10 @@
 		<p>
 			{$currentUser?.fname}
 			{$currentUser?.lname} <br />
-			{$currentUser?.email}
+			{$currentUser?.email} <br />
+			{#if !$currentUser?.agent}
+				<FindUser />
+			{/if}
 		</p>
 	</section>
 
@@ -127,25 +131,3 @@
 		</article>
 	</dialog>
 {/if}
-
-<style>
-	/* width */
-	::-webkit-scrollbar {
-		width: 1px;
-	}
-
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #11191f;
-	}
-
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: hsl(205deg, 16%, 77%);
-	}
-
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: rgb(185, 185, 185);
-	}
-</style>

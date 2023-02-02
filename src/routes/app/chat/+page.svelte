@@ -4,6 +4,7 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
 	import Clients from '$lib/components/Clients.svelte';
+	import FindUser from '$lib/components/FindUser.svelte';
 
 	let user;
 
@@ -36,7 +37,7 @@
 	{:else}
 		<main class="container">
 			<section>
-				<a href="/app/chat">Add my agent</a>
+				<FindUser />
 			</section>
 		</main>
 	{/if}
