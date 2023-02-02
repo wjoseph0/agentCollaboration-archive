@@ -1,22 +1,15 @@
 <script>
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { filter } from '$lib/bad-words';
-	import { onMount } from 'svelte';
 
 	let newMessage = '';
-	export let receiver;
-
-	onMount(async () => {
-		receiver = await pb
-			.collection('users')
-			.getFirstListItem(`email="${receiver}"`);
-	});
+	export let recipient;
 
 	async function sendMessage() {
 		const data = {
 			text: filter.clean(newMessage),
-			sender: $currentUser?.id,
-			receiver: receiver.id
+			user: $currentUser?.id,
+			recipient: recipient
 		};
 		await pb.collection('messages').create(data);
 		newMessage = '';
@@ -31,6 +24,6 @@
 <style>
 	form {
 		display: grid;
-		grid-template-columns: 9fr 1fr;
+		grid-template-columns: 8fr 1fr;
 	}
 </style>

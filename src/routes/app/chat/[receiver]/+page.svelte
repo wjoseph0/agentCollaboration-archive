@@ -6,7 +6,7 @@
 
 <main class="container">
 	<section id="messages">
-		<Messages receiver={data.receiver} />
+		<Messages />
 	</section>
 	<section>
 		<NewMessage receiver={data.receiver} />

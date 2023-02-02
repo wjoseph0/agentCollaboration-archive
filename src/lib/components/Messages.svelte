@@ -1,20 +1,20 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
-	import { pb } from '$lib/pocketbase';
+	import { pb, currentUser } from '$lib/pocketbase';
 
 	let messages = [];
-	export let receiver;
-
-	let filter = `sender.email = "${receiver}" || receiver.email = "${receiver}"`;
-
+	export let recipient;
+	let filter = `(user = "${recipient.id}") || (recipient = "${recipient.id}") `;
+	console.log(recipient.id);
 	onMount(async () => {
 		// Get initial messages
 		const resultList = await pb.collection('messages').getList(1, 50, {
 			sort: 'created',
-			expand: 'sender',
+			expand: 'user',
 			filter: filter
 		});
 		messages = resultList.items;
+		console.log(messages);
 
 		// Subscribe to realtime messages
 		await pb
@@ -22,8 +22,8 @@
 			.subscribe('*', async ({ action, record }) => {
 				if (action === 'create') {
 					// Fetch associated user
-					const sender = await pb.collection('users').getOne(record.sender);
-					record.expand = { sender };
+					const user = await pb.collection('users').getOne(record.user);
+					record.expand = { user };
 					messages = [...messages, record];
 				}
 				if (action === 'delete') {
@@ -42,13 +42,13 @@
 	<div>
 		<img
 			class="avatar"
-			src={`https://avatars.dicebear.com/api/identicon/${message.expand.sender.id}.svg`}
+			src={`https://avatars.dicebear.com/api/identicon/${message.expand.user.id}.svg`}
 			alt="avatar"
 			width="40px"
 		/>
 		<small>
-			{message.expand.sender.fname}
-			{message.expand.sender.lname}
+			{message.expand.user.fname}
+			{message.expand.user.lname}
 		</small>
 
 		<p class="msg-text">{message.text}</p>
