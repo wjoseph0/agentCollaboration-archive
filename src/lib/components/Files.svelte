@@ -10,14 +10,14 @@
 		});
 
 		// Subscribe to realtime files
-		await pb.collection('files').subscribe('*', async ({ action, record }) => {
+		/* 	await pb.collection('files').subscribe('*', async ({ action, record }) => {
 			if (action === 'create') {
 				files = [...files, record];
 			}
 			if (action === 'delete') {
 				files = files.filter((f) => f.id !== record.id);
 			}
-		});
+		}); */
 	});
 
 	// Unsubscribe from realtime messages
