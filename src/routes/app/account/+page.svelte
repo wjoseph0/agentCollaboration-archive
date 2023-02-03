@@ -3,15 +3,15 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
+	import Clients from '$lib/components/Clients.svelte';
 
 	let modalVisible = false;
+	let expandedCurrentUser;
 
 	onMount(async () => {
-		const expandedCurrentUser = await pb
-			.collection('users')
-			.getOne($currentUser.id, {
-				expand: 'agent'
-			});
+		expandedCurrentUser = await pb.collection('users').getOne($currentUser.id, {
+			expand: 'agent,clients'
+		});
 
 		await currentUser.set(expandedCurrentUser);
 	});
@@ -60,8 +60,8 @@
 			{$currentUser?.fname}
 			{$currentUser?.lname} <br />
 			{$currentUser?.email} <br />
-			{#if !$currentUser?.agent}
-				<FindUser />
+			{#if !$currentUser?.agent && expandedCurrentUser}
+				<FindUser {expandedCurrentUser} />
 			{/if}
 		</p>
 	</section>
@@ -82,6 +82,15 @@
 				{$currentUser?.expand?.agent?.lname} <br />
 				{$currentUser?.expand?.agent?.email}
 			</p>
+		</section>
+	{/if}
+
+	{#if $currentUser?.isAgent && expandedCurrentUser}
+		<section>
+			<h3>My Clients</h3>
+			<FindUser {expandedCurrentUser} />
+			<p />
+			<Clients {expandedCurrentUser} />
 		</section>
 	{/if}
 

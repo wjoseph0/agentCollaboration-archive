@@ -6,38 +6,40 @@
 	import Clients from '$lib/components/Clients.svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
 
-	let user;
+	let expandedCurrentUser;
 
 	onMount(async () => {
-		user = await pb.collection('users').getOne($currentUser?.id, {
-			expand: 'agent'
-		});
+		expandedCurrentUser = await pb
+			.collection('users')
+			.getOne($currentUser?.id, {
+				expand: 'agent,clients'
+			});
 	});
 </script>
 
-{#if user}
-	{#if user.agent && !user.isAgent}
+{#if expandedCurrentUser}
+	{#if expandedCurrentUser.agent && !expandedCurrentUser.isAgent}
 		<main class="container" id="user">
 			<section id="messages">
-				<Messages recipient={user.expand.agent} />
+				<Messages recipient={expandedCurrentUser.expand.agent} />
 			</section>
 			<section>
-				<NewMessage recipient={user.agent} />
+				<NewMessage recipient={expandedCurrentUser.agent} />
 			</section>
 		</main>
-	{:else if user.isAgent}
+	{:else if expandedCurrentUser.isAgent}
 		<main class="container">
 			<section>
-				<a href="/app/chat">Add client</a>
+				<FindUser {expandedCurrentUser} />
 			</section>
 			<section>
-				<Clients />
+				<Clients {expandedCurrentUser} />
 			</section>
 		</main>
 	{:else}
 		<main class="container">
 			<section>
-				<FindUser />
+				<FindUser {expandedCurrentUser} />
 			</section>
 		</main>
 	{/if}

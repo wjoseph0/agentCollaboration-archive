@@ -3,12 +3,9 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { clients } from '$lib/clients';
 
+	export let expandedCurrentUser;
 	onMount(async () => {
-		const user = await pb.collection('users').getOne($currentUser?.id, {
-			expand: 'clients'
-		});
-
-		clients.set(user.expand.clients);
+		clients.set(expandedCurrentUser.expand.clients);
 
 		if ($clients === undefined) {
 			clients.set([]);
@@ -33,7 +30,7 @@
 
 {#each $clients as client}
 	<section>
-		<a href="/app/chat/{client.email}">
+		<a href="/app/chat/{client.id}">
 			<img
 				class="avatar"
 				src={`https://avatars.dicebear.com/api/identicon/${client.id}.svg`}
