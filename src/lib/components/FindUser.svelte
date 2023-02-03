@@ -1,24 +1,22 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { contacts } from '$lib/contacts';
+	import { clients } from '$lib/clients';
 	import { onMount, onDestroy } from 'svelte';
 
+	export let expandedCurrentUser;
 	onMount(async () => {
-		const user = await pb.collection('users').getOne($currentUser?.id, {
-			expand: 'contacts'
-		});
-		contacts.set(user.expand.contacts);
-		if ($contacts === undefined) {
-			contacts.set([]);
+		clients.set(expandedCurrentUser.expand.clients);
+		if ($clients === undefined) {
+			clients.set([]);
 		}
 
 		pb.collection('users').subscribe($currentUser?.id, async (e) => {
 			if (e.action === 'update') {
-				contacts.set([]);
-				for (let i = 0; i < e.record.contacts.length; i++) {
-					const contactID = e.record.contacts[i];
-					const user = await pb.collection('users').getOne(contactID);
-					contacts.set([...$contacts, user]);
+				clients.set([]);
+				for (let i = 0; i < e.record.clients.length; i++) {
+					const clientID = e.record.clients[i];
+					const user = await pb.collection('users').getOne(clientID);
+					clients.set([...$clients, user]);
 				}
 			}
 		});
@@ -30,7 +28,8 @@
 
 	let userEmail = '';
 	let user;
-	let userInContacts = false;
+	let userIsClient = false;
+	let searchVisible = false;
 
 	const searchForUser = async () => {
 		try {
@@ -38,11 +37,11 @@
 				.collection('users')
 				.getFirstListItem(`email="${userEmail}"`);
 
-			userInContacts = false;
-			for (let i = 0; i < $contacts.length; i++) {
-				const contact = $contacts[i];
-				if (contact.email === user.email) {
-					userInContacts = true;
+			userIsClient = false;
+			for (let i = 0; i < $clients.length; i++) {
+				const client = $clients[i];
+				if (client.email === user.email) {
+					userIsClient = true;
 				}
 			}
 		} catch {
@@ -50,47 +49,125 @@
 		}
 	};
 
-	const addToContacts = async () => {
-		let contactsArr = [];
-		await contacts.set([...$contacts, user]);
-		for (let i = 0; i < $contacts.length; i++) {
-			const contact = $contacts[i];
-			contactsArr.push(contact.id);
+	const addClient = async () => {
+		let clientsArr = [];
+		await clients.set([...$clients, user]);
+		for (let i = 0; i < $clients.length; i++) {
+			const contact = $clients[i];
+			clientsArr.push(contact.id);
 		}
+		console.log(clientsArr);
+		console.log($clients);
 		const data = {
-			contacts: contactsArr
+			clients: clientsArr
 		};
 		await pb.collection('users').update($currentUser.id, data);
-		window.location.assign('/app/chat');
+		toggleSearch();
+	};
+
+	async function addAgent() {
+		const data = {
+			agent: user.id
+		};
+
+		const updateCurrentUser = await pb
+			.collection('users')
+			.update($currentUser.id, data);
+
+		await currentUser.set(updateCurrentUser);
+		location.reload();
+	}
+
+	const toggleSearch = () => {
+		userEmail = '';
+		if (searchVisible === true) {
+			searchVisible = false;
+			return;
+		}
+		searchVisible = true;
 	};
 </script>
 
-<section>
-	<input
-		type="email"
-		placeholder="Search email"
-		bind:value={userEmail}
-		on:keyup={searchForUser}
-	/>
-</section>
+{#if !$currentUser?.isAgent}
+	{#if searchVisible}
+		<dialog open>
+			<article>
+				<!-- svelte-ignore a11y-missing-content -->
+				<!-- svelte-ignore a11y-invalid-attribute -->
+				<a
+					href="#"
+					aria-label="Close"
+					class="close"
+					data-target="modal-example"
+					on:click={toggleSearch}
+				/>
+				<h3>Add your agent!</h3>
+				<input
+					type="email"
+					placeholder="Search email"
+					bind:value={userEmail}
+					on:keyup={searchForUser}
+				/>
+				{#if user && userEmail !== ''}
+					<p>{user.fname}</p>
+					<p>{user.lname}</p>
+					<p>{user.email}</p>
+					<section>
+						{#if $currentUser.email === user.email}
+							<button disabled>Hey that's me!</button>
+						{:else}
+							<button on:click={addAgent}>Add agent</button>
+						{/if}
+					</section>
+				{/if}
 
-{#if user}
-	<section>
-		<p>{user.fname}</p>
-		<p>{user.lname}</p>
-		<p>{user.email}</p>
-		{#if userInContacts}
-			<button disabled>Already in contacts</button>
-		{:else if $currentUser.email === user.email}
-			<button disabled>Hey that's me!</button>
-		{:else}
-			<button on:click={addToContacts}>Add to contacts</button>
-		{/if}
-	</section>
+				{#if !user && userEmail !== ''}
+					<p>No user found.</p>
+				{/if}
+			</article>
+		</dialog>
+	{:else}
+		<!-- svelte-ignore a11y-invalid-attribute -->
+		<a href="#" on:click={toggleSearch}>Add my agent</a>
+	{/if}
 {/if}
 
-{#if !user && userEmail}
-	<section>
-		<p>No user found.</p>
-	</section>
+{#if $currentUser?.isAgent}
+	{#if searchVisible}
+		<dialog open>
+			<article>
+				<!-- svelte-ignore a11y-missing-content -->
+				<!-- svelte-ignore a11y-invalid-attribute -->
+				<a href="#" aria-label="Close" class="close" on:click={toggleSearch} />
+				<h3>Add your client!</h3>
+				<input
+					type="email"
+					placeholder="Search email"
+					bind:value={userEmail}
+					on:keyup={searchForUser}
+				/>
+				{#if user && userEmail !== ''}
+					<p>{user.fname}</p>
+					<p>{user.lname}</p>
+					<p>{user.email}</p>
+					<section>
+						{#if userIsClient}
+							<button disabled>Client added</button>
+						{:else if $currentUser.email === user.email}
+							<button disabled>Hey that's me!</button>
+						{:else}
+							<button on:click={addClient}>Add client</button>
+						{/if}
+					</section>
+				{/if}
+
+				{#if !user && userEmail !== ''}
+					<p>No user found.</p>
+				{/if}
+			</article>
+		</dialog>
+	{:else}
+		<!-- svelte-ignore a11y-invalid-attribute -->
+		<a href="#" on:click={toggleSearch}>Add client</a>
+	{/if}
 {/if}

@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const contacts = writable([]);
+export const clients = writable([]);
