@@ -14,6 +14,7 @@
 		});
 
 		await currentUser.set(expandedCurrentUser);
+		console.log(expandedCurrentUser);
 	});
 
 	function toggleModal() {
