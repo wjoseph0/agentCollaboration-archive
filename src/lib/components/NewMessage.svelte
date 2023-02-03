@@ -9,7 +9,7 @@
 		const data = {
 			text: filter.clean(newMessage),
 			user: $currentUser?.id,
-			recipient: recipient
+			recipient: recipient?.id
 		};
 		await pb.collection('messages').create(data);
 		newMessage = '';
