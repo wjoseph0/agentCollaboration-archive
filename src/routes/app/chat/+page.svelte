@@ -24,7 +24,7 @@
 				<Messages recipient={expandedCurrentUser.expand.agent} />
 			</section>
 			<section>
-				<NewMessage recipient={expandedCurrentUser.agent} />
+				<NewMessage recipient={expandedCurrentUser.expand.agent} />
 			</section>
 		</main>
 	{:else if expandedCurrentUser.isAgent}
