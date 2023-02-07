@@ -12,8 +12,6 @@
 
 {#if $currentUser}
 	<AppNav />
-
-	<slot />
-{:else}
-	<slot />
 {/if}
+
+<slot />

@@ -48,64 +48,66 @@
 	}
 </script>
 
-<main class="container">
-	<section>
-		<img
-			class="avatar"
-			src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.id}.svg`}
-			alt="avatar"
-			width="120px"
-		/>
-		<p>
-			{$currentUser?.fname}
-			{$currentUser?.lname} <br />
-			{$currentUser?.email} <br />
-			{#if !$currentUser?.agent && expandedCurrentUser}
-				<FindUser {expandedCurrentUser} />
-			{/if}
-		</p>
-	</section>
-
-	<section />
-
-	{#if $currentUser?.agent && !$currentUser?.isAgent}
+{#if $currentUser}
+	<main class="container">
 		<section>
-			<h3>My Agent</h3>
 			<img
 				class="avatar"
-				src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.expand?.agent?.id}.svg`}
+				src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.id}.svg`}
 				alt="avatar"
-				width="50px"
+				width="120px"
 			/>
 			<p>
-				{$currentUser?.expand?.agent?.fname}
-				{$currentUser?.expand?.agent?.lname} <br />
-				{$currentUser?.expand?.agent?.email}
+				{$currentUser?.fname}
+				{$currentUser?.lname} <br />
+				{$currentUser?.email} <br />
+				{#if !$currentUser?.agent && expandedCurrentUser}
+					<FindUser {expandedCurrentUser} />
+				{/if}
 			</p>
 		</section>
-	{/if}
 
-	{#if $currentUser?.isAgent && expandedCurrentUser}
-		<section>
-			<h3>My Clients</h3>
-			<FindUser {expandedCurrentUser} />
-			<p />
-			<Clients {expandedCurrentUser} />
-		</section>
-	{/if}
+		<section />
 
-	<section>
-		{#if $currentUser?.isAgent}
-			<button on:click={toggleModal}>Switch to Client</button>
-		{:else}
-			<button on:click={toggleModal}>Switch to Agent</button>
+		{#if $currentUser?.agent && !$currentUser?.isAgent}
+			<section>
+				<h3>My Agent</h3>
+				<img
+					class="avatar"
+					src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.expand?.agent?.id}.svg`}
+					alt="avatar"
+					width="50px"
+				/>
+				<p>
+					{$currentUser?.expand?.agent?.fname}
+					{$currentUser?.expand?.agent?.lname} <br />
+					{$currentUser?.expand?.agent?.email}
+				</p>
+			</section>
 		{/if}
-	</section>
 
-	<section>
-		<Signout />
-	</section>
-</main>
+		{#if $currentUser?.isAgent && expandedCurrentUser}
+			<section>
+				<h3>My Clients</h3>
+				<FindUser {expandedCurrentUser} />
+				<p />
+				<Clients {expandedCurrentUser} />
+			</section>
+		{/if}
+
+		<section>
+			{#if $currentUser?.isAgent}
+				<button on:click={toggleModal}>Switch to Client</button>
+			{:else}
+				<button on:click={toggleModal}>Switch to Agent</button>
+			{/if}
+		</section>
+
+		<section>
+			<Signout />
+		</section>
+	</main>
+{/if}
 
 {#if modalVisible}
 	<dialog open>

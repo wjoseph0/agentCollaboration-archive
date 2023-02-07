@@ -17,31 +17,33 @@
 	});
 </script>
 
-{#if expandedCurrentUser}
-	{#if expandedCurrentUser.agent && !expandedCurrentUser.isAgent}
-		<main class="container" id="user">
-			<section id="messages">
-				<Messages recipient={expandedCurrentUser.expand.agent} />
-			</section>
-			<section>
-				<NewMessage recipient={expandedCurrentUser.expand.agent} />
-			</section>
-		</main>
-	{:else if expandedCurrentUser.isAgent}
-		<main class="container">
-			<section>
-				<FindUser {expandedCurrentUser} />
-			</section>
-			<section>
-				<Clients {expandedCurrentUser} />
-			</section>
-		</main>
-	{:else}
-		<main class="container">
-			<section>
-				<FindUser {expandedCurrentUser} />
-			</section>
-		</main>
+{#if $currentUser}
+	{#if expandedCurrentUser}
+		{#if expandedCurrentUser.agent && !expandedCurrentUser.isAgent}
+			<main class="container" id="user">
+				<section id="messages">
+					<Messages recipient={expandedCurrentUser.expand.agent} />
+				</section>
+				<section>
+					<NewMessage recipient={expandedCurrentUser.expand.agent} />
+				</section>
+			</main>
+		{:else if expandedCurrentUser.isAgent}
+			<main class="container">
+				<section>
+					<FindUser {expandedCurrentUser} />
+				</section>
+				<section>
+					<Clients {expandedCurrentUser} />
+				</section>
+			</main>
+		{:else}
+			<main class="container">
+				<section>
+					<FindUser {expandedCurrentUser} />
+				</section>
+			</main>
+		{/if}
 	{/if}
 {/if}
 

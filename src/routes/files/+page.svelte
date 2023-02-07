@@ -4,13 +4,15 @@
 	import { currentUser } from '$lib/pocketbase';
 </script>
 
-<main class="container">
-	{#if $currentUser?.isAgent}
+{#if $currentUser}
+	<main class="container">
+		{#if $currentUser?.isAgent}
+			<section>
+				<UploadFile />
+			</section>
+		{/if}
 		<section>
-			<UploadFile />
+			<Files />
 		</section>
-	{/if}
-	<section>
-		<Files />
-	</section>
-</main>
+	</main>
+{/if}

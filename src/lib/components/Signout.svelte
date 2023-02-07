@@ -1,5 +1,4 @@
 <script>
-	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
 
 	const signOut = () => {
