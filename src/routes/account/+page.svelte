@@ -112,7 +112,7 @@
 		<article>
 			<!-- svelte-ignore a11y-missing-content -->
 			<a
-				href="/app/account"
+				href="/account"
 				aria-label="Close"
 				class="close"
 				data-target="modal-example"
@@ -126,14 +126,14 @@
 			{/if}
 			<footer>
 				<a
-					href="/app/account"
+					href="/account"
 					role="button"
 					class="secondary"
 					on:click={toggleModal}
 				>
 					Cancel
 				</a>
-				<a href="/app/account" role="button" on:click={switchAccountType}>
+				<a href="/account" role="button" on:click={switchAccountType}>
 					Confirm
 				</a>
 			</footer>
