@@ -3,7 +3,6 @@
 	import { pb } from '$lib/pocketbase';
 
 	const signOut = () => {
-		goto('/login');
 		pb.authStore.clear();
 	};
 </script>
