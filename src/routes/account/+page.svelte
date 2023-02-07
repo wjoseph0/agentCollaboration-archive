@@ -36,13 +36,11 @@
 			};
 		}
 
-		const updatedRecord = await pb
-			.collection('users')
-			.update($currentUser.id, data, {
-				expand: 'agent'
-			});
+		await pb.collection('users').update($currentUser.id, data);
 
-		await currentUser.set(updatedRecord);
+		await pb
+			.collection('users')
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
 
 		toggleModal();
 	}

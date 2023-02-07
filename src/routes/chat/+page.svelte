@@ -1,20 +1,11 @@
 <script>
 	import Messages from '$lib/components/Messages.svelte';
 	import NewMessage from '$lib/components/NewMessage.svelte';
-	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
+	import { currentUser } from '$lib/pocketbase';
 	import Clients from '$lib/components/Clients.svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
 
-	let expandedCurrentUser;
-
-	onMount(async () => {
-		expandedCurrentUser = await pb
-			.collection('users')
-			.getOne($currentUser?.id, {
-				expand: 'agent,clients'
-			});
-	});
+	let expandedCurrentUser = $currentUser;
 </script>
 
 {#if $currentUser}

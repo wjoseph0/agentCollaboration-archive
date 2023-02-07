@@ -7,7 +7,14 @@
 
 	export const login = async () => {
 		try {
-			await pb.collection('users').authWithPassword(email, password);
+			await pb.collection('users').authWithPassword(
+				email,
+				password,
+				{},
+				{
+					expand: 'agent,clients,focusedClient'
+				}
+			);
 			goto('/');
 		} catch (error) {
 			console.error(error);
