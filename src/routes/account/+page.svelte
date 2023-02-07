@@ -67,8 +67,6 @@
 			</p>
 		</section>
 
-		<section />
-
 		{#if $currentUser?.agent && !$currentUser?.isAgent}
 			<section>
 				<h3>My Agent</h3>
