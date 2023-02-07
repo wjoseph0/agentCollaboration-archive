@@ -11,7 +11,6 @@
 		</section>
 	{/if}
 	<section>
-		<h1>Files</h1>
 		<Files />
 	</section>
 </main>
