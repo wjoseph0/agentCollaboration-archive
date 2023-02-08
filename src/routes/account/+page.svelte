@@ -1,20 +1,10 @@
 <script>
 	import Signout from '$lib/components/Signout.svelte';
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
 	import Clients from '$lib/components/Clients.svelte';
 
 	let modalVisible = false;
-	let expandedCurrentUser;
-
-	onMount(async () => {
-		expandedCurrentUser = await pb.collection('users').getOne($currentUser.id, {
-			expand: 'agent,clients'
-		});
-
-		await currentUser.set(expandedCurrentUser);
-	});
 
 	function toggleModal() {
 		if (modalVisible === true) {
@@ -51,48 +41,44 @@
 		<section>
 			<img
 				class="avatar"
-				src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.id}.svg`}
+				src={`https://avatars.dicebear.com/api/identicon/${$currentUser.id}.svg`}
 				alt="avatar"
 				width="120px"
 			/>
 			<p>
-				{$currentUser?.fname}
-				{$currentUser?.lname} <br />
-				{$currentUser?.email} <br />
-				{#if !$currentUser?.agent && expandedCurrentUser}
+				{$currentUser.fname}
+				{$currentUser.lname} <br />
+				{$currentUser.email} <br />
+				{#if !$currentUser.expand.agent && !$currentUser.isAgent}
 					<FindUser />
 				{/if}
 			</p>
 		</section>
 
-		{#if $currentUser?.agent && !$currentUser?.isAgent}
-			<section>
-				<h3>My Agent</h3>
-				<img
-					class="avatar"
-					src={`https://avatars.dicebear.com/api/identicon/${$currentUser?.expand?.agent?.id}.svg`}
-					alt="avatar"
-					width="50px"
-				/>
-				<p>
-					{$currentUser?.expand?.agent?.fname}
-					{$currentUser?.expand?.agent?.lname} <br />
-					{$currentUser?.expand?.agent?.email}
-				</p>
-			</section>
-		{/if}
-
-		{#if $currentUser?.isAgent && expandedCurrentUser}
-			<section>
+		<section>
+			{#if $currentUser.isAgent}
 				<h3>My Clients</h3>
 				<FindUser />
 				<p />
 				<Clients />
-			</section>
-		{/if}
+			{:else if $currentUser.expand.agent}
+				<h3>My Agent</h3>
+				<img
+					class="avatar"
+					src={`https://avatars.dicebear.com/api/identicon/${$currentUser.expand.agent.id}.svg`}
+					alt="avatar"
+					width="50px"
+				/>
+				<p>
+					{$currentUser.expand.agent.fname}
+					{$currentUser.expand.agent.lname} <br />
+					{$currentUser.expand.agent.email}
+				</p>
+			{/if}
+		</section>
 
 		<section>
-			{#if $currentUser?.isAgent}
+			{#if $currentUser.isAgent}
 				<button on:click={toggleModal}>Switch to Client</button>
 			{:else}
 				<button on:click={toggleModal}>Switch to Agent</button>
