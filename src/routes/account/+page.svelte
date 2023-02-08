@@ -56,11 +56,21 @@
 		</section>
 
 		<section>
-			{#if $currentUser.isAgent}
-				<h3>My Clients</h3>
-				<FindUser />
-				<p />
-				<Clients />
+			{#if $currentUser.isAgent && $currentUser.expand.focusedClient}
+				<section>
+					<h3>My Focused Client</h3>
+					<img
+						class="avatar"
+						src={`https://avatars.dicebear.com/api/identicon/${$currentUser.expand.focusedClient.id}.svg`}
+						alt="avatar"
+						width="50px"
+					/>
+					<p>
+						{$currentUser.expand.focusedClient.fname}
+						{$currentUser.expand.focusedClient.lname} <br />
+						{$currentUser.expand.focusedClient.email}
+					</p>
+				</section>
 			{:else if $currentUser.expand.agent}
 				<h3>My Agent</h3>
 				<img

@@ -1,28 +1,21 @@
 <script>
-	import { pb } from '$lib/pocketbase';
-	import { onMount, onDestroy } from 'svelte';
+	import { pb, currentUser } from '$lib/pocketbase';
+	import { onMount } from 'svelte';
 
 	let files = [];
+	let filter;
+
+	if ($currentUser.isAgent && $currentUser.focusedClient) {
+		filter = 'client = agent.focusedClient';
+	} else if (!currentUser.isAgent && $currentUser.agent) {
+		filter = 'agent = client.agent';
+	}
 
 	onMount(async () => {
 		files = await pb.collection('files').getFullList(200, {
-			sort: '-created'
+			sort: '-created',
+			filter: filter
 		});
-
-		// Subscribe to realtime files
-		/* 	await pb.collection('files').subscribe('*', async ({ action, record }) => {
-			if (action === 'create') {
-				files = [...files, record];
-			}
-			if (action === 'delete') {
-				files = files.filter((f) => f.id !== record.id);
-			}
-		}); */
-	});
-
-	// Unsubscribe from realtime messages
-	onDestroy(() => {
-		pb.collection('files').unsubscribe();
 	});
 </script>
 

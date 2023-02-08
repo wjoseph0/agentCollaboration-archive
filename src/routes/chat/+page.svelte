@@ -2,40 +2,40 @@
 	import Messages from '$lib/components/Messages.svelte';
 	import NewMessage from '$lib/components/NewMessage.svelte';
 	import { currentUser } from '$lib/pocketbase';
-	import Clients from '$lib/components/Clients.svelte';
-	import FindUser from '$lib/components/FindUser.svelte';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+
+	$: if (
+		browser &&
+		(($currentUser.isAgent && !$currentUser.focusedClient) ||
+			(!$currentUser.isAgent && !$currentUser.agent))
+	) {
+		goto('/account');
+	}
 </script>
 
 {#if $currentUser}
-	{#if $currentUser.agent && !$currentUser.isAgent}
-		<main class="container" id="user">
+	<main class="container" id="chatContainer">
+		{#if $currentUser.focusedClient && $currentUser.isAgent}
+			<section id="messages">
+				<Messages recipient={$currentUser.expand.focusedClient} />
+			</section>
+			<section>
+				<NewMessage recipient={$currentUser.expand.focusedClient} />
+			</section>
+		{:else if $currentUser.agent && !$currentUser.isAgent}
 			<section id="messages">
 				<Messages recipient={$currentUser.expand.agent} />
 			</section>
 			<section>
 				<NewMessage recipient={$currentUser.expand.agent} />
 			</section>
-		</main>
-	{:else if $currentUser.isAgent}
-		<main class="container">
-			<section>
-				<FindUser />
-			</section>
-			<section>
-				<Clients />
-			</section>
-		</main>
-	{:else}
-		<main class="container">
-			<section>
-				<FindUser />
-			</section>
-		</main>
-	{/if}
+		{/if}
+	</main>
 {/if}
 
 <style>
-	#user {
+	#chatContainer {
 		height: 90vh;
 		display: grid;
 		padding-top: 0;
