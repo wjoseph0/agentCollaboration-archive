@@ -4,37 +4,33 @@
 	import { currentUser } from '$lib/pocketbase';
 	import Clients from '$lib/components/Clients.svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
-
-	let expandedCurrentUser = $currentUser;
 </script>
 
 {#if $currentUser}
-	{#if expandedCurrentUser}
-		{#if expandedCurrentUser.agent && !expandedCurrentUser.isAgent}
-			<main class="container" id="user">
-				<section id="messages">
-					<Messages recipient={expandedCurrentUser.expand.agent} />
-				</section>
-				<section>
-					<NewMessage recipient={expandedCurrentUser.expand.agent} />
-				</section>
-			</main>
-		{:else if expandedCurrentUser.isAgent}
-			<main class="container">
-				<section>
-					<FindUser {expandedCurrentUser} />
-				</section>
-				<section>
-					<Clients {expandedCurrentUser} />
-				</section>
-			</main>
-		{:else}
-			<main class="container">
-				<section>
-					<FindUser {expandedCurrentUser} />
-				</section>
-			</main>
-		{/if}
+	{#if $currentUser.agent && !$currentUser.isAgent}
+		<main class="container" id="user">
+			<section id="messages">
+				<Messages recipient={$currentUser.expand.agent} />
+			</section>
+			<section>
+				<NewMessage recipient={$currentUser.expand.agent} />
+			</section>
+		</main>
+	{:else if $currentUser.isAgent}
+		<main class="container">
+			<section>
+				<FindUser expandedCurrentUser={$currentUser} />
+			</section>
+			<section>
+				<Clients expandedCurrentUser={$currentUser} />
+			</section>
+		</main>
+	{:else}
+		<main class="container">
+			<section>
+				<FindUser expandedCurrentUser={$currentUser} />
+			</section>
+		</main>
 	{/if}
 {/if}
 
