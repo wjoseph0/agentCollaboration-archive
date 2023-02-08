@@ -1,173 +1,101 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { clients } from '$lib/clients';
-	import { onMount, onDestroy } from 'svelte';
 
-	export let expandedCurrentUser;
-	onMount(async () => {
-		clients.set(expandedCurrentUser.expand.clients);
-		if ($clients === undefined) {
-			clients.set([]);
-		}
+	let inputEmail = '';
+	let searchedUser;
+	let searchedUserIsClient = false;
+	let searchModalVisible = false;
 
-		pb.collection('users').subscribe($currentUser?.id, async (e) => {
-			if (e.action === 'update') {
-				clients.set([]);
-				for (let i = 0; i < e.record.clients.length; i++) {
-					const clientID = e.record.clients[i];
-					const user = await pb.collection('users').getOne(clientID);
-					clients.set([...$clients, user]);
-				}
-			}
-		});
-	});
-
-	onDestroy(() => {
-		pb.collection('users').unsubscribe();
-	});
-
-	let userEmail = '';
-	let user;
-	let userIsClient = false;
-	let searchVisible = false;
-
-	const searchForUser = async () => {
+	async function searchForUser() {
 		try {
-			user = await pb
+			searchedUser = await pb
 				.collection('users')
-				.getFirstListItem(`email="${userEmail}"`);
+				.getFirstListItem(`email="${inputEmail}"`);
 
-			userIsClient = false;
-			for (let i = 0; i < $clients.length; i++) {
-				const client = $clients[i];
-				if (client.email === user.email) {
-					userIsClient = true;
+			searchedUserIsClient = false;
+			for (let i = 0; i < $currentUser.expand.clients.length; i++) {
+				const client = $currentUser.expand.clients[i];
+				if (client.email === searchedUser.email) {
+					searchedUserIsClient = true;
 				}
 			}
 		} catch {
-			user = undefined;
+			searchedUser = null;
 		}
-	};
+	}
 
-	const addClient = async () => {
-		let clientsArr = [];
-		await clients.set([...$clients, user]);
-		for (let i = 0; i < $clients.length; i++) {
-			const contact = $clients[i];
-			clientsArr.push(contact.id);
-		}
-		console.log(clientsArr);
-		console.log($clients);
+	async function addClient() {
 		const data = {
-			clients: clientsArr
+			clients: [...$currentUser.clients, searchedUser.id]
 		};
 		await pb.collection('users').update($currentUser.id, data);
-		toggleSearch();
-	};
+		await pb
+			.collection('users')
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		toggleSearchModal();
+	}
 
 	async function addAgent() {
 		const data = {
-			agent: user.id
+			agent: searchedUser.id
 		};
-
-		const updateCurrentUser = await pb
+		await pb.collection('users').update($currentUser.id, data);
+		await pb
 			.collection('users')
-			.update($currentUser.id, data);
-
-		await currentUser.set(updateCurrentUser);
-		location.reload();
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		toggleSearchModal();
 	}
 
-	const toggleSearch = () => {
-		userEmail = '';
-		if (searchVisible === true) {
-			searchVisible = false;
+	function toggleSearchModal() {
+		if (searchModalVisible === true) {
+			inputEmail = '';
+			searchModalVisible = false;
 			return;
 		}
-		searchVisible = true;
-	};
+		searchModalVisible = true;
+	}
 </script>
 
-{#if !$currentUser?.isAgent}
-	{#if searchVisible}
-		<dialog open>
-			<article>
-				<!-- svelte-ignore a11y-missing-content -->
-				<!-- svelte-ignore a11y-invalid-attribute -->
-				<a
-					href="#"
-					aria-label="Close"
-					class="close"
-					data-target="modal-example"
-					on:click={toggleSearch}
-				/>
-				<h3>Add your agent!</h3>
-				<input
-					type="email"
-					placeholder="Search email"
-					bind:value={userEmail}
-					on:keyup={searchForUser}
-				/>
-				{#if user && userEmail !== ''}
-					<p>{user.fname}</p>
-					<p>{user.lname}</p>
-					<p>{user.email}</p>
-					<section>
-						{#if $currentUser.email === user.email}
-							<button disabled>Hey that's me!</button>
-						{:else}
-							<button on:click={addAgent}>Add agent</button>
-						{/if}
-					</section>
-				{/if}
-
-				{#if !user && userEmail !== ''}
-					<p>No user found.</p>
-				{/if}
-			</article>
-		</dialog>
-	{:else}
-		<!-- svelte-ignore a11y-invalid-attribute -->
-		<a href="#" on:click={toggleSearch}>Add my agent</a>
-	{/if}
-{/if}
-
-{#if $currentUser?.isAgent}
-	{#if searchVisible}
-		<dialog open>
-			<article>
-				<!-- svelte-ignore a11y-missing-content -->
-				<!-- svelte-ignore a11y-invalid-attribute -->
-				<a href="#" aria-label="Close" class="close" on:click={toggleSearch} />
+{#if searchModalVisible}
+	<dialog open>
+		<article>
+			<!-- svelte-ignore a11y-missing-content -->
+			<a
+				href="#close"
+				aria-label="Close"
+				class="close"
+				on:click={toggleSearchModal}
+			/>
+			{#if $currentUser.isAgent}
 				<h3>Add your client!</h3>
-				<input
-					type="email"
-					placeholder="Search email"
-					bind:value={userEmail}
-					on:keyup={searchForUser}
-				/>
-				{#if user && userEmail !== ''}
-					<p>{user.fname}</p>
-					<p>{user.lname}</p>
-					<p>{user.email}</p>
-					<section>
-						{#if userIsClient}
-							<button disabled>Client added</button>
-						{:else if $currentUser.email === user.email}
-							<button disabled>Hey that's me!</button>
-						{:else}
-							<button on:click={addClient}>Add client</button>
-						{/if}
-					</section>
-				{/if}
-
-				{#if !user && userEmail !== ''}
-					<p>No user found.</p>
-				{/if}
-			</article>
-		</dialog>
-	{:else}
-		<!-- svelte-ignore a11y-invalid-attribute -->
-		<a href="#" on:click={toggleSearch}>Add client</a>
-	{/if}
+			{:else}
+				<h3>Add your agent!</h3>
+			{/if}
+			<input
+				placeholder="Search email"
+				bind:value={inputEmail}
+				on:keyup={searchForUser}
+			/>
+			{#if searchedUser}
+				<p>{searchedUser.fname}</p>
+				<p>{searchedUser.lname}</p>
+				<p>{searchedUser.email}</p>
+				<section>
+					{#if $currentUser.email === searchedUser.email}
+						<button disabled>Hey that's me!</button>
+					{:else if $currentUser.isAgent}
+						<button on:click={addClient}>Add client</button>
+					{:else}
+						<button on:click={addAgent}>Add agent</button>
+					{/if}
+				</section>
+			{:else if inputEmail !== ''}
+				<p>No user found.</p>
+			{/if}
+		</article>
+	</dialog>
+{:else if $currentUser.isAgent}
+	<a href="#addmyclient" on:click={toggleSearchModal}>Add my client</a>
+{:else}
+	<a href="#addmyagent" on:click={toggleSearchModal}>Add my agent</a>
 {/if}

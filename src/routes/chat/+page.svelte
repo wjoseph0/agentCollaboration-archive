@@ -1,49 +1,36 @@
 <script>
 	import Messages from '$lib/components/Messages.svelte';
 	import NewMessage from '$lib/components/NewMessage.svelte';
-	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
+	import { currentUser } from '$lib/pocketbase';
 	import Clients from '$lib/components/Clients.svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
-
-	let expandedCurrentUser;
-
-	onMount(async () => {
-		expandedCurrentUser = await pb
-			.collection('users')
-			.getOne($currentUser?.id, {
-				expand: 'agent,clients'
-			});
-	});
 </script>
 
 {#if $currentUser}
-	{#if expandedCurrentUser}
-		{#if expandedCurrentUser.agent && !expandedCurrentUser.isAgent}
-			<main class="container" id="user">
-				<section id="messages">
-					<Messages recipient={expandedCurrentUser.expand.agent} />
-				</section>
-				<section>
-					<NewMessage recipient={expandedCurrentUser.expand.agent} />
-				</section>
-			</main>
-		{:else if expandedCurrentUser.isAgent}
-			<main class="container">
-				<section>
-					<FindUser {expandedCurrentUser} />
-				</section>
-				<section>
-					<Clients {expandedCurrentUser} />
-				</section>
-			</main>
-		{:else}
-			<main class="container">
-				<section>
-					<FindUser {expandedCurrentUser} />
-				</section>
-			</main>
-		{/if}
+	{#if $currentUser.agent && !$currentUser.isAgent}
+		<main class="container" id="user">
+			<section id="messages">
+				<Messages recipient={$currentUser.expand.agent} />
+			</section>
+			<section>
+				<NewMessage recipient={$currentUser.expand.agent} />
+			</section>
+		</main>
+	{:else if $currentUser.isAgent}
+		<main class="container">
+			<section>
+				<FindUser />
+			</section>
+			<section>
+				<Clients />
+			</section>
+		</main>
+	{:else}
+		<main class="container">
+			<section>
+				<FindUser />
+			</section>
+		</main>
 	{/if}
 {/if}
 

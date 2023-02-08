@@ -18,7 +18,14 @@
 				passwordConfirm: password
 			};
 			await pb.collection('users').create(data);
-			await pb.collection('users').authWithPassword(email, password);
+			await pb.collection('users').authWithPassword(
+				email,
+				password,
+				{},
+				{
+					expand: 'agent,clients,focusedClient'
+				}
+			);
 			goto('/');
 		} catch (err) {
 			console.error(err);

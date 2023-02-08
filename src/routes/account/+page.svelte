@@ -36,13 +36,11 @@
 			};
 		}
 
-		const updatedRecord = await pb
-			.collection('users')
-			.update($currentUser.id, data, {
-				expand: 'agent'
-			});
+		await pb.collection('users').update($currentUser.id, data);
 
-		await currentUser.set(updatedRecord);
+		await pb
+			.collection('users')
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
 
 		toggleModal();
 	}
@@ -62,12 +60,10 @@
 				{$currentUser?.lname} <br />
 				{$currentUser?.email} <br />
 				{#if !$currentUser?.agent && expandedCurrentUser}
-					<FindUser {expandedCurrentUser} />
+					<FindUser />
 				{/if}
 			</p>
 		</section>
-
-		<section />
 
 		{#if $currentUser?.agent && !$currentUser?.isAgent}
 			<section>
@@ -89,9 +85,9 @@
 		{#if $currentUser?.isAgent && expandedCurrentUser}
 			<section>
 				<h3>My Clients</h3>
-				<FindUser {expandedCurrentUser} />
+				<FindUser />
 				<p />
-				<Clients {expandedCurrentUser} />
+				<Clients />
 			</section>
 		{/if}
 
