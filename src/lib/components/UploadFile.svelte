@@ -9,9 +9,11 @@
 		const formData = new FormData();
 		formData.append('file', newFile[0]);
 		formData.append('name', fileName);
-		formData.append('user', $currentUser.id);
+		formData.append('agent', $currentUser.id);
+		formData.append('client', $currentUser.expand.focusedClient.id);
 		await pb.collection('files').create(formData);
 		formVisibilty();
+		location.reload();
 	};
 
 	const formVisibilty = () => {
@@ -26,14 +28,13 @@
 
 {#if showForm}
 	<form on:submit|preventDefault={uploadFile}>
-		<select bind:value={fileName} required>
-			<option value="" selected>Select file type...</option>
-			<option value="Inspection Report">Inspection Report</option>
-		</select>
-		<input bind:files={newFile} type="file" required />
+		<input type="text" bind:value={fileName} placeholder="Name" required />
+		<input type="file" bind:files={newFile} required />
 		<div>
 			<button type="submit">Upload</button>
-			<button type="button" class="secondary" on:click={formVisibilty}>Cancel</button>
+			<button type="button" class="secondary" on:click={formVisibilty}
+				>Cancel</button
+			>
 		</div>
 	</form>
 {/if}

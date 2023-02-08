@@ -1,6 +1,11 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { pb } from '$lib/pocketbase';
+	import { pb, currentUser } from '$lib/pocketbase';
+	import { browser } from '$app/environment';
+
+	$: if (browser && $currentUser) {
+		goto('/account');
+	}
 
 	let email;
 	let password;

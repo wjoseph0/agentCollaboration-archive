@@ -5,6 +5,15 @@
 	import Clients from '$lib/components/Clients.svelte';
 
 	let modalVisible = false;
+	let clientSelectorVisible = false;
+
+	function toggleChangeClientSelector() {
+		if (clientSelectorVisible === true) {
+			clientSelectorVisible = false;
+			return;
+		}
+		clientSelectorVisible = true;
+	}
 
 	function toggleModal() {
 		if (modalVisible === true) {
@@ -56,11 +65,34 @@
 		</section>
 
 		<section>
-			{#if $currentUser.isAgent}
-				<h3>My Clients</h3>
-				<FindUser />
-				<p />
-				<Clients />
+			{#if $currentUser.isAgent && $currentUser.expand.focusedClient}
+				<section>
+					<h3>My Focused Client</h3>
+					<img
+						class="avatar"
+						src={`https://avatars.dicebear.com/api/identicon/${$currentUser.expand.focusedClient.id}.svg`}
+						alt="avatar"
+						width="50px"
+					/>
+					<p>
+						{$currentUser.expand.focusedClient.fname}
+						{$currentUser.expand.focusedClient.lname} <br />
+						{$currentUser.expand.focusedClient.email} <br />
+						<a href="/account" on:click={toggleChangeClientSelector}>Change</a>
+					</p>
+					{#if clientSelectorVisible}
+						<FindUser />
+						<p />
+						<Clients />
+					{/if}
+				</section>
+			{:else if $currentUser.isAgent && !$currentUser.focusedClient}
+				<section>
+					<h3>Select a client:</h3>
+					<FindUser />
+					<p />
+					<Clients />
+				</section>
 			{:else if $currentUser.expand.agent}
 				<h3>My Agent</h3>
 				<img
