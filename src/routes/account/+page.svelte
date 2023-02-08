@@ -38,11 +38,11 @@
 
 		await pb.collection('users').update($currentUser.id, data);
 
+		toggleModal();
+
 		await pb
 			.collection('users')
 			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
-
-		toggleModal();
 	}
 </script>
 
