@@ -19,7 +19,7 @@
 	{:else if $currentUser.isAgent}
 		<main class="container">
 			<section>
-				<FindUser expandedCurrentUser={$currentUser} />
+				<FindUser />
 			</section>
 			<section>
 				<Clients expandedCurrentUser={$currentUser} />
@@ -28,7 +28,7 @@
 	{:else}
 		<main class="container">
 			<section>
-				<FindUser expandedCurrentUser={$currentUser} />
+				<FindUser />
 			</section>
 		</main>
 	{/if}

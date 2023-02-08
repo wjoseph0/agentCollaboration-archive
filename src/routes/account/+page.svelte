@@ -60,7 +60,7 @@
 				{$currentUser?.lname} <br />
 				{$currentUser?.email} <br />
 				{#if !$currentUser?.agent && expandedCurrentUser}
-					<FindUser {expandedCurrentUser} />
+					<FindUser />
 				{/if}
 			</p>
 		</section>
@@ -85,7 +85,7 @@
 		{#if $currentUser?.isAgent && expandedCurrentUser}
 			<section>
 				<h3>My Clients</h3>
-				<FindUser {expandedCurrentUser} />
+				<FindUser />
 				<p />
 				<Clients {expandedCurrentUser} />
 			</section>
