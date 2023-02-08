@@ -22,7 +22,7 @@
 				<FindUser />
 			</section>
 			<section>
-				<Clients expandedCurrentUser={$currentUser} />
+				<Clients />
 			</section>
 		</main>
 	{:else}

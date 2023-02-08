@@ -87,7 +87,7 @@
 				<h3>My Clients</h3>
 				<FindUser />
 				<p />
-				<Clients {expandedCurrentUser} />
+				<Clients />
 			</section>
 		{/if}
 
