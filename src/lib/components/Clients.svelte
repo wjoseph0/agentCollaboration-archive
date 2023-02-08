@@ -4,7 +4,7 @@
 
 {#each $currentUser.expand.clients as client}
 	<section>
-		<a href="/app/chat/{client.id}">
+		<a href="/chat/{client.id}">
 			<img
 				class="avatar"
 				src={`https://avatars.dicebear.com/api/identicon/${client.id}.svg`}
