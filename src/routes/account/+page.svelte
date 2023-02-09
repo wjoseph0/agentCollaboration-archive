@@ -3,9 +3,17 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import FindUser from '$lib/components/FindUser.svelte';
 	import Clients from '$lib/components/Clients.svelte';
+	import { onMount } from 'svelte';
+	import UploadFile from '../../lib/components/UploadFile.svelte';
 
 	let modalVisible = false;
 	let clientSelectorVisible = false;
+
+	onMount(async () => {
+		await pb
+			.collection('users')
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+	});
 
 	function toggleChangeClientSelector() {
 		if (clientSelectorVisible === true) {
@@ -48,15 +56,23 @@
 {#if $currentUser}
 	<main class="container">
 		<section>
-			<img
-				class="avatar"
-				src={`https://avatars.dicebear.com/api/identicon/${$currentUser.id}.svg`}
-				alt="avatar"
-				width="120px"
-			/>
+			{#if $currentUser.profilePic}
+				<img
+					src="https://wjoseph0.cloud/api/files/{$currentUser.collectionId}/{$currentUser.id}/{$currentUser.profilePic}"
+					alt="profile pic"
+					width="200px"
+				/>
+			{:else}
+				<img
+					class="avatar"
+					src={`https://api.dicebear.com/5.x/initials/svg?seed=${$currentUser.fname}%20${$currentUser.lname}`}
+					alt="avatar"
+					width="120px"
+				/>
+			{/if}
 			<p>
-				{$currentUser.fname}
-				{$currentUser.lname} <br />
+				<strong>{$currentUser.fname} {$currentUser.lname}</strong>
+				<br />
 				{$currentUser.email} <br />
 				{#if !$currentUser.expand.agent && !$currentUser.isAgent}
 					<FindUser />
@@ -68,12 +84,21 @@
 			{#if $currentUser.isAgent && $currentUser.expand.focusedClient}
 				<section>
 					<h3>My Focused Client</h3>
-					<img
-						class="avatar"
-						src={`https://avatars.dicebear.com/api/identicon/${$currentUser.expand.focusedClient.id}.svg`}
-						alt="avatar"
-						width="50px"
-					/>
+					{#if $currentUser.expand.focusedClient.profilePic}
+						<img
+							src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.focusedClient}/{$currentUser
+								.expand.focusedClient.profilePic}"
+							alt="profile pic"
+							width="50px"
+						/>
+					{:else}
+						<img
+							class="avatar"
+							src={`https://api.dicebear.com/5.x/initials/svg?seed=${$currentUser.expand.focusedClient.fname}%20${$currentUser.expand.focusedClient.lname}`}
+							alt="avatar"
+							width="50px"
+						/>
+					{/if}
 					<p>
 						{$currentUser.expand.focusedClient.fname}
 						{$currentUser.expand.focusedClient.lname} <br />
@@ -95,12 +120,21 @@
 				</section>
 			{:else if $currentUser.expand.agent}
 				<h3>My Agent</h3>
-				<img
-					class="avatar"
-					src={`https://avatars.dicebear.com/api/identicon/${$currentUser.expand.agent.id}.svg`}
-					alt="avatar"
-					width="50px"
-				/>
+				{#if $currentUser.expand.agent.profilePic}
+					<img
+						src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+							.expand.agent.profilePic}"
+						alt="profile pic"
+						width="50px"
+					/>
+				{:else}
+					<img
+						class="avatar"
+						src={`https://api.dicebear.com/5.x/initials/svg?seed=${$currentUser.expand.agent.fname}%20${$currentUser.expand.agent.lname}`}
+						alt="avatar"
+						width="50px"
+					/>
+				{/if}
 				<p>
 					{$currentUser.expand.agent.fname}
 					{$currentUser.expand.agent.lname} <br />
@@ -161,6 +195,10 @@
 	main {
 		height: 90vh;
 		overflow-y: scroll;
+	}
+
+	img {
+		border-radius: 0.6rem;
 	}
 
 	/* width */
