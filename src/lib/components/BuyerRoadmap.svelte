@@ -20,13 +20,25 @@
 <section>
 	{#each buyerSteps as step}
 		<div>
-			<h3>{counter()}. {step}</h3>
+			<h2>({counter()})</h2>
+			<h3>{step}</h3>
 		</div>
 	{/each}
 </section>
 
 <style>
-	div:nth-child(even) {
-		text-align: right;
+	h2,
+	h3 {
+		text-align: center;
+	}
+
+	h2 {
+		border-radius: 99rem;
+		border-color: #fff;
+		border-width: 2px;
+	}
+
+	div {
+		height: 50vh;
 	}
 </style>
