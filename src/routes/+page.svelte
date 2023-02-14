@@ -22,7 +22,8 @@
 <style>
 	main {
 		height: 90vh;
-		padding: 0;
+		padding-top: 0;
+		padding-bottom: 0;
 		overflow-y: scroll;
 	}
 
