@@ -1,44 +1,32 @@
 <script>
 	let buyerSteps = [
-		'Establish Agency Relationship',
-		'Mortgage Pre-Approval',
-		'Preview Homes',
-		'Make Offer',
-		'Accepted Offer',
-		'Contingencies',
-		'Final Walk-Through',
-		'Closing Day'
+		['Establish Agency Relationship', 'bi bi-people-fill'],
+		['Mortgage Pre-Approval', 'bi bi-hand-thumbs-up-fill'],
+		['Preview Homes', 'bi bi-search-heart-fill'],
+		['Make Offer', 'bi bi-envelope-paper-fill'],
+		['Accepted Offer', 'bi bi-envelope-paper-heart-fill'],
+		['Contingencies', 'bi bi-list-ol'],
+		['Final Walk-Through', 'bi bi-arrow-through-heart-fill'],
+		['Closing Day', 'bi bi-key-fill']
 	];
-
-	let count = 0;
-	function counter() {
-		count++;
-		return count;
-	}
 </script>
 
 <section>
 	{#each buyerSteps as step}
 		<div>
-			<h2>({counter()})</h2>
-			<h3>{step}</h3>
+			<div>{step[0]}</div>
+			<i class={step[1]} />
 		</div>
+		<!-- <i class="bi bi-slash-lg" /> -->
 	{/each}
 </section>
 
 <style>
-	h2,
-	h3 {
-		text-align: center;
+	i {
+		font-size: 6rem;
 	}
 
-	h2 {
-		border-radius: 99rem;
-		border-color: #fff;
-		border-width: 2px;
-	}
-
-	div {
-		height: 50vh;
+	div:nth-child(even) {
+		text-align: right;
 	}
 </style>

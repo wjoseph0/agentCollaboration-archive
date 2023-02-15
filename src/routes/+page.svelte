@@ -22,13 +22,12 @@
 <style>
 	main {
 		height: 90vh;
-		padding-top: 0;
 		padding-bottom: 0;
 		overflow-y: scroll;
+		scrollbar-width: none;
 	}
 
-	/* width */
 	::-webkit-scrollbar {
-		width: 0px;
+		display: none;
 	}
 </style>
