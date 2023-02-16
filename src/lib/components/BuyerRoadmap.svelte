@@ -13,11 +13,10 @@
 
 <section>
 	{#each buyerSteps as step}
-		<div>
+		<div class="step">
 			<div>{step[0]}</div>
 			<i class={step[1]} />
 		</div>
-		<!-- <i class="bi bi-slash-lg" /> -->
 	{/each}
 </section>
 
@@ -28,5 +27,9 @@
 
 	div:nth-child(even) {
 		text-align: right;
+	}
+
+	.step:nth-child(1) {
+		color: lightgreen;
 	}
 </style>
