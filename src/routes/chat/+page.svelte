@@ -4,6 +4,7 @@
 	import { currentUser } from '$lib/pocketbase';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import ClientBanner from '$lib/components/ClientBanner.svelte';
 
 	$: if (
 		browser &&
@@ -16,6 +17,8 @@
 
 {#if $currentUser}
 	<main class="container" id="chatContainer">
+		<ClientBanner />
+
 		{#if $currentUser.focusedClient && $currentUser.isAgent}
 			<section id="messages">
 				<Messages recipient={$currentUser.expand.focusedClient} />
@@ -46,7 +49,7 @@
 	#messages {
 		margin-bottom: 0;
 		overflow-y: scroll;
-		height: 80vh;
+		height: 70vh;
 	}
 
 	#newMessage {

@@ -4,6 +4,7 @@
 	import { currentUser } from '$lib/pocketbase';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import ClientBanner from '$lib/components/ClientBanner.svelte';
 
 	$: if (
 		browser &&
@@ -17,14 +18,28 @@
 {#if $currentUser}
 	{#if ($currentUser.isAgent && $currentUser.focusedClient) || (!$currentUser.isAgent && $currentUser.agent)}
 		<main class="container">
-			{#if $currentUser.isAgent}
-				<section>
-					<UploadFile />
-				</section>
-			{/if}
-			<section>
+			<ClientBanner />
+			<section id="filesContainer">
+				{#if $currentUser.isAgent}
+					<section>
+						<UploadFile />
+					</section>
+				{/if}
+				<h2>Files</h2>
 				<Files />
 			</section>
 		</main>
 	{/if}
 {/if}
+
+<style>
+	main {
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 90vh;
+	}
+
+	#filesContainer {
+		margin-top: 1rem;
+	}
+</style>
