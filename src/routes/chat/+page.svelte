@@ -20,14 +20,14 @@
 			<section id="messages">
 				<Messages recipient={$currentUser.expand.focusedClient} />
 			</section>
-			<section>
+			<section id="newMessage">
 				<NewMessage recipient={$currentUser.expand.focusedClient} />
 			</section>
 		{:else if $currentUser.agent && !$currentUser.isAgent}
 			<section id="messages">
 				<Messages recipient={$currentUser.expand.agent} />
 			</section>
-			<section>
+			<section id="newMessage">
 				<NewMessage recipient={$currentUser.expand.agent} />
 			</section>
 		{/if}
@@ -45,11 +45,13 @@
 
 	#messages {
 		margin-bottom: 0;
-	}
-
-	#messages {
 		overflow-y: scroll;
 		height: 80vh;
+	}
+
+	#newMessage {
+		margin-bottom: 0;
+		height: 50px;
 	}
 
 	/* width */
