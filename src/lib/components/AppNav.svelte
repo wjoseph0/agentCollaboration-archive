@@ -8,7 +8,6 @@
 		{#if ($currentUser.isAgent && $currentUser.focusedClient) || (!$currentUser.isAgent && $currentUser.agent)}
 			<li><a href="/chat">Chat</a></li>
 			<li><a href="/files">Files</a></li>
-			<li><a href="/map">Map</a></li>
 		{/if}
 	</ul>
 	<ul>
