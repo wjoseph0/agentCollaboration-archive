@@ -28,7 +28,7 @@
 		<p>
 			<img
 				src="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}?thumb=100x300"
-				alt="thumb"
+				alt=" "
 				style="width: 100px"
 			/>{file.name}
 		</p>
