@@ -13,7 +13,7 @@
 	export const login = async () => {
 		try {
 			await pb.collection('users').authWithPassword(
-				email,
+				email.toLowerCase(),
 				password,
 				{},
 				{

@@ -10,13 +10,15 @@
 		try {
 			searchedUser = await pb
 				.collection('users')
-				.getFirstListItem(`email="${inputEmail}"`);
+				.getFirstListItem(`email="${inputEmail.toLowerCase()}"`);
 
-			searchedUserIsClient = false;
-			for (let i = 0; i < $currentUser.expand.clients.length; i++) {
-				const client = $currentUser.expand.clients[i];
-				if (client.email === searchedUser.email) {
-					searchedUserIsClient = true;
+			if ($currentUser.isAgent) {
+				searchedUserIsClient = false;
+				for (let i = 0; i < $currentUser.expand.clients.length; i++) {
+					const client = $currentUser.expand.clients[i];
+					if (client.email === searchedUser.email) {
+						searchedUserIsClient = true;
+					}
 				}
 			}
 		} catch {

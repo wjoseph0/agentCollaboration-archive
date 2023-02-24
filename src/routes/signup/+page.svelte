@@ -17,14 +17,14 @@
 			const data = {
 				fname: fname,
 				lname: lname,
-				email: email,
+				email: email.toLowerCase(),
 				emailVisibility: true,
 				password: password,
 				passwordConfirm: password
 			};
 			await pb.collection('users').create(data);
 			await pb.collection('users').authWithPassword(
-				email,
+				email.toLowerCase(),
 				password,
 				{},
 				{
