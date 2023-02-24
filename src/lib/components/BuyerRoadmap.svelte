@@ -25,8 +25,8 @@
 		font-size: 6rem;
 	}
 
-	div:nth-child(even) {
-		text-align: right;
+	.step {
+		margin-bottom: 5em;
 	}
 
 	.step:nth-child(1) {
