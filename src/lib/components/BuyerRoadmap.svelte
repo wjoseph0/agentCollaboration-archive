@@ -25,8 +25,13 @@
 		font-size: 6rem;
 	}
 
+	section {
+		margin-top: 5em;
+	}
+
 	.step {
 		margin-bottom: 5em;
+		text-align: center;
 	}
 
 	.step:nth-child(1) {
