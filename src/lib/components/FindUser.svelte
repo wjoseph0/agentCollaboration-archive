@@ -3,7 +3,6 @@
 
 	let inputEmail = '';
 	let searchedUser;
-	let searchedUserIsClient = false;
 	let searchModalVisible = false;
 
 	async function searchForUser() {
@@ -11,16 +10,6 @@
 			searchedUser = await pb
 				.collection('users')
 				.getFirstListItem(`email="${inputEmail.toLowerCase()}"`);
-
-			if ($currentUser.isAgent) {
-				searchedUserIsClient = false;
-				for (let i = 0; i < $currentUser.expand.clients.length; i++) {
-					const client = $currentUser.expand.clients[i];
-					if (client.email === searchedUser.email) {
-						searchedUserIsClient = true;
-					}
-				}
-			}
 		} catch {
 			searchedUser = null;
 		}
