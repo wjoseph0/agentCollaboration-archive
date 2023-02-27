@@ -16,13 +16,20 @@
 	}
 
 	async function addClient() {
-		const data = {
+		const currentUserData = {
 			clients: [...$currentUser.clients, searchedUser.id]
 		};
-		await pb.collection('users').update($currentUser.id, data);
+		const journeyData = {
+			agent: $currentUser.id,
+			client: searchedUser.id,
+			step: 1
+		};
+
+		await pb.collection('users').update($currentUser.id, currentUserData);
 		await pb
 			.collection('users')
 			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		await pb.collection('journeys').create(journeyData);
 		toggleSearchModal();
 	}
 
