@@ -47,8 +47,9 @@
 	}
 
 	#messages {
-		padding-top: 1em;
 		margin-bottom: 0;
+		padding-top: 1em;
+		padding-right: 0.5em;
 		overflow-y: scroll;
 		height: 70vh;
 	}
