@@ -21,14 +21,7 @@
 	});
 
 	let buyerSteps = [
-		[
-			'1',
-			'Establish Agency Relationship',
-			'bi bi-people-fill',
-			{
-				checklist: 'step'
-			}
-		],
+		['1', 'Form Agency', 'bi bi-people-fill'],
 		['2', 'Mortgage Pre-Approval', 'bi bi-hand-thumbs-up-fill'],
 		['3', 'Preview Homes', 'bi bi-search-heart-fill'],
 		['4', 'Make Offer', 'bi bi-envelope-paper-fill'],
@@ -51,14 +44,14 @@
 					</summary>
 				</details>
 			{:else if step[0] == journey.step}
-				<details open id="open">
+				<details id="open" open>
 					<summary><i class={step[2]} /> {step[1]} </summary>
-					<p>Discribing things</p>
+					<p>Describing things</p>
 				</details>
 			{:else if step[0] > journey.step}
 				<details class="future">
 					<summary><i class={step[2]} /> {step[1]} </summary>
-					<p>Discribing things</p>
+					<p>Describing things</p>
 				</details>
 			{/if}
 		{/each}
@@ -74,16 +67,12 @@
 		color: lightgreen;
 	}
 
-	.completed {
-		color: green;
-	}
-
 	#open > summary {
 		font-size: 2em;
 		color: inherit;
 	}
 
 	.future {
-		opacity: 0.5;
+		opacity: 0.2;
 	}
 </style>
