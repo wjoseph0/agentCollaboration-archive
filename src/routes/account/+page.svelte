@@ -195,6 +195,8 @@
 	main {
 		height: 90vh;
 		overflow-y: scroll;
+		padding-right: 16px;
+		padding-left: 16px;
 	}
 
 	img {

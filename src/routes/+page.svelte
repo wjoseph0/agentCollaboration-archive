@@ -16,9 +16,8 @@
 
 {#if $currentUser}
 	<main class="container">
-		{#if $currentUser.isAgent}
-			<ClientBanner />
-		{/if}
+		<ClientBanner />
+
 		<section>
 			<BuyerRoadmap />
 		</section>
@@ -35,7 +34,7 @@
 	}
 
 	section {
-		margin-top: 1rem;
+		margin-top: 2rem;
 	}
 
 	::-webkit-scrollbar {

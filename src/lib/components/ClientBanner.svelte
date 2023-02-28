@@ -9,14 +9,14 @@
 				src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.focusedClient}/{$currentUser
 					.expand.focusedClient.profilePic}"
 				alt="profile pic"
-				width="50px"
+				width="40px"
 			/>
 		{:else}
 			<img
 				class="avatar"
 				src={`https://api.dicebear.com/5.x/initials/svg?seed=${$currentUser.expand.focusedClient.fname}%20${$currentUser.expand.focusedClient.lname}`}
 				alt="avatar"
-				width="50px"
+				width="40px"
 			/>
 		{/if}
 
@@ -30,14 +30,14 @@
 				src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
 					.expand.agent.profilePic}"
 				alt="profile pic"
-				width="50px"
+				width="40px"
 			/>
 		{:else}
 			<img
 				class="avatar"
 				src={`https://api.dicebear.com/5.x/initials/svg?seed=${$currentUser.expand.agent.fname}%20${$currentUser.expand.agent.lname}`}
 				alt="avatar"
-				width="50px"
+				width="40px"
 			/>
 		{/if}
 		{$currentUser.expand.agent.fname}
@@ -48,6 +48,7 @@
 <style>
 	h2 {
 		margin: 0;
+		padding-top: 0.2rem;
 		text-align: center;
 		height: 5vh;
 	}
