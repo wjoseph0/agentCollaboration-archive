@@ -50,32 +50,11 @@
 		margin-bottom: 0;
 		padding-top: 1em;
 		padding-right: 0.5em;
-		overflow-y: scroll;
 		height: 70vh;
 	}
 
 	#newMessage {
 		margin-bottom: 0;
 		height: 50px;
-	}
-
-	/* width */
-	::-webkit-scrollbar {
-		width: 1px;
-	}
-
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #11191f;
-	}
-
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: hsl(205deg, 16%, 77%);
-	}
-
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: rgb(185, 185, 185);
 	}
 </style>
