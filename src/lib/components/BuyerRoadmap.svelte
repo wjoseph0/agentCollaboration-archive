@@ -2,7 +2,7 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
 
-	let journey;
+	let journey = 'loading';
 	let agent;
 	let client;
 
@@ -32,7 +32,9 @@
 	];
 </script>
 
-{#if journey}
+{#if journey == 'loading'}
+	<div aria-busy="true" />
+{:else}
 	{#each buyerSteps as step}
 		{#if step[0] < journey.step}
 			<details>
@@ -61,6 +63,19 @@
 		color: lightgreen;
 	}
 
+	details[open] > summary {
+		color: inherit;
+	}
+
+	details summary:focus {
+		color: inherit;
+	}
+
+	#open {
+		border-bottom: #1095c1 3px solid;
+		border-radius: 0.5em;
+	}
+
 	#open > summary {
 		font-size: 1.6em;
 		color: inherit;
@@ -68,5 +83,9 @@
 
 	.future {
 		opacity: 0.2;
+	}
+
+	.future[open] {
+		opacity: 1;
 	}
 </style>
