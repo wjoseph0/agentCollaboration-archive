@@ -61,6 +61,19 @@
 		color: lightgreen;
 	}
 
+	details[open] > summary {
+		color: inherit;
+	}
+
+	details summary:focus {
+		color: inherit;
+	}
+
+	#open {
+		border-bottom: #1095c1 3px solid;
+		border-radius: 0.5em;
+	}
+
 	#open > summary {
 		font-size: 1.6em;
 		color: inherit;
@@ -68,5 +81,9 @@
 
 	.future {
 		opacity: 0.2;
+	}
+
+	.future[open] {
+		opacity: 1;
 	}
 </style>
