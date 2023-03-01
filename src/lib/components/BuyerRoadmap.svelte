@@ -2,7 +2,7 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
 
-	let journey;
+	let journey = 'loading';
 	let agent;
 	let client;
 
@@ -32,7 +32,9 @@
 	];
 </script>
 
-{#if journey}
+{#if journey == 'loading'}
+	<div aria-busy="true" />
+{:else}
 	{#each buyerSteps as step}
 		{#if step[0] < journey.step}
 			<details>

@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { pb } from '$lib/pocketbase';
 
-	let messages = ['Loading...'];
+	let messages = ['loading'];
 	export let recipient;
 	let filter = `(user = "${recipient.id}") || (recipient = "${recipient.id}") `;
 
@@ -54,7 +54,7 @@
 
 <div id="messageContainer" use:scrollToBottom={messages}>
 	{#each messages as message (message.id)}
-		{#if message == 'Loading...'}
+		{#if message == 'loading'}
 			<div aria-busy="true" />
 		{:else}
 			<div id="message">
