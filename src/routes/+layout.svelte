@@ -4,6 +4,7 @@
 	import { currentUser } from '$lib/pocketbase';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import { navigating } from '$app/stores';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -14,4 +15,8 @@
 	<AppNav />
 {/if}
 
-<slot />
+{#if $navigating}
+	<div aria-busy="true" />
+{:else}
+	<slot />
+{/if}
