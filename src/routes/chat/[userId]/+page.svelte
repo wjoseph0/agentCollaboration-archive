@@ -5,6 +5,8 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { pb } from '$lib/pocketbase';
 
 	$: if (
 		browser &&
@@ -13,6 +15,29 @@
 	) {
 		goto('/account');
 	}
+
+	export let data;
+
+	let messages = data.messages.items;
+
+	onMount(async () => {
+		// Subscribe to realtime messages
+		await pb
+			.collection('messages')
+			.subscribe('*', async ({ action, record }) => {
+				if (action === 'create') {
+					// Fetch associated user
+					const user = await pb.collection('users').getOne(record.user);
+					record.expand = { user };
+					messages = [...messages, record];
+				}
+			});
+	});
+
+	// Unsubscribe from realtime messages
+	onDestroy(() => {
+		pb.collection('messages').unsubscribe();
+	});
 </script>
 
 {#if $currentUser}
@@ -21,14 +46,14 @@
 
 		{#if $currentUser.focusedClient && $currentUser.isAgent}
 			<section id="messages">
-				<Messages recipient={$currentUser.expand.focusedClient} />
+				<Messages {messages} />
 			</section>
 			<section id="newMessage">
 				<NewMessage recipient={$currentUser.expand.focusedClient} />
 			</section>
 		{:else if $currentUser.agent && !$currentUser.isAgent}
 			<section id="messages">
-				<Messages recipient={$currentUser.expand.agent} />
+				<Messages {messages} />
 			</section>
 			<section id="newMessage">
 				<NewMessage recipient={$currentUser.expand.agent} />

@@ -7,7 +7,15 @@
 		{#if ($currentUser.isAgent && $currentUser.focusedClient) || (!$currentUser.isAgent && $currentUser.agent)}
 			<li><a href="/"><i class="bi bi-compass-fill" /></a></li>
 			<li>
-				<a href="/chat"><i class="bi bi-chat-right-text-fill" /></a>
+				{#if $currentUser.isAgent}
+					<a href="/chat/{$currentUser.focusedClient}"
+						><i class="bi bi-chat-right-text-fill" /></a
+					>
+				{:else if !$currentUser.isAgent}
+					<a href="/chat/{$currentUser.agent}"
+						><i class="bi bi-chat-right-text-fill" /></a
+					>
+				{/if}
 			</li>
 			<li><a href="/files"><i class="bi bi-folder-fill" /></a></li>
 		{/if}
