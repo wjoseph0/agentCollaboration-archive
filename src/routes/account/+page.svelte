@@ -103,7 +103,7 @@
 						{$currentUser.expand.focusedClient.fname}
 						{$currentUser.expand.focusedClient.lname} <br />
 						{$currentUser.expand.focusedClient.email} <br />
-						<a href="/account" on:click={toggleChangeClientSelector}>Change</a>
+						<a href="#top" on:click={toggleChangeClientSelector}>Change</a>
 					</p>
 					{#if clientSelectorVisible}
 						<FindUser />
