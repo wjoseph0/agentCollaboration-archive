@@ -13,6 +13,10 @@
 	) {
 		goto('/account');
 	}
+
+	export let data;
+
+	let files = data.files;
 </script>
 
 {#if $currentUser}
@@ -20,13 +24,12 @@
 		<main class="container">
 			<ClientBanner />
 			<section id="filesContainer">
-				{#if $currentUser.isAgent}
-					<section>
-						<UploadFile />
-					</section>
-				{/if}
+				<section>
+					<UploadFile />
+				</section>
+
 				<h2>Files</h2>
-				<Files />
+				<Files {files} />
 			</section>
 		</main>
 	{/if}
