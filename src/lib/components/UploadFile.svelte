@@ -9,8 +9,13 @@
 		const formData = new FormData();
 		formData.append('file', newFile[0]);
 		formData.append('name', fileName);
-		formData.append('agent', $currentUser.id);
-		formData.append('client', $currentUser.expand.focusedClient.id);
+		if ($currentUser.isAgent) {
+			formData.append('agent', $currentUser.id);
+			formData.append('client', $currentUser.focusedClient);
+		} else if (!$currentUser.isAgent) {
+			formData.append('agent', $currentUser.agent);
+			formData.append('client', $currentUser.id);
+		}
 		await pb.collection('files').create(formData);
 		formVisibilty();
 		location.reload();
