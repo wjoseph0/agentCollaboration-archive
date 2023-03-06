@@ -47,12 +47,10 @@
 		{:else if step[0] == journey.step}
 			<details id="open" open>
 				<summary><i class={step[2]} /> {step[1]} </summary>
-				<p>Describing things</p>
 			</details>
 		{:else if step[0] > journey.step}
 			<details class="future">
 				<summary><i class={step[2]} /> {step[1]} </summary>
-				<p>Describing things</p>
 			</details>
 		{/if}
 	{/each}
