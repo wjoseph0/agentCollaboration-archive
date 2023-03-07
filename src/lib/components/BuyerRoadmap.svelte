@@ -50,7 +50,7 @@
 			{
 				numbers: [1, 2],
 				completeNumber: '2',
-				name: 'Preperation Phase',
+				name: 'Preparing Phase',
 				steps: [
 					[
 						{
