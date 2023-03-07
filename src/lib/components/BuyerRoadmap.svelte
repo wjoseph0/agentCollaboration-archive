@@ -20,37 +20,154 @@
 			.getFirstListItem(`agent='${agent}' && client='${client}'`);
 	});
 
-	let buyerSteps = [
-		['1', 'Form Agency', 'bi bi-people-fill'],
-		['2', 'Mortgage Pre-Approval', 'bi bi-hand-thumbs-up-fill'],
-		['3', 'Preview Homes', 'bi bi-search-heart-fill'],
-		['4', 'Make Offer', 'bi bi-envelope-paper-fill'],
-		['5', 'Accepted Offer', 'bi bi-envelope-paper-heart-fill'],
-		['6', 'Contingencies', 'bi bi-list-ol'],
-		['7', 'Final Walk-Through', 'bi bi-arrow-through-heart-fill'],
-		['8', 'Closing Day', 'bi bi-key-fill']
+	let buyerPhases = [
+		[
+			{
+				numbers: [1, 2],
+				completeNumber: '2',
+				name: 'Preperation Phase',
+				steps: [
+					[
+						{
+							number: '1',
+							name: 'Form Agency',
+							icon: 'bi bi-people-fill',
+							desc: 'This is where you will officially hire your real estate agent to represent you during your journey.',
+							link: 'https://study.com/learn/lesson/real-estate-agency-overview-types.html'
+						}
+					],
+					[
+						{
+							number: '2',
+							name: 'Mortgage Pre-Approval',
+							icon: 'bi bi-hand-thumbs-up-fill',
+							desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
+							link: 'https://www.zillow.com/mortgage-learning/pre-approval/'
+						}
+					]
+				]
+			}
+		],
+
+		[
+			{
+				numbers: [3, 4],
+				completeNumber: '4',
+				name: 'Searching Phase',
+				steps: [
+					[
+						{
+							number: '3',
+							name: 'Preview Homes',
+							icon: 'bi bi-search-heart-fill',
+							desc: 'This is where you will start to tour homes and make offers on the ones you like!',
+							link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
+						}
+					],
+					[
+						{
+							number: '4',
+							name: 'Make Offer',
+							icon: 'bi bi-envelope-paper-fill',
+							desc: 'This is where you will start to tour homes and make offers on the ones you like!',
+							link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
+						}
+					]
+				]
+			}
+		],
+		[
+			{
+				numbers: [5, 6, 7, 8],
+				completeNumber: 8,
+				name: 'Closing Phase',
+				steps: [
+					[
+						{
+							number: '5',
+							name: 'Accepted Offer',
+							icon: 'bi bi-envelope-paper-heart-fill',
+							desc: 'Your closing journey begins!',
+							link: 'https://www.realtor.com/advice/buy/my-offer-was-accepted-now-what/'
+						}
+					],
+					[
+						{
+							number: '6',
+							name: 'Contingencies',
+							icon: 'bi bi-list-ol',
+							desc: 'Now we will handle any contingencies we set in the offer.',
+							link: ''
+						}
+					],
+					[
+						{
+							number: '7',
+							name: 'Final Walk-Through',
+							icon: 'bi bi-arrow-through-heart-fill',
+							desc: '',
+							link: ''
+						}
+					],
+					[
+						{
+							number: '8',
+							name: 'Closing Day',
+							icon: 'bi bi-key-fill',
+							desc: 'The home stretch! This is where you will sign paperwork and recieve the keys!',
+							link: ''
+						}
+					]
+				]
+			}
+		]
 	];
 </script>
 
 {#if journey == 'loading'}
 	<div aria-busy="true" />
 {:else}
-	{#each buyerSteps as step}
-		{#if step[0] < journey.step}
+	{#each buyerPhases as phase}
+		{#if phase[0].completeNumber < journey.step}
 			<details>
 				<summary>
 					<i class="bi bi-check-circle-fill" id="checkmark" />
-					<i class={step[2]} />
-					{step[1]}
+					<i class={phase[0].icon} />
+					{phase[0].name}
 				</summary>
 			</details>
-		{:else if step[0] == journey.step}
+		{:else if phase[0].numbers.includes(journey.step)}
 			<details id="open" open>
-				<summary><i class={step[2]} /> {step[1]} </summary>
+				<summary> <strong>{phase[0].name}</strong> </summary>
+				{#each phase[0].steps as step}
+					{#if step[0].number == journey.step}
+						<details open>
+							<summary>
+								<i class={step[0].icon} />
+								{step[0].name}
+							</summary>
+						</details>
+					{:else if step[0].number < journey.step}
+						<details class="future">
+							<summary>
+								<i class="bi bi-check-circle-fill" id="checkmark" />
+								<i class={step[0].icon} />
+								{step[0].name}
+							</summary>
+						</details>
+					{:else}
+						<details class="future">
+							<summary>
+								<i class={step[0].icon} />
+								{step[0].name}
+							</summary>
+						</details>
+					{/if}
+				{/each}
 			</details>
-		{:else if step[0] > journey.step}
+		{:else if phase[0].completeNumber > journey.step}
 			<details class="future">
-				<summary><i class={step[2]} /> {step[1]} </summary>
+				<summary> <strong>{phase[0].name}</strong> </summary>
 			</details>
 		{/if}
 	{/each}
@@ -70,13 +187,15 @@
 	}
 
 	#open {
-		border-bottom: #1095c1 3px solid;
-		border-radius: 0.5em;
+		border: #1095c1 2px solid;
+		padding: 1.5em 1em 1.5em 1em;
+		border-radius: 1em;
 	}
 
 	#open > summary {
 		font-size: 1.6em;
 		color: inherit;
+		padding-bottom: 2rem;
 	}
 
 	.future {
