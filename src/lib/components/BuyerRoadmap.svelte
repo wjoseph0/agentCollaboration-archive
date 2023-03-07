@@ -141,14 +141,14 @@
 				<summary> <strong>{phase[0].name}</strong> </summary>
 				{#each phase[0].steps as step}
 					{#if step[0].number == journey.step}
-						<details open>
+						<details id="openStep" open>
 							<summary>
 								<i class={step[0].icon} />
 								{step[0].name}
 							</summary>
 						</details>
 					{:else if step[0].number < journey.step}
-						<details class="future">
+						<details class="completed">
 							<summary>
 								<i class="bi bi-check-circle-fill" id="checkmark" />
 								<i class={step[0].icon} />
@@ -178,6 +178,10 @@
 		color: lightgreen;
 	}
 
+	details {
+		border-bottom: none;
+	}
+
 	details[open] > summary {
 		color: inherit;
 	}
@@ -198,11 +202,17 @@
 		padding-bottom: 2rem;
 	}
 
-	.future {
-		opacity: 0.2;
+	#openStep {
+		border-bottom: #1095c1 2px solid;
 	}
 
-	.future[open] {
-		opacity: 1;
+	.completed {
+		opacity: 0.5;
+		font-size: small;
+	}
+
+	.future {
+		opacity: 0.3;
+		font-size: small;
 	}
 </style>
