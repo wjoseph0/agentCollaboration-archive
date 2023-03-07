@@ -14,13 +14,29 @@
 		client = $currentUser.id;
 	}
 
+	async function moveBackward(journey) {
+		const data = {
+			step: journey.step - 1
+		};
+
+		await pb.collection('journeys').update(journey.id, data);
+	}
+
+	async function moveForward(journey) {
+		const data = {
+			step: journey.step + 1
+		};
+
+		await pb.collection('journeys').update(journey.id, data);
+	}
+
 	onMount(async () => {
 		journey = await pb
 			.collection('journeys')
 			.getFirstListItem(`agent='${agent}' && client='${client}'`);
 
 		// Subscribe to changes only in the specified record
-		await pb.collection('journeys').subscribe(`${journey.id}`, async (e) => {
+		await pb.collection('journeys').subscribe(journey.id, async (e) => {
 			journey = e.record;
 		});
 	});
@@ -178,9 +194,21 @@
 			</details>
 		{/if}
 	{/each}
+	{#if $currentUser.isAgent}
+		<div>
+			<button on:click={moveBackward(journey)} class="secondary outline">
+				Move back
+			</button>
+			<button on:click={moveForward(journey)}>Move forward</button>
+		</div>
+	{/if}
 {/if}
 
 <style>
+	div {
+		display: flex;
+	}
+
 	#checkmark {
 		color: lightgreen;
 	}
