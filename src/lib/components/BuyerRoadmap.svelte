@@ -1,8 +1,8 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
-	let journey = 'loading';
+	let journey;
 	let agent;
 	let client;
 
@@ -18,6 +18,15 @@
 		journey = await pb
 			.collection('journeys')
 			.getFirstListItem(`agent='${agent}' && client='${client}'`);
+
+		// Subscribe to changes only in the specified record
+		await pb.collection('journeys').subscribe(`${journey.id}`, async (e) => {
+			journey = e.record;
+		});
+	});
+
+	onDestroy(() => {
+		pb.collection('journeys').unsubscribe();
 	});
 
 	let buyerPhases = [
@@ -124,9 +133,7 @@
 	];
 </script>
 
-{#if journey == 'loading'}
-	<div aria-busy="true" />
-{:else}
+{#if journey}
 	{#each buyerPhases as phase}
 		{#if phase[0].completeNumber < journey.step}
 			<details>
