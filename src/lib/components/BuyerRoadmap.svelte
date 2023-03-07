@@ -196,10 +196,14 @@
 	{/each}
 	{#if $currentUser.isAgent}
 		<div>
-			<button on:click={moveBackward(journey)} class="secondary outline">
-				Move back
-			</button>
-			<button on:click={moveForward(journey)}>Move forward</button>
+			{#if journey.step > 1}
+				<button on:click={moveBackward(journey)} class="secondary outline">
+					Move back
+				</button>
+			{/if}
+			{#if journey.step < 8}
+				<button on:click={moveForward(journey)}>Move forward</button>
+			{/if}
 		</div>
 	{/if}
 {/if}
