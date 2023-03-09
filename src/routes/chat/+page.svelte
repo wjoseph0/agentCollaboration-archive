@@ -8,6 +8,10 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { pb } from '$lib/pocketbase';
 
+	$: if (browser && !$currentUser) {
+		goto('/login');
+	}
+
 	$: if (
 		browser &&
 		(($currentUser.isAgent && !$currentUser.focusedClient) ||

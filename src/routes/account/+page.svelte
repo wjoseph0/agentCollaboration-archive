@@ -4,6 +4,12 @@
 	import FindUser from '$lib/components/FindUser.svelte';
 	import Clients from '$lib/components/Clients.svelte';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+
+	$: if (browser && !$currentUser) {
+		goto('/login');
+	}
 
 	let modalVisible = false;
 	let clientSelectorVisible = false;
