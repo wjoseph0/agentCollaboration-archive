@@ -171,7 +171,7 @@
 								{step[0].name}
 							</summary>
 							{#if step[0].number == 4}
-								<OfferCheatSheet />
+								<OfferCheatSheet {journey} />
 							{/if}
 						</details>
 					{:else if step[0].number < journey.step}
