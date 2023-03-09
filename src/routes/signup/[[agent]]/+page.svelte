@@ -7,6 +7,8 @@
 		goto('/account');
 	}
 
+	export let data;
+
 	let fname = '';
 	let lname = '';
 	let email = '';
@@ -14,15 +16,16 @@
 
 	const signUp = async () => {
 		try {
-			const data = {
+			const info = {
 				fname: fname,
 				lname: lname,
 				email: email.toLowerCase(),
 				emailVisibility: true,
 				password: password,
-				passwordConfirm: password
+				passwordConfirm: password,
+				agent: data.agent
 			};
-			await pb.collection('users').create(data);
+			await pb.collection('users').create(info);
 			await pb.collection('users').authWithPassword(
 				email.toLowerCase(),
 				password,
