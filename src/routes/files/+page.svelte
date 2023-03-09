@@ -1,10 +1,11 @@
 <script>
 	import Files from '$lib/components/Files.svelte';
 	import UploadFile from '$lib/components/UploadFile.svelte';
-	import { currentUser } from '$lib/pocketbase';
+	import { pb, currentUser } from '$lib/pocketbase';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
+	import { onMount } from 'svelte';
 
 	$: if (
 		browser &&
@@ -14,25 +15,29 @@
 		goto('/account');
 	}
 
+	onMount(async () => {
+		await pb
+			.collection('users')
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+	});
+
 	export let data;
 
 	let files = data.files;
 </script>
 
 {#if $currentUser}
-	{#if ($currentUser.isAgent && $currentUser.focusedClient) || (!$currentUser.isAgent && $currentUser.agent)}
-		<main class="container">
-			<ClientBanner />
-			<section id="filesContainer">
-				<section>
-					<UploadFile />
-				</section>
-
-				<h2>Files</h2>
-				<Files {files} />
+	<main class="container">
+		<ClientBanner />
+		<section id="filesContainer">
+			<section>
+				<UploadFile />
 			</section>
-		</main>
-	{/if}
+
+			<h2>Files</h2>
+			<Files {files} />
+		</section>
+	</main>
 {/if}
 
 <style>

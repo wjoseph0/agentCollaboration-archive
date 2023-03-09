@@ -21,6 +21,9 @@
 	let messages = data.messages.items;
 
 	onMount(async () => {
+		await pb
+			.collection('users')
+			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
 		// Subscribe to realtime messages
 		await pb
 			.collection('messages')
