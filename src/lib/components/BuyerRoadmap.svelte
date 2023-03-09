@@ -3,6 +3,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import OfferCheatSheet from '$lib/components/OfferCheatSheet.svelte';
 
+
 	let journey;
 	let agent;
 	let client;
@@ -170,9 +171,11 @@
 								<i class={step[0].icon} />
 								{step[0].name}
 							</summary>
+
 							{#if step[0].number == 4}
 								<OfferCheatSheet {journey} />
 							{/if}
+
 						</details>
 					{:else if step[0].number < journey.step}
 						<details class="completed">
