@@ -4,7 +4,6 @@
 	import FindUser from '$lib/components/FindUser.svelte';
 	import Clients from '$lib/components/Clients.svelte';
 	import { onMount } from 'svelte';
-	import UploadFile from '../../lib/components/UploadFile.svelte';
 
 	let modalVisible = false;
 	let clientSelectorVisible = false;
