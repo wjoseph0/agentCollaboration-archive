@@ -7,6 +7,10 @@
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import { onMount } from 'svelte';
 
+	$: if (browser && !$currentUser) {
+		goto('/login');
+	}
+
 	$: if (
 		browser &&
 		(($currentUser.isAgent && !$currentUser.focusedClient) ||

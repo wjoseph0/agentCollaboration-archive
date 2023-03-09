@@ -4,6 +4,13 @@
 	import FindUser from '$lib/components/FindUser.svelte';
 	import Clients from '$lib/components/Clients.svelte';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import Invite from '$lib/components/Invite.svelte';
+
+	$: if (browser && !$currentUser) {
+		goto('/login');
+	}
 
 	let modalVisible = false;
 	let clientSelectorVisible = false;
@@ -54,7 +61,7 @@
 
 {#if $currentUser}
 	<main class="container">
-		<section>
+		<section id="me">
 			{#if $currentUser.profilePic}
 				<img
 					src="https://wjoseph0.cloud/api/files/{$currentUser.collectionId}/{$currentUser.id}/{$currentUser.profilePic}"
@@ -77,6 +84,11 @@
 					<FindUser />
 				{/if}
 			</p>
+			{#if $currentUser.isAgent}
+				<section>
+					<Invite />
+				</section>
+			{/if}
 		</section>
 
 		<section>
@@ -196,6 +208,10 @@
 		overflow-y: scroll;
 		padding-right: 16px;
 		padding-left: 16px;
+	}
+
+	#me {
+		text-align: center;
 	}
 
 	img {
