@@ -36,6 +36,7 @@
 			.getFirstListItem(`journey='${journey.id}'`);
 
 		searchProfilePromise.then((result) => {
+			searchProfile = result;
 			buyerName = result.buyerName;
 			priceRange = result.priceRange;
 			location = result.location;
@@ -129,7 +130,11 @@
 				<a href="#top" role="button" class="secondary" on:click={toggleModal}>
 					Cancel
 				</a>
-				<a href="#top" role="button" on:click={setSearchProfile}>Update</a>
+				{#if searchProfile}
+					<a href="#top" role="button" on:click={setSearchProfile}>Update</a>
+				{:else}
+					<a href="#top" role="button" on:click={setSearchProfile}>Submit</a>
+				{/if}
 			</footer>
 		</article>
 	</dialog>
