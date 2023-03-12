@@ -92,8 +92,14 @@
 			{/if}
 		</article>
 	</dialog>
-{:else if $currentUser.isAgent}
-	<a href="#addmyclient" on:click={toggleSearchModal}>Add my client</a>
 {:else}
-	<a href="#addmyagent" on:click={toggleSearchModal}>Add my agent</a>
+	<a href="#top" on:click={toggleSearchModal}
+		><i class="bi bi-plus-circle-dotted" /></a
+	>
 {/if}
+
+<style>
+	i {
+		font-size: 2em;
+	}
+</style>
