@@ -4,11 +4,21 @@
 	import FindUser from '$lib/components/FindUser.svelte';
 
 	export let modalVisible = false;
+	let clients = [];
 
 	onMount(async () => {
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		clients = $currentUser.expand.clients?.sort((a, b) => {
+			let fa = a.fname.toLowerCase(),
+				fb = b.fname.toLowerCase();
+
+			if (fa < fb) {
+				return -1;
+			}
+			if (fa > fb) {
+				return 1;
+			}
+			return 0;
+		});
 	});
 
 	async function focusClient(clientID) {
@@ -48,8 +58,8 @@
 				<FindUser />
 			</div>
 			{#if $currentUser.expand.clients}
-				{#each $currentUser.expand.clients as client}
-					<section>
+				<section>
+					{#each clients as client}
 						<a id="clients" href="#top" on:click={focusClient(client.id)}>
 							{#if client.profilePic}
 								<img
@@ -75,8 +85,8 @@
 								</small>
 							</div>
 						</a>
-					</section>
-				{/each}
+					{/each}
+				</section>
 			{/if}
 		</article>
 	</dialog>
@@ -91,18 +101,21 @@
 	}
 
 	i {
-		font-size: 2.2em;
+		font-size: 2em;
+		padding-left: 0.2em;
 	}
 
 	section,
 	h1 {
 		text-align: left;
+		margin-bottom: 1em;
 	}
 
 	a#clients {
 		display: flex;
 		flex-direction: row;
 		align-items: flex-start;
+		margin-bottom: 1.5em;
 	}
 
 	div {
