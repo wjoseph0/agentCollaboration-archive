@@ -20,6 +20,7 @@
 		await pb
 			.collection('users')
 			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		location.reload();
 	}
 
 	function toggleModal() {
