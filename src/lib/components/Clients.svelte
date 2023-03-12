@@ -5,6 +5,7 @@
 
 	export let modalVisible = false;
 	let clients = [];
+	let searchValue;
 
 	onMount(async () => {
 		clients = $currentUser.expand.clients?.sort((a, b) => {
@@ -20,6 +21,47 @@
 			return 0;
 		});
 	});
+
+	function isAMatch(client) {
+		return client.fname.toLowerCase().startsWith(searchValue.toLowerCase());
+	}
+
+	function filterClients() {
+		if (searchValue) {
+			clients = $currentUser.expand.clients?.sort((a, b) => {
+				let fa = a.fname.toLowerCase(),
+					fb = b.fname.toLowerCase();
+
+				if (fa < fb) {
+					return -1;
+				}
+				if (fa > fb) {
+					return 1;
+				}
+				return 0;
+			});
+
+			let clientsFiltered = clients.filter(isAMatch);
+			console.log(clientsFiltered);
+			console.log(searchValue);
+
+			clients = clientsFiltered;
+			return;
+		}
+
+		clients = $currentUser.expand.clients?.sort((a, b) => {
+			let fa = a.fname.toLowerCase(),
+				fb = b.fname.toLowerCase();
+
+			if (fa < fb) {
+				return -1;
+			}
+			if (fa > fb) {
+				return 1;
+			}
+			return 0;
+		});
+	}
 
 	async function focusClient(clientID) {
 		const data = {
@@ -57,6 +99,12 @@
 				<h1>My Clients</h1>
 				<FindUser />
 			</div>
+			<input
+				type="text"
+				placeholder="Search"
+				bind:value={searchValue}
+				on:keyup={filterClients}
+			/>
 			{#if $currentUser.expand.clients}
 				<section>
 					{#each clients as client}
