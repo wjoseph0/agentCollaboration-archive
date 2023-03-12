@@ -8,7 +8,7 @@
 	let agent;
 	let client;
 
-	if ($currentUser.isAgent) {
+	$: if ($currentUser.isAgent) {
 		agent = $currentUser.id;
 		client = $currentUser.focusedClient;
 	} else {
@@ -32,7 +32,7 @@
 		await pb.collection('journeys').update(journey.id, data);
 	}
 
-	onMount(async () => {
+	$: onMount(async () => {
 		journey = await pb
 			.collection('journeys')
 			.getFirstListItem(`agent='${agent}' && client='${client}'`);

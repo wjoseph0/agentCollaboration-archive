@@ -94,7 +94,8 @@
 		<section>
 			{#if $currentUser.isAgent && $currentUser.expand.focusedClient}
 				<section>
-					<h3>My Focused Client</h3>
+					<h2>Client in Focus</h2>
+					<Clients /> <br />
 					{#if $currentUser.expand.focusedClient.profilePic}
 						<img
 							src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.focusedClient}/{$currentUser
@@ -114,20 +115,12 @@
 						{$currentUser.expand.focusedClient.fname}
 						{$currentUser.expand.focusedClient.lname} <br />
 						{$currentUser.expand.focusedClient.email} <br />
-						<a href="#top" on:click={toggleChangeClientSelector}>Change</a>
 					</p>
-					{#if clientSelectorVisible}
-						<FindUser />
-						<p />
-						<Clients />
-					{/if}
 				</section>
 			{:else if $currentUser.isAgent && !$currentUser.focusedClient}
 				<section>
 					<h3>Select a client:</h3>
-					<FindUser />
-					<p />
-					<Clients />
+					<Clients modalVisible="true" />
 				</section>
 			{:else if $currentUser.expand.agent}
 				<h3>My Agent</h3>
@@ -210,12 +203,17 @@
 		padding-left: 16px;
 	}
 
-	#me {
-		text-align: center;
-	}
-
 	img {
 		border-radius: 0.6rem;
+	}
+
+	h2 {
+		margin-bottom: 0em;
+	}
+
+	section,
+	#me {
+		text-align: center;
 	}
 
 	/* width */
