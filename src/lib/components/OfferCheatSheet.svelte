@@ -3,8 +3,9 @@
 	import { onMount } from 'svelte';
 
 	export let journey;
-	let cheatsheet;
 
+	let cheatsheetPromise;
+	let cheatsheet;
 	let buyerName;
 	let purchasePrice;
 	let earnestMoney;
@@ -22,6 +23,7 @@
 	let condoFee;
 	let parking;
 	let storageUnit;
+	let modalVisible = false;
 
 	if ($currentUser.isAgent) {
 		buyerName = `${$currentUser.expand.focusedClient.fname} ${$currentUser.expand.focusedClient.lname}`;
@@ -29,85 +31,66 @@
 		buyerName = `${$currentUser.fname} ${$currentUser.lname}`;
 	}
 
-	onMount(async () => {
-		cheatsheet = await pb
+	$: data = {
+		journey: journey.id,
+		buyerName: buyerName,
+		purchasePrice: purchasePrice,
+		earnestMoney: earnestMoney,
+		inclusions: inclusions,
+		exclusions: exclusions,
+		bindingAcceptance: bindingAcceptance,
+		closingDate: closingDate,
+		financingContingency: financingContingency,
+		appraisalContingency: appraisalContingency,
+		inspectionContingency: inspectionContingency,
+		rightToCure: rightToCure,
+		radonTest: radonTest,
+		sellerClosingCostCredit: sellerClosingCostCredit,
+		homeWarranty: homeWarranty,
+		condoFee: condoFee,
+		parking: parking,
+		storageUnit: storageUnit
+	};
+
+	onMount(() => {
+		cheatsheetPromise = pb
 			.collection('cheatsheets')
 			.getFirstListItem(`journey='${journey.id}'`);
 
-		if (cheatsheet) {
-			buyerName = cheatsheet.buyerName;
-			purchasePrice = cheatsheet.purchasePrice;
-			earnestMoney = cheatsheet.earnestMoney;
-			inclusions = cheatsheet.inclusions;
-			exclusions = cheatsheet.exclusions;
-			bindingAcceptance = cheatsheet.bindingAcceptance;
-			closingDate = cheatsheet.closingDate;
-			financingContingency = cheatsheet.financingContingency;
-			appraisalContingency = cheatsheet.appraisalContingency;
-			inspectionContingency = cheatsheet.inspectionContingency;
-			rightToCure = cheatsheet.rightToCure;
-			radonTest = cheatsheet.radonTest;
-			sellerClosingCostCredit = cheatsheet.sellerClosingCostCredit;
-			homeWarranty = cheatsheet.homeWarranty;
-			condoFee = cheatsheet.condoFee;
-			parking = cheatsheet.parking;
-			storageUnit = cheatsheet.storageUnit;
-		}
+		cheatsheetPromise.then((result) => {
+			cheatsheet = result;
+			buyerName = result.buyerName;
+			purchasePrice = result.purchasePrice;
+			earnestMoney = result.earnestMoney;
+			inclusions = result.inclusions;
+			exclusions = result.exclusions;
+			bindingAcceptance = result.bindingAcceptance?.substring(0, 10);
+			closingDate = result.closingDate?.substring(0, 10);
+			financingContingency = result.financingContingency;
+			appraisalContingency = result.appraisalContingency;
+			inspectionContingency = result.inspectionContingency;
+			rightToCure = result.rightToCure;
+			radonTest = result.radonTest;
+			sellerClosingCostCredit = result.sellerClosingCostCredit;
+			homeWarranty = result.homeWarranty;
+			condoFee = result.condoFee;
+			parking = result.parking;
+			storageUnit = result.storageUnit;
+		});
 	});
 
-	async function updateCheatSheet() {
-		const data = {
-			journey: journey.id,
-			buyerName: buyerName,
-			purchasePrice: purchasePrice,
-			earnestMoney: earnestMoney,
-			inclusions: inclusions,
-			exclusions: exclusions,
-			bindingAcceptance: bindingAcceptance,
-			closingDate: closingDate,
-			financingContingency: financingContingency,
-			appraisalContingency: appraisalContingency,
-			inspectionContingency: inspectionContingency,
-			rightToCure: rightToCure,
-			radonTest: radonTest,
-			sellerClosingCostCredit: sellerClosingCostCredit,
-			homeWarranty: homeWarranty,
-			condoFee: condoFee,
-			parking: parking,
-			storageUnit: storageUnit
-		};
-
-		cheatsheet = await pb.collection('cheatsheets').update(cheatsheet.id, data);
-		toggleModal();
-	}
-
-	async function submitNewOffer(journey) {
-		const data = {
-			journey: journey.id,
-			buyerName: buyerName,
-			purchasePrice: purchasePrice,
-			earnestMoney: earnestMoney,
-			inclusions: inclusions,
-			exclusions: exclusions,
-			bindingAcceptance: bindingAcceptance,
-			closingDate: closingDate,
-			financingContingency: financingContingency,
-			appraisalContingency: appraisalContingency,
-			inspectionContingency: inspectionContingency,
-			rightToCure: rightToCure,
-			radonTest: radonTest,
-			sellerClosingCostCredit: sellerClosingCostCredit,
-			homeWarranty: homeWarranty,
-			condoFee: condoFee,
-			parking: parking,
-			storageUnit: storageUnit
-		};
+	async function setOfferCheatSheet() {
+		if (cheatsheet) {
+			cheatsheet = await pb
+				.collection('cheatsheets')
+				.update(cheatsheet.id, data);
+			toggleModal();
+			return;
+		}
 
 		cheatsheet = await pb.collection('cheatsheets').create(data);
 		toggleModal();
 	}
-
-	let modalVisible = false;
 
 	function toggleModal() {
 		if (modalVisible === true) {
@@ -117,6 +100,21 @@
 		modalVisible = true;
 	}
 </script>
+
+<div class="container">
+	{#if cheatsheet}
+		<a href="#top" on:click={toggleModal}>View cheat sheet</a>
+	{:else}
+		{#await cheatsheetPromise}
+			<!-- svelte-ignore a11y-missing-content -->
+			<a href="#top" aria-busy="true" />
+		{:then}
+			<a href="#top" on:click={toggleModal}>View cheat sheet</a>
+		{:catch}
+			<a href="#top" on:click={toggleModal}>Fill out cheat sheet</a>
+		{/await}
+	{/if}
+</div>
 
 {#if modalVisible}
 	<dialog open>
@@ -132,7 +130,7 @@
 			<h1>Offer to Purchase</h1>
 			<form>
 				<label>
-					Buyer's name, including middle initial (when applicable)
+					Buyer's name
 					<input bind:value={buyerName} type="text" />
 				</label>
 
@@ -226,22 +224,20 @@
 					Cancel
 				</a>
 				{#if cheatsheet}
-					<a href="#top" role="button" on:click={updateCheatSheet}>Update</a>
+					<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
 				{:else}
-					<a href="#top" role="button" on:click={submitNewOffer(journey)}
-						>Submit</a
-					>
+					<a href="#top" role="button" on:click={setOfferCheatSheet}>Submit</a>
 				{/if}
 			</footer>
 		</article>
 	</dialog>
-{:else if cheatsheet}
-	<a href="#top" on:click={toggleModal}>View cheat sheet</a>
-{:else}
-	<a href="#top" on:click={toggleModal}>Fill out cheat sheet</a>
 {/if}
 
 <style>
+	.container {
+		padding-top: 0.5em;
+	}
+
 	#sellerCredit {
 		padding-top: 1em;
 	}
