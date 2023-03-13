@@ -158,7 +158,7 @@
 				<summary>
 					<i class="bi bi-check-circle-fill" id="checkmark" />
 					<i class={phase[0].icon} />
-					{phase[0].name}
+					<strong>{phase[0].name}</strong>
 				</summary>
 			</details>
 		{:else if phase[0].numbers.includes(journey.step)}
@@ -187,6 +187,10 @@
 								<i class={step[0].icon} />
 								{step[0].name}
 							</summary>
+
+							{#if step[0].number == 3}
+								<SearchProfile {journey} />
+							{/if}
 						</details>
 					{:else}
 						<details class="future">
@@ -194,6 +198,9 @@
 								<i class={step[0].icon} />
 								{step[0].name}
 							</summary>
+							{#if step[0].number == 4}
+								<OfferCheatSheet {journey} />
+							{/if}
 						</details>
 					{/if}
 				{/each}
@@ -256,12 +263,10 @@
 	}
 
 	.completed {
-		opacity: 0.5;
 		font-size: small;
 	}
 
 	.future {
-		opacity: 0.3;
 		font-size: small;
 	}
 </style>
