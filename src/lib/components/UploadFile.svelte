@@ -37,7 +37,7 @@
 		<input type="file" bind:files={newFile} required />
 		<div>
 			<button type="submit">Upload</button>
-			<button type="button" class="secondary" on:click={formVisibilty}
+			<button type="button" class="secondary outline" on:click={formVisibilty}
 				>Cancel</button
 			>
 		</div>
