@@ -1,22 +1,8 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
 	import BuyerRoadmap from '$lib/components/BuyerRoadmap.svelte';
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import { onMount } from 'svelte';
-
-	$: if (browser && !$currentUser) {
-		goto('/login');
-	}
-
-	$: if (
-		browser &&
-		(($currentUser.isAgent && !$currentUser.focusedClient) ||
-			(!$currentUser.isAgent && !$currentUser.agent))
-	) {
-		goto('/account');
-	}
 
 	onMount(async () => {
 		await pb

@@ -2,23 +2,9 @@
 	import Messages from '$lib/components/Messages.svelte';
 	import NewMessage from '$lib/components/NewMessage.svelte';
 	import { currentUser } from '$lib/pocketbase';
-	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { pb } from '$lib/pocketbase';
-
-	$: if (browser && !$currentUser) {
-		goto('/login');
-	}
-
-	$: if (
-		browser &&
-		(($currentUser.isAgent && !$currentUser.focusedClient) ||
-			(!$currentUser.isAgent && !$currentUser.agent))
-	) {
-		goto('/account');
-	}
 
 	export let data;
 

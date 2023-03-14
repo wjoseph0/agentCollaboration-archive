@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import FindUser from '$lib/components/FindUser.svelte';
 
-	export let modalVisible = false;
+	let modalVisible = false;
 	let clients = [];
 	let searchValue;
 

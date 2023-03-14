@@ -4,13 +4,7 @@
 	import FindUser from '$lib/components/FindUser.svelte';
 	import Clients from '$lib/components/Clients.svelte';
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
 	import Invite from '$lib/components/Invite.svelte';
-
-	$: if (browser && !$currentUser) {
-		goto('/login');
-	}
 
 	let modalVisible = false;
 	let clientSelectorVisible = false;
@@ -119,11 +113,11 @@
 				</section>
 			{:else if $currentUser.isAgent && !$currentUser.focusedClient}
 				<section>
-					<h3>Select a client:</h3>
-					<Clients modalVisible="true" />
+					<h2>Select a client:</h2>
+					<Clients />
 				</section>
 			{:else if $currentUser.expand.agent}
-				<h3>My Agent</h3>
+				<h2>My Agent</h2>
 				{#if $currentUser.expand.agent.profilePic}
 					<img
 						src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser

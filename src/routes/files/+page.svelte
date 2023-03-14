@@ -2,22 +2,8 @@
 	import Files from '$lib/components/Files.svelte';
 	import UploadFile from '$lib/components/UploadFile.svelte';
 	import { pb, currentUser } from '$lib/pocketbase';
-	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import { onMount } from 'svelte';
-
-	$: if (browser && !$currentUser) {
-		goto('/login');
-	}
-
-	$: if (
-		browser &&
-		(($currentUser.isAgent && !$currentUser.focusedClient) ||
-			(!$currentUser.isAgent && !$currentUser.agent))
-	) {
-		goto('/account');
-	}
 
 	onMount(async () => {
 		await pb
