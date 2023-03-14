@@ -32,12 +32,8 @@
 				/>
 			{/if}
 			<p>
-				<strong>{$currentUser.fname} {$currentUser.lname}</strong>
-				<br />
-				{$currentUser.email} <br />
-				{#if !$currentUser.expand.agent && !$currentUser.isAgent}
-					<FindUser />
-				{/if}
+				<strong>{$currentUser.fname} {$currentUser.lname}</strong><br />
+				{$currentUser.email}
 			</p>
 			{#if $currentUser.isAgent}
 				<section>
@@ -99,6 +95,9 @@
 					{$currentUser.expand.agent.lname} <br />
 					{$currentUser.expand.agent.email}
 				</p>
+			{:else if !currentUser.agent}
+				<h2>My Agent</h2>
+				<FindUser />
 			{/if}
 		</section>
 
