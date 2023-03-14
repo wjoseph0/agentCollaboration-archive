@@ -5,54 +5,13 @@
 	import Clients from '$lib/components/Clients.svelte';
 	import { onMount } from 'svelte';
 	import Invite from '$lib/components/Invite.svelte';
-
-	let modalVisible = false;
-	let clientSelectorVisible = false;
+	import AccountType from '$lib/components/AccountType.svelte';
 
 	onMount(async () => {
 		await pb
 			.collection('users')
 			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
 	});
-
-	function toggleChangeClientSelector() {
-		if (clientSelectorVisible === true) {
-			clientSelectorVisible = false;
-			return;
-		}
-		clientSelectorVisible = true;
-	}
-
-	function toggleModal() {
-		if (modalVisible === true) {
-			modalVisible = false;
-			return;
-		}
-		modalVisible = true;
-	}
-
-	async function switchAccountType() {
-		let data;
-		if ($currentUser.isAgent) {
-			data = {
-				isAgent: false
-			};
-		} else {
-			data = {
-				isAgent: true
-			};
-		}
-
-		await pb.collection('users').update($currentUser.id, data, {
-			expand: 'agent,clients,focusedClient'
-		});
-
-		toggleModal();
-
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
-	}
 </script>
 
 {#if $currentUser}
@@ -144,51 +103,13 @@
 		</section>
 
 		<section>
-			{#if $currentUser.isAgent}
-				<button on:click={toggleModal}>Switch to Client</button>
-			{:else}
-				<button on:click={toggleModal}>Switch to Agent</button>
-			{/if}
+			<AccountType />
 		</section>
 
 		<section>
 			<Signout />
 		</section>
 	</main>
-{/if}
-
-{#if modalVisible}
-	<dialog open>
-		<article>
-			<!-- svelte-ignore a11y-missing-content -->
-			<a
-				href="/account"
-				aria-label="Close"
-				class="close"
-				data-target="modal-example"
-				on:click={toggleModal}
-			/>
-			<h3>Confirm change!</h3>
-			{#if $currentUser.isAgent}
-				<p>Your account type will revert back to a <strong>client</strong>.</p>
-			{:else}
-				<p>Your account type will change to an <strong>agent</strong>.</p>
-			{/if}
-			<footer>
-				<a
-					href="/account"
-					role="button"
-					class="secondary"
-					on:click={toggleModal}
-				>
-					Cancel
-				</a>
-				<a href="/account" role="button" on:click={switchAccountType}>
-					Confirm
-				</a>
-			</footer>
-		</article>
-	</dialog>
 {/if}
 
 <style>
