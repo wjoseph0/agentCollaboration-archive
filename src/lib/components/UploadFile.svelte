@@ -45,5 +45,5 @@
 {/if}
 
 {#if !showForm}
-	<button on:click={formVisibilty}>New</button>
+	<button class="outline" on:click={formVisibilty}>New</button>
 {/if}
