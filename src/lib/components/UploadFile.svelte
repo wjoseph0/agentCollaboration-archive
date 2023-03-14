@@ -32,16 +32,23 @@
 </script>
 
 {#if showForm}
-	<form on:submit|preventDefault={uploadFile}>
-		<input type="text" bind:value={fileName} placeholder="Name" required />
-		<input type="file" bind:files={newFile} required />
-		<div>
-			<button type="submit">Upload</button>
-			<button type="button" class="secondary outline" on:click={formVisibilty}
-				>Cancel</button
-			>
-		</div>
-	</form>
+	<dialog open>
+		<article>
+			<h1>Upload File</h1>
+			<form on:submit|preventDefault={uploadFile}>
+				<input type="text" bind:value={fileName} placeholder="Name" required />
+				<input type="file" bind:files={newFile} required />
+				<div>
+					<button type="submit">Upload</button>
+					<button
+						type="button"
+						class="secondary outline"
+						on:click={formVisibilty}>Cancel</button
+					>
+				</div>
+			</form>
+		</article>
+	</dialog>
 {/if}
 
 {#if !showForm}
