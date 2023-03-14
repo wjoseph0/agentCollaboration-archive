@@ -20,24 +20,32 @@
 	<main class="container">
 		<ClientBanner />
 		<section id="filesContainer">
-			<section>
-				<UploadFile />
-			</section>
-
 			<h2>Files</h2>
 			<Files {files} />
+		</section>
+		<section id="uploadFile">
+			<UploadFile />
 		</section>
 	</main>
 {/if}
 
 <style>
 	main {
+		height: 90vh;
 		padding-top: 0;
 		padding-bottom: 0;
-		height: 90vh;
+		overflow: hidden;
 	}
 
 	#filesContainer {
-		margin-top: 1rem;
+		height: 75vh;
+		padding: 1rem 0 1rem 0;
+		margin-bottom: 0;
+		overflow: scroll;
+	}
+
+	#uploadFile {
+		height: 5vh;
+		margin-bottom: 0;
 	}
 </style>
