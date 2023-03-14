@@ -6,4 +6,4 @@
 	};
 </script>
 
-<button class="secondary" on:click={signOut}>Sign Out</button>
+<button class="secondary outline" on:click={signOut}>Sign Out</button>

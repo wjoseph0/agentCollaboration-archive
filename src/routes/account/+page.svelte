@@ -103,9 +103,6 @@
 
 		<section>
 			<AccountType />
-		</section>
-
-		<section>
 			<Signout />
 		</section>
 	</main>

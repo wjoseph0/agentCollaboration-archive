@@ -67,8 +67,6 @@
 			</footer>
 		</article>
 	</dialog>
-{:else if $currentUser.isAgent}
-	<button on:click={toggleModal}>Switch to Client</button>
 {:else}
-	<button on:click={toggleModal}>Switch to Agent</button>
+	<button class="outline" on:click={toggleModal}>Change Account Type</button>
 {/if}
