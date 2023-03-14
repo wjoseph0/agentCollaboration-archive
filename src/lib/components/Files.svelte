@@ -8,12 +8,20 @@
 		rel="noreferrer"
 		href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
 	>
-		<p>
+		<div>
 			<img
 				src="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}?thumb=100x300"
 				alt=" "
 				style="width: 100px"
-			/>{file.name}
-		</p>
+			/>
+			<small>{file.name}</small>
+		</div>
 	</a>
 {/each}
+
+<style>
+	div {
+		margin-bottom: 2em;
+		font-weight: bold;
+	}
+</style>
