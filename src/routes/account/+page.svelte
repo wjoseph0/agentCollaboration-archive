@@ -43,7 +43,9 @@
 			};
 		}
 
-		await pb.collection('users').update($currentUser.id, data);
+		await pb.collection('users').update($currentUser.id, data, {
+			expand: 'agent,clients,focusedClient'
+		});
 
 		toggleModal();
 
