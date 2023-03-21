@@ -53,9 +53,7 @@
 	};
 
 	onMount(() => {
-		cheatsheetPromise = pb
-			.collection('cheatsheets')
-			.getFirstListItem(`journey='${journey.id}'`);
+		cheatsheetPromise = pb.collection('cheatsheets').getFirstListItem(`journey='${journey.id}'`);
 
 		cheatsheetPromise.then((result) => {
 			cheatsheet = result;
@@ -81,9 +79,7 @@
 
 	async function setOfferCheatSheet() {
 		if (cheatsheet) {
-			cheatsheet = await pb
-				.collection('cheatsheets')
-				.update(cheatsheet.id, data);
+			cheatsheet = await pb.collection('cheatsheets').update(cheatsheet.id, data);
 			toggleModal();
 			return;
 		}
@@ -177,18 +173,8 @@
 				<label>
 					Inspection Contingency
 					<input bind:checked={inspectionContingency} type="checkbox" />
-					<label
-						>Right to Cure <input
-							bind:checked={rightToCure}
-							type="checkbox"
-						/></label
-					>
-					<label
-						>Radon Test <input
-							bind:checked={radonTest}
-							type="checkbox"
-						/></label
-					>
+					<label>Right to Cure <input bind:checked={rightToCure} type="checkbox" /></label>
+					<label>Radon Test <input bind:checked={radonTest} type="checkbox" /></label>
 				</label>
 
 				<label id="sellerCredit">
@@ -220,9 +206,7 @@
 				</details>
 			</form>
 			<footer>
-				<a href="#top" role="button" class="secondary" on:click={toggleModal}>
-					Cancel
-				</a>
+				<a href="#top" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
 				{#if cheatsheet}
 					<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
 				{:else}

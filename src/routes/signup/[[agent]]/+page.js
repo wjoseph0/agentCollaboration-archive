@@ -1,5 +1,5 @@
 export async function load({ params }) {
-  return {
-    agent: params.agent
-  };
-};
+	return {
+		agent: params.agent
+	};
+}

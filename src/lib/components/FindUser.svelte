@@ -26,9 +26,7 @@
 		};
 
 		await pb.collection('users').update($currentUser.id, currentUserData);
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 		await pb.collection('journeys').create(journeyData);
 		toggleSearchModal();
 	}
@@ -38,9 +36,7 @@
 			agent: searchedUser.id
 		};
 		await pb.collection('users').update($currentUser.id, data);
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 		toggleSearchModal();
 	}
 
@@ -58,22 +54,13 @@
 	<dialog open>
 		<article>
 			<!-- svelte-ignore a11y-missing-content -->
-			<a
-				href="#close"
-				aria-label="Close"
-				class="close"
-				on:click={toggleSearchModal}
-			/>
+			<a href="#close" aria-label="Close" class="close" on:click={toggleSearchModal} />
 			{#if $currentUser.isAgent}
 				<h3>Add your client!</h3>
 			{:else}
 				<h3>Add your agent!</h3>
 			{/if}
-			<input
-				placeholder="Search email"
-				bind:value={inputEmail}
-				on:keyup={searchForUser}
-			/>
+			<input placeholder="Search email" bind:value={inputEmail} on:keyup={searchForUser} />
 			{#if searchedUser}
 				<p>{searchedUser.fname}</p>
 				<p>{searchedUser.lname}</p>
@@ -93,9 +80,7 @@
 		</article>
 	</dialog>
 {:else}
-	<a href="#top" on:click={toggleSearchModal}
-		><i class="bi bi-plus-circle-dotted" /></a
-	>
+	<a href="#top" on:click={toggleSearchModal}><i class="bi bi-plus-circle-dotted" /></a>
 {/if}
 
 <style>

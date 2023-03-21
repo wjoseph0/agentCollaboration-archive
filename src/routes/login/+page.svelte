@@ -32,12 +32,7 @@
 
 	<form on:submit|preventDefault={login}>
 		<input placeholder="Email" type="text" bind:value={email} required />
-		<input
-			placeholder="Password"
-			type="password"
-			bind:value={password}
-			required
-		/>
+		<input placeholder="Password" type="password" bind:value={password} required />
 		<button>Login</button>
 	</form>
 

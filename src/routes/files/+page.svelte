@@ -6,9 +6,7 @@
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 	});
 
 	export let data;

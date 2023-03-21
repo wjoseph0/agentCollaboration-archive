@@ -69,9 +69,7 @@
 		};
 
 		await pb.collection('users').update($currentUser.id, data);
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 		location.reload();
 	}
 
@@ -99,12 +97,7 @@
 				<h1>My Clients</h1>
 				<FindUser />
 			</div>
-			<input
-				type="text"
-				placeholder="Search"
-				bind:value={searchValue}
-				on:keyup={filterClients}
-			/>
+			<input type="text" placeholder="Search" bind:value={searchValue} on:keyup={filterClients} />
 			{#if $currentUser.expand.clients}
 				<section>
 					{#each clients as client}

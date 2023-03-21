@@ -48,9 +48,7 @@
 
 	async function setSearchProfile() {
 		if (searchProfile) {
-			searchProfile = await pb
-				.collection('search_profiles')
-				.update(searchProfile.id, data);
+			searchProfile = await pb.collection('search_profiles').update(searchProfile.id, data);
 			toggleModal();
 			return;
 		}
@@ -127,9 +125,7 @@
 				</label>
 			</form>
 			<footer>
-				<a href="#top" role="button" class="secondary" on:click={toggleModal}>
-					Cancel
-				</a>
+				<a href="#top" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
 				{#if searchProfile}
 					<a href="#top" role="button" on:click={setSearchProfile}>Update</a>
 				{:else}

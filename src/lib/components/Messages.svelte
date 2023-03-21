@@ -18,8 +18,8 @@
 		<div id="message">
 			{#if message.expand.user.profilePic}
 				<img
-					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{message.user}/{message
-						.expand.user.profilePic}"
+					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{message.user}/{message.expand.user
+						.profilePic}"
 					alt="profile pic"
 					width="50px"
 				/>

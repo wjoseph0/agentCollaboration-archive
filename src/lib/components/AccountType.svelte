@@ -27,9 +27,7 @@
 			expand: 'agent,clients,focusedClient'
 		});
 
-		await pb
-			.collection('users')
-			.authRefresh({}, { expand: 'agent,clients,focusedClient' });
+		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 
 		toggleModal();
 	}
@@ -53,17 +51,8 @@
 				<p>Your account type will change to an <strong>agent</strong>.</p>
 			{/if}
 			<footer>
-				<a
-					href="/account"
-					role="button"
-					class="secondary"
-					on:click={toggleModal}
-				>
-					Cancel
-				</a>
-				<a href="/account" role="button" on:click={switchAccountType}>
-					Confirm
-				</a>
+				<a href="/account" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
+				<a href="/account" role="button" on:click={switchAccountType}> Confirm </a>
 			</footer>
 		</article>
 	</dialog>
