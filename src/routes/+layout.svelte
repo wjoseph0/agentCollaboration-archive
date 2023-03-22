@@ -2,7 +2,6 @@
 	import '../app.css';
 	import AppNav from '$lib/components/AppNav.svelte';
 	import { currentUser } from '$lib/pocketbase';
-	import { navigating } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 
@@ -15,8 +14,6 @@
 	<AppNav />
 {/if}
 
-{#if $navigating}
-	<div aria-busy="true" />
-{:else}
+<div class="container mx-auto md:w-8/12 lg:w-6/12">
 	<slot />
-{/if}
+</div>
