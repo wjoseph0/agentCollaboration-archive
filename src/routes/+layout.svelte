@@ -1,5 +1,5 @@
 <script>
-	import '@picocss/pico';
+	import '../app.css';
 	import AppNav from '$lib/components/AppNav.svelte';
 	import { currentUser } from '$lib/pocketbase';
 	import { navigating } from '$app/stores';
