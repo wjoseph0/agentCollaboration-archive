@@ -14,6 +14,6 @@
 	<AppNav />
 {/if}
 
-<div class="container mx-auto md:w-8/12 lg:w-6/12">
+<div class="container mx-auto md:w-8/12 lg:w-6/12 flex flex-col">
 	<slot />
 </div>
