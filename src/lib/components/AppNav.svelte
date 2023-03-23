@@ -58,7 +58,7 @@
 			<!-- svelte-ignore a11y-missing-attribute -->
 			<li><a href="/account"> Profile </a></li>
 			<!-- svelte-ignore a11y-missing-attribute -->
-			<li><a>Settings</a></li>
+			<!-- <li><a>Settings</a></li> -->
 			<!-- svelte-ignore a11y-missing-attribute -->
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li
