@@ -20,7 +20,7 @@
 					expand: 'agent,clients,focusedClient'
 				}
 			);
-			goto('/account');
+			goto('/');
 		} catch (error) {
 			console.error(error);
 		}
