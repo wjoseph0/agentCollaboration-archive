@@ -3,8 +3,7 @@
 
 	const shareData = {
 		title: 'OpenAgent',
-		text: "Let's collaborate!",
-		url: `https://open-agent.vercel.app/signup/${$currentUser.id}`
+		text: `Let's collaborate! https://open-agent.vercel.app/signup/${$currentUser.id}`
 	};
 
 	const share = async () => {
