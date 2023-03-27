@@ -1,10 +1,15 @@
 <script>
 	import Messages from '$lib/components/Messages.svelte';
 	import NewMessage from '$lib/components/NewMessage.svelte';
-	import { currentUser } from '$lib/pocketbase';
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import { onMount, onDestroy } from 'svelte';
-	import { pb } from '$lib/pocketbase';
+	import { pb, currentUser } from '$lib/pocketbase';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+
+	$: if (browser && !$currentUser) {
+		goto('/login');
+	}
 
 	export let data;
 
