@@ -16,29 +16,5 @@
 </script>
 
 {#if $currentUser}
-	<main class="container">
-		<ClientBanner />
-
-		<section>
-			<BuyerRoadmap />
-		</section>
-	</main>
+	<BuyerRoadmap />
 {/if}
-
-<style>
-	main {
-		height: 90vh;
-		padding-top: 0;
-		padding-bottom: 0;
-		overflow-y: scroll;
-		scrollbar-width: none;
-	}
-
-	section {
-		margin-top: 2rem;
-	}
-
-	::-webkit-scrollbar {
-		display: none;
-	}
-</style>
