@@ -1,14 +1,16 @@
 <script>
-	import '../app.css';
+	import '@picocss/pico';
 	import AppNav from '$lib/components/AppNav.svelte';
 	import { currentUser } from '$lib/pocketbase';
-  import { navigating } from '$app/stores';
+	import { navigating } from '$app/stores';
 </script>
 
 {#if $currentUser}
 	<AppNav />
 {/if}
 
-<div class="container mx-auto md:w-8/12 lg:w-6/12 flex flex-col">
+{#if $navigating}
+	<div aria-busy="true" />
+{:else}
 	<slot />
-</div>
+{/if}

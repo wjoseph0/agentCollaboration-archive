@@ -152,12 +152,6 @@
 </script>
 
 {#if journey}
-	<ul class="steps">
-		<li class="step step-primary">Prepare</li>
-		<li class="step step-primary">Search</li>
-		<li class="step">Close</li>
-	</ul>
-
 	{#each buyerPhases as phase}
 		{#if phase[0].completeNumber < journey.step}
 			<details>
@@ -217,18 +211,13 @@
 			</details>
 		{/if}
 	{/each}
-
 	{#if $currentUser.isAgent}
 		<div>
 			{#if journey.step > 1}
-				<button on:click={moveBackward(journey)} class="btn btn-secondary rounded-lg">
-					Move back
-				</button>
+				<button on:click={moveBackward(journey)} class="secondary outline"> Move back </button>
 			{/if}
 			{#if journey.step < 8}
-				<button on:click={moveForward(journey)} class="btn btn-primary rounded-lg"
-					>Move forward</button
-				>
+				<button on:click={moveForward(journey)}>Move forward</button>
 			{/if}
 		</div>
 	{/if}
