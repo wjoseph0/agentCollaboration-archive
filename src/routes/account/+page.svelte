@@ -6,6 +6,12 @@
 	import { onMount } from 'svelte';
 	import Invite from '$lib/components/Invite.svelte';
 	import AccountType from '$lib/components/AccountType.svelte';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+
+	$: if (browser && !$currentUser) {
+		goto('/login');
+	}
 
 	onMount(async () => {
 		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
