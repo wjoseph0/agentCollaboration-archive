@@ -3,7 +3,7 @@
 
 	const shareData = {
 		title: 'OpenAgent',
-		text: "Let's collaborate!",
+		text: "Hi! Let's use OpenAgent to collaborate!",
 		url: `https://open-agent.vercel.app/signup/${$currentUser.id}`
 	};
 
@@ -12,4 +12,4 @@
 	};
 </script>
 
-<a href="#top" role="button" on:click={share}>Invite Client</a>
+<a href="#top" role="button" on:click={share}>Invite</a>
