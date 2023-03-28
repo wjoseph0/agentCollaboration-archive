@@ -14,7 +14,7 @@
 
 <nav class="navbar bg-base-100 mx-auto md:w-8/12 lg:w-6/12">
 	<div class="flex-1">
-		<a href="/" class="btn btn-ghost normal-case text-xl">AgentPad</a>
+		<a href="/" class="btn btn-ghost normal-case text-xl">Open Agent</a>
 	</div>
 	<div class="flex-none">
 		<div class="dropdown dropdown-end">
