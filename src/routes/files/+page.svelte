@@ -25,6 +25,9 @@
 {#if $currentUser}
 	{#if $currentUser.isAgent && !$currentUser.focusedClient}
 		<ChooseClient />
+		<div style="width: 50%; margin:0 auto;">
+			<MyFiles />
+		</div>
 	{:else}
 		<main class="container">
 			<ClientBanner />
