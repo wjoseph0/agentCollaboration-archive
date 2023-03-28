@@ -8,6 +8,7 @@
 	import AccountType from '$lib/components/AccountType.svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import ChooseClient from '$lib/components/ChooseClient.svelte';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -73,10 +74,7 @@
 					</p>
 				</section>
 			{:else if $currentUser.isAgent && !$currentUser.focusedClient}
-				<section>
-					<h2>Select a client:</h2>
-					<Clients />
-				</section>
+				<ChooseClient />
 			{:else if $currentUser.expand.agent}
 				<h2>My Agent</h2>
 				{#if $currentUser.expand.agent.profilePic}

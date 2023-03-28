@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import ChooseClient from '$lib/components/ChooseClient.svelte';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -21,15 +22,19 @@
 </script>
 
 {#if $currentUser}
-	<main class="container">
-		<ClientBanner />
-		<section id="filesContainer">
-			<Files {files} />
-		</section>
-		<section id="uploadFile">
-			<UploadFile />
-		</section>
-	</main>
+	{#if $currentUser.isAgent && !$currentUser.focusedClient}
+		<ChooseClient />
+	{:else}
+		<main class="container">
+			<ClientBanner />
+			<section id="filesContainer">
+				<Files {files} />
+			</section>
+			<section id="uploadFile">
+				<UploadFile />
+			</section>
+		</main>
+	{/if}
 {/if}
 
 <style>
