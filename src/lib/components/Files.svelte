@@ -2,26 +2,37 @@
 	export let files;
 </script>
 
-{#each files as file}
-	<a
-		target="_blank"
-		rel="noreferrer"
-		href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
-	>
-		<div>
-			<img
-				src="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}?thumb=100x300"
-				alt=" "
-				style="width: 100px"
-			/>
-			<small>{file.name}</small>
-		</div>
-	</a>
-{/each}
+<table>
+	<thead>
+		<tr>
+			<th scope="col" />
+			<th scope="col" />
+		</tr>
+	</thead>
+	<tbody>
+		{#each files as file}
+			<tr>
+				<th scope="row"><i class="bi bi-file-earmark" /></th>
+				<td>
+					<a
+						target="_blank"
+						rel="noreferrer"
+						href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
+					>
+						{file.name}
+					</a>
+				</td>
+			</tr>
+		{/each}
+	</tbody>
+</table>
 
 <style>
-	div {
-		margin-bottom: 2em;
-		font-weight: bold;
+	tbody > tr {
+		height: 4em;
+	}
+
+	td {
+		font-size: medium;
 	}
 </style>

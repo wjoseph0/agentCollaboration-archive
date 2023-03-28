@@ -24,7 +24,6 @@
 	<main class="container">
 		<ClientBanner />
 		<section id="filesContainer">
-			<h2>Files</h2>
 			<Files {files} />
 		</section>
 		<section id="uploadFile">
