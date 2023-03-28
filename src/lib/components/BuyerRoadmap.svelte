@@ -16,23 +16,21 @@
 		client = $currentUser.id;
 	}
 
-	async function moveBackward(journey) {
+	const scrollToCurrentStep = () => {
+		const el = document.getElementById('currentStep');
+		if (!el) return;
+		el.scrollIntoView({ behavior: 'smooth' });
+	};
+
+	const updateStep = async (stepID) => {
 		const data = {
-			step: journey.step - 1
+			step: stepID
 		};
 
 		await pb.collection('journeys').update(journey.id, data);
-	}
+	};
 
-	async function moveForward(journey) {
-		const data = {
-			step: journey.step + 1
-		};
-
-		await pb.collection('journeys').update(journey.id, data);
-	}
-
-	$: onMount(async () => {
+	onMount(async () => {
 		journey = await pb
 			.collection('journeys')
 			.getFirstListItem(`agent='${agent}' && client='${client}'`);
@@ -41,113 +39,55 @@
 		await pb.collection('journeys').subscribe(journey.id, async (e) => {
 			journey = e.record;
 		});
+
+		scrollToCurrentStep();
 	});
 
 	onDestroy(() => {
 		pb.collection('journeys').unsubscribe();
 	});
 
-	let buyerPhases = [
-		[
-			{
-				numbers: [1, 2],
-				completeNumber: '2',
-				name: 'Preparing Phase',
-				steps: [
-					[
-						{
-							number: '1',
-							name: 'Form Agency',
-							icon: 'bi bi-people-fill',
-							desc: 'This is where you will officially hire your real estate agent to represent you during your journey.',
-							link: 'https://study.com/learn/lesson/real-estate-agency-overview-types.html'
-						}
-					],
-					[
-						{
-							number: '2',
-							name: 'Mortgage Pre-Approval',
-							icon: 'bi bi-hand-thumbs-up-fill',
-							desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
-							link: 'https://www.zillow.com/mortgage-learning/pre-approval/'
-						}
-					]
-				]
-			}
-		],
-
-		[
-			{
-				numbers: [3, 4],
-				completeNumber: '4',
-				name: 'Searching Phase',
-				steps: [
-					[
-						{
-							number: '3',
-							name: 'Preview Homes',
-							icon: 'bi bi-search-heart-fill',
-							desc: 'This is where you will start to tour homes and make offers on the ones you like!',
-							link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
-						}
-					],
-					[
-						{
-							number: '4',
-							name: 'Make Offer',
-							icon: 'bi bi-envelope-paper-fill',
-							desc: 'This is where you will start to tour homes and make offers on the ones you like!',
-							link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
-						}
-					]
-				]
-			}
-		],
-		[
-			{
-				numbers: [5, 6, 7, 8],
-				completeNumber: 8,
-				name: 'Closing Phase',
-				steps: [
-					[
-						{
-							number: '5',
-							name: 'Accepted Offer',
-							icon: 'bi bi-envelope-paper-heart-fill',
-							desc: 'Your closing journey begins!',
-							link: 'https://www.realtor.com/advice/buy/my-offer-was-accepted-now-what/'
-						}
-					],
-					[
-						{
-							number: '6',
-							name: 'Contingencies',
-							icon: 'bi bi-list-ol',
-							desc: 'Now we will handle any contingencies we set in the offer.',
-							link: ''
-						}
-					],
-					[
-						{
-							number: '7',
-							name: 'Final Walk-Through',
-							icon: 'bi bi-arrow-through-heart-fill',
-							desc: '',
-							link: ''
-						}
-					],
-					[
-						{
-							number: '8',
-							name: 'Closing Day',
-							icon: 'bi bi-key-fill',
-							desc: 'The home stretch! This is where you will sign paperwork and recieve the keys!',
-							link: ''
-						}
-					]
-				]
-			}
-		]
+	const steps = [
+		{
+			id: 1,
+			name: 'Form Agency',
+			phase: 1
+		},
+		{
+			id: 2,
+			name: 'Mortgage Pre-Approval',
+			phase: 1
+		},
+		{
+			id: 3,
+			name: 'Preview Homes',
+			phase: 2
+		},
+		{
+			id: 4,
+			name: 'Make Offer',
+			phase: 2
+		},
+		{
+			id: 5,
+			name: 'Accepted Offer',
+			phase: 3
+		},
+		{
+			id: 6,
+			name: 'Contingencies',
+			phase: 3
+		},
+		{
+			id: 7,
+			name: 'Final Walk-Through',
+			phase: 3
+		},
+		{
+			id: 8,
+			name: 'Closing Day',
+			phase: 3
+		}
 	];
 </script>
 
@@ -158,7 +98,23 @@
 		<li class="step">Close</li>
 	</ul>
 
-	{#each buyerPhases as phase}
+	<div class="h-96 carousel carousel-vertical rounded-box mt-9">
+		{#each steps as step}
+			<div class="carousel-item h-full bg-primary flex flex-col items-center m-1 p-4">
+				{#if step.id == journey.step}
+					<div class="badge" id="currentStep">Current Step</div>
+				{/if}
+				<div class="stat bg-white flex flex-col items-center h-2/3">
+					<!-- <div class="stat-title">Step</div> -->
+					<div class="stat-value">{step.name}</div>
+					<div class="stat-actions">
+						<button class="btn btn-sm btn-success">Add funds</button>
+					</div>
+				</div>
+			</div>
+		{/each}
+	</div>
+	<!-- 	{#each buyerPhases as phase}
 		{#if phase[0].completeNumber < journey.step}
 			<details>
 				<summary>
@@ -216,9 +172,9 @@
 				<summary> <strong>{phase[0].name}</strong> </summary>
 			</details>
 		{/if}
-	{/each}
+	{/each} -->
 
-	{#if $currentUser.isAgent}
+	<!-- {#if $currentUser.isAgent}
 		<div>
 			{#if journey.step > 1}
 				<button on:click={moveBackward(journey)} class="btn btn-secondary rounded-lg">
@@ -231,11 +187,11 @@
 				>
 			{/if}
 		</div>
-	{/if}
+	{/if} -->
 {/if}
 
 <style>
-	div {
+	/* 	div {
 		display: flex;
 	}
 
@@ -277,5 +233,5 @@
 
 	.future {
 		font-size: small;
-	}
+	} */
 </style>
