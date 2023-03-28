@@ -35,7 +35,7 @@
 	}
 
 	section {
-		margin-top: 2rem;
+		margin-top: 4rem;
 	}
 
 	::-webkit-scrollbar {
