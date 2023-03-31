@@ -1,4 +1,5 @@
 <script>
+	import EditEvent from '$lib/components/EditEvent.svelte';
 	export let events;
 </script>
 
@@ -15,7 +16,9 @@
 			<tr>
 				<th scope="row"><input type="date" value={event.date.substring(0, 10)} disabled /></th>
 				<td id="title">{event.name}</td>
-				<td><a href="#top">Edit</a></td>
+				<td>
+					<EditEvent recordId={event.id} name={event.name} date={event.date.substring(0, 10)} />
+				</td>
 			</tr>
 		{/each}
 	</tbody>
