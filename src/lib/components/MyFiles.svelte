@@ -1,34 +1,19 @@
 <script>
-	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
+	import { pb } from '$lib/pocketbase';
 	import UploadAgentFile from '$lib/components/UploadAgentFile.svelte';
 
-	let files = [];
-
-	onMount(async () => {
-		files = await pb.collection('files').getFullList(200 /* batch size */, {
-			sort: '-created',
-			filter: 'client = null'
-		});
-
-		await pb.collection('files').subscribe('*', async ({ action, record }) => {
-			files = await pb.collection('files').getFullList(200 /* batch size */, {
-				sort: '-created',
-				filter: 'client = null'
-			});
-		});
-	});
+	export let files;
+	$: myFiles = files.filter((f) => f.client === '');
 
 	const makePublic = async (id) => {
 		const data = {
 			isPublic: true
 		};
 
-		const record = await pb.collection('files').update(id, data);
+		await pb.collection('files').update(id, data);
 	};
 
 	let modalVisible = false;
-
 	function toggleModal() {
 		if (modalVisible === true) {
 			modalVisible = false;
@@ -61,7 +46,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each files as file}
+					{#each myFiles as file}
 						<tr>
 							<th scope="row"><i class="bi bi-file-earmark" /></th>
 							<td>

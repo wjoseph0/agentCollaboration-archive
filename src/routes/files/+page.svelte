@@ -35,7 +35,7 @@
 				files.splice(i, 1, record);
 				files = files.sort(sortFunction);
 			} else if (action === 'delete') {
-				files = files.filter((e) => e.id !== record.id);
+				files = files.filter((f) => f.id !== record.id);
 			}
 		});
 	});
@@ -49,7 +49,7 @@
 	{#if $currentUser.isAgent && !$currentUser.focusedClient}
 		<ChooseClient />
 		<div style="width: 50%; margin:0 auto;">
-			<MyFiles />
+			<MyFiles {files} />
 		</div>
 	{:else}
 		<main class="container">
@@ -60,7 +60,7 @@
 				</section>
 				<section id="agentActions">
 					<UploadFile />
-					<MyFiles />
+					<MyFiles {files} />
 				</section>
 			{:else}
 				<section id="filesContainerClient">
