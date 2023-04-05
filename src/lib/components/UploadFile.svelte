@@ -18,7 +18,6 @@
 		}
 		await pb.collection('files').create(formData);
 		formVisibilty();
-		location.reload();
 	};
 
 	const formVisibilty = () => {
