@@ -2,8 +2,8 @@
 	import { currentUser } from '$lib/pocketbase';
 
 	const shareData = {
-		title: 'OpenAgent',
-		text: "Hi! Let's use OpenAgent to collaborate!",
+		title: 'Agentpad',
+		text: "Hi! Let's use Agentpad to collaborate!",
 		url: `https://agentpadapp.com/signup/${$currentUser.id}`
 	};
 
