@@ -131,23 +131,7 @@
 		text-align: center;
 	}
 
-	/* width */
 	::-webkit-scrollbar {
-		width: 1px;
-	}
-
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #11191f;
-	}
-
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: hsl(205deg, 16%, 77%);
-	}
-
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: rgb(185, 185, 185);
+		width: 0;
 	}
 </style>
