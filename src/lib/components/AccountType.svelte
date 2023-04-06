@@ -27,9 +27,9 @@
 			expand: 'agent,clients,focusedClient'
 		});
 
-		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
-
 		toggleModal();
+
+		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 	}
 </script>
 

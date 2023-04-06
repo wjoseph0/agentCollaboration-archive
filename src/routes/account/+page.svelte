@@ -48,34 +48,9 @@
 		</section>
 
 		<section>
-			{#if $currentUser.isAgent && $currentUser.expand.focusedClient}
-				<section>
-					<h2>Client in Focus</h2>
-					<Clients /> <br />
-					{#if $currentUser.expand.focusedClient.profilePic}
-						<img
-							src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.focusedClient}/{$currentUser
-								.expand.focusedClient.profilePic}"
-							alt="profile pic"
-							width="50px"
-						/>
-					{:else}
-						<img
-							class="avatar"
-							src={`https://api.dicebear.com/5.x/initials/svg?seed=${$currentUser.expand.focusedClient.fname}%20${$currentUser.expand.focusedClient.lname}`}
-							alt="avatar"
-							width="50px"
-						/>
-					{/if}
-					<p>
-						{$currentUser.expand.focusedClient.fname}
-						{$currentUser.expand.focusedClient.lname} <br />
-						{$currentUser.expand.focusedClient.email} <br />
-					</p>
-				</section>
-			{:else if $currentUser.isAgent && !$currentUser.focusedClient}
+			{#if $currentUser.isAgent && !$currentUser.focusedClient}
 				<ChooseClient />
-			{:else if $currentUser.expand.agent}
+			{:else if !$currentUser.isAgent && $currentUser.expand.agent}
 				<h2>My Agent</h2>
 				{#if $currentUser.expand.agent.profilePic}
 					<img
@@ -97,7 +72,7 @@
 					{$currentUser.expand.agent.lname} <br />
 					{$currentUser.expand.agent.email}
 				</p>
-			{:else if !currentUser.agent}
+			{:else if !$currentUser.isAgent && !currentUser.agent}
 				<h2>My Agent</h2>
 				<FindUser />
 			{/if}
