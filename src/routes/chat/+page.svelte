@@ -12,16 +12,20 @@
 		goto('/login');
 	}
 
-	export let data;
-
-	let messages = data.messages.items;
+	let messages = [];
 
 	onMount(async () => {
 		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
-		// Subscribe to realtime messages
+
+		const result = await pb.collection('messages').getList(1, 50, {
+			sort: 'created',
+			expand: 'user'
+		});
+
+		messages = result.items;
+
 		await pb.collection('messages').subscribe('*', async ({ action, record }) => {
 			if (action === 'create') {
-				// Fetch associated user
 				const user = await pb.collection('users').getOne(record.user);
 				record.expand = { user };
 				messages = [...messages, record];
@@ -29,7 +33,6 @@
 		});
 	});
 
-	// Unsubscribe from realtime messages
 	onDestroy(() => {
 		pb.collection('messages').unsubscribe();
 	});
@@ -42,17 +45,14 @@
 		<main class="container" id="chatContainer">
 			<ClientBanner />
 
+			<section id="messages">
+				<Messages {messages} />
+			</section>
 			{#if $currentUser.focusedClient && $currentUser.isAgent}
-				<section id="messages">
-					<Messages {messages} />
-				</section>
 				<section id="newMessage">
 					<NewMessage recipient={$currentUser.expand.focusedClient} />
 				</section>
 			{:else if $currentUser.agent && !$currentUser.isAgent}
-				<section id="messages">
-					<Messages {messages} />
-				</section>
 				<section id="newMessage">
 					<NewMessage recipient={$currentUser.expand.agent} />
 				</section>
