@@ -1,9 +1,9 @@
 {
 	"background_color": "#ffffff",
 	"theme_color": "#11191f",
-	"name": "OpenAgent",
-	"short_name": "OpenAgent",
-	"description": "Real Estate collaboration software.",
+	"name": "Agentpad",
+	"short_name": "Agentpad",
+	"description": "Real Estate collaboration software",
 	"orientation": "portrait",
 	"display": "standalone",
 	"start_url": "/",
