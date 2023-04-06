@@ -3,7 +3,7 @@
 	"theme_color": "#11191f",
 	"name": "Agentpad",
 	"short_name": "Agentpad",
-	"description": "Real Estate collaboration software",
+	"description": "Real estate collaboration software",
 	"orientation": "portrait",
 	"display": "standalone",
 	"start_url": "/",
