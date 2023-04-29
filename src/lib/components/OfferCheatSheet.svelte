@@ -175,9 +175,9 @@
 				</label>
 
 				{#if financingContingency}
-				<label>Loan Type <input type="text" bind:value={loanType} /></label>
-				<label>Down Payment <input type="text" bind:value={downPayment} /></label>
-				<label>Interest Rate <input type="text" bind:value={interestRate} /></label>
+					<label>Loan Type <input type="text" bind:value={loanType} /></label>
+					<label>Down Payment <input type="text" bind:value={downPayment} /></label>
+					<label>Interest Rate <input type="text" bind:value={interestRate} /></label>
 				{/if}
 
 				<label>
@@ -191,8 +191,8 @@
 				</label>
 
 				{#if inspectionContingency}
-				<label>Right to Cure <input bind:checked={rightToCure} type="checkbox" /></label>
-				<label>Radon Test <input bind:checked={radonTest} type="checkbox" /></label>
+					<label>Right to Cure <input bind:checked={rightToCure} type="checkbox" /></label>
+					<label>Radon Test <input bind:checked={radonTest} type="checkbox" /></label>
 				{/if}
 
 				<label id="sellerCredit">
@@ -226,7 +226,7 @@
 			<footer>
 				<a href="#top" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
 				{#if cheatsheet}
-				<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
+					<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
 				{:else}
 					<a href="#top" role="button" on:click={setOfferCheatSheet}>Submit</a>
 				{/if}
