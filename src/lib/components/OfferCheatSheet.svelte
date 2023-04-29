@@ -14,6 +14,9 @@
 	let bindingAcceptance;
 	let closingDate;
 	let financingContingency;
+	let loanType;
+	let downPayment;
+	let interestRate;
 	let appraisalContingency;
 	let inspectionContingency;
 	let rightToCure;
@@ -41,6 +44,9 @@
 		bindingAcceptance: bindingAcceptance,
 		closingDate: closingDate,
 		financingContingency: financingContingency,
+		loanType: loanType,
+		downPayment: downPayment,
+		interestRate: interestRate,
 		appraisalContingency: appraisalContingency,
 		inspectionContingency: inspectionContingency,
 		rightToCure: rightToCure,
@@ -65,6 +71,9 @@
 			bindingAcceptance = result.bindingAcceptance?.substring(0, 10);
 			closingDate = result.closingDate?.substring(0, 10);
 			financingContingency = result.financingContingency;
+			loanType = result.loanType;
+			downPayment = result.downPayment;
+			interestRate = result.interestRate;
 			appraisalContingency = result.appraisalContingency;
 			inspectionContingency = result.inspectionContingency;
 			rightToCure = result.rightToCure;
@@ -165,6 +174,12 @@
 					<input bind:checked={financingContingency} type="checkbox" />
 				</label>
 
+				{#if financingContingency}
+				<label>Loan Type <input type="text" bind:value={loanType} /></label>
+				<label>Down Payment <input type="text" bind:value={downPayment} /></label>
+				<label>Interest Rate <input type="text" bind:value={interestRate} /></label>
+				{/if}
+
 				<label>
 					Appraisal Contingency
 					<input bind:checked={appraisalContingency} type="checkbox" />
@@ -173,9 +188,12 @@
 				<label>
 					Inspection Contingency
 					<input bind:checked={inspectionContingency} type="checkbox" />
-					<label>Right to Cure <input bind:checked={rightToCure} type="checkbox" /></label>
-					<label>Radon Test <input bind:checked={radonTest} type="checkbox" /></label>
 				</label>
+
+				{#if inspectionContingency}
+				<label>Right to Cure <input bind:checked={rightToCure} type="checkbox" /></label>
+				<label>Radon Test <input bind:checked={radonTest} type="checkbox" /></label>
+				{/if}
 
 				<label id="sellerCredit">
 					Seller Closing Cost Credit
@@ -208,7 +226,7 @@
 			<footer>
 				<a href="#top" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
 				{#if cheatsheet}
-					<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
+				<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
 				{:else}
 					<a href="#top" role="button" on:click={setOfferCheatSheet}>Submit</a>
 				{/if}
