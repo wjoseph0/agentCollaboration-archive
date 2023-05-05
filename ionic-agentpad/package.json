@@ -28,6 +28,9 @@
 		"@capacitor/core": "^4.8.0",
 		"@ionic/core": "^7.0.3",
 		"ionic-svelte": "^0.5.78",
-		"ionicons": "^7.1.0"
+		"ionicons": "^7.1.0",
+		"clipboard": "^2.0.11",
+		"pocketbase": "^0.9.1",
+		"bad-words": "^3.0.4"
 	}
 }
