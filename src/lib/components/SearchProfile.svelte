@@ -110,12 +110,12 @@
 				</label>
 
 				<label>
-					Bed
+					Bedrooms
 					<input bind:value={bed} type="number" />
 				</label>
 
 				<label>
-					Bath
+					Bathrooms
 					<input bind:value={bath} type="number" />
 				</label>
 
