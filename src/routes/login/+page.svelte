@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { browser } from '$app/environment';
+	import '@picocss/pico';
 
 	$: if (browser && $currentUser) {
 		goto('/account');

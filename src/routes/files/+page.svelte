@@ -8,6 +8,7 @@
 	import { browser } from '$app/environment';
 	import ChooseClient from '$lib/components/ChooseClient.svelte';
 	import MyFiles from '$lib/components/MyFiles.svelte';
+	import '@picocss/pico';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');

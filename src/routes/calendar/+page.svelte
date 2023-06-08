@@ -7,6 +7,7 @@
 	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import CreateEvent from '$lib/components/CreateEvent.svelte';
 	import Events from '$lib/components/Events.svelte';
+	import '@picocss/pico';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
