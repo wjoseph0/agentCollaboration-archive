@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { browser } from '$app/environment';
-	import '@picocss/pico';
 
 	$: if (browser && $currentUser) {
 		goto('/account');
@@ -42,18 +41,45 @@
 	};
 </script>
 
-<main class="container">
-	<h1>Create an account</h1>
+<main class="container prose flex flex-col justify-center h-screen">
+	<h1 class="text-center">Sign Up</h1>
 
-	<form on:submit|preventDefault={signUp}>
-		<input placeholder="First Name" type="text" bind:value={fname} required />
-		<input placeholder="Last Name" type="text" bind:value={lname} required />
-		<input placeholder="Email" type="email" bind:value={email} required />
-		<input placeholder="Password" type="password" bind:value={password} minlength="8" required />
-		<button>Signup</button>
+	<form on:submit|preventDefault={signUp} class="flex flex-col space-y-2">
+		<input
+			placeholder="First Name"
+			type="text"
+			class="input input-bordered"
+			bind:value={fname}
+			required
+		/>
+		<input
+			placeholder="Last Name"
+			type="text"
+			class="input input-bordered"
+			bind:value={lname}
+			required
+		/>
+		<input
+			placeholder="Email"
+			type="email"
+			class="input input-bordered"
+			bind:value={email}
+			required
+		/>
+		<input
+			placeholder="Password"
+			type="password"
+			class="input input-bordered"
+			bind:value={password}
+			minlength="8"
+			required
+		/>
+		<button class="btn btn-primary">Sign Up</button>
 	</form>
 
-	<a href="/login">I have an account!</a>
+	<p class="text-center text-sm">
+		Have an account already? <a href="/login" class="link link-primary link-hover">Sign in</a> here now.
+	</p>
 </main>
 
 <footer>

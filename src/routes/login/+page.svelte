@@ -47,7 +47,8 @@
 		/>
 		<button class="btn btn-primary">Login</button>
 		<p class="text-center text-sm">
-			Don't have an account? <a href="/signup" class=" link-primary">Sign Up</a>
+			Don't have an account? <a href="/signup" class="link link-primary link-hover">Sign up</a> to create
+			one.
 		</p>
 	</form>
 </main>
