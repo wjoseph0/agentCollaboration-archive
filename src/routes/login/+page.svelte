@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { browser } from '$app/environment';
-	import '@picocss/pico';
 
 	$: if (browser && $currentUser) {
 		goto('/account');
@@ -28,49 +27,25 @@
 	};
 </script>
 
-<main class="container">
-	<h1>Login</h1>
+<main class="container prose flex flex-col justify-center h-screen">
+	<h1 class="text-center">Login</h1>
 
-	<form on:submit|preventDefault={login}>
-		<input placeholder="Email" type="text" bind:value={email} required />
-		<input placeholder="Password" type="password" bind:value={password} required />
-		<button>Login</button>
+	<form on:submit|preventDefault={login} class="flex flex-col space-y-2">
+		<input
+			placeholder="Email"
+			type="text"
+			class="input input-bordered"
+			bind:value={email}
+			required
+		/>
+		<input
+			placeholder="Password"
+			type="password"
+			class="input input-bordered"
+			bind:value={password}
+			required
+		/>
+		<button class="btn btn-primary">Login</button>
+		<a href="/signup" class="link">I need an account!</a>
 	</form>
-
-	<a href="/signup">I need an account!</a>
 </main>
-
-<footer>
-	<a href="https://app.termly.io/document/privacy-policy/bc7e25ed-f732-455f-98f9-e97843ec792a">
-		Privacy Policy
-	</a>
-
-	<a
-		href="https://app.termly.io/document/terms-and-conditions/ebafceeb-c35c-4515-9797-9f7b45202ab0"
-	>
-		Terms and Conditions
-	</a>
-
-	<a href="https://app.termly.io/document/disclaimer/80837b1b-cd4d-47e0-bec7-b39ceb8646d2">
-		Disclaimer
-	</a>
-
-	<a
-		href="https://app.termly.io/document/acceptable-use-policy/c8445309-d475-4d68-bf8e-675ca412faf3"
-	>
-		Acceptable Use Policy
-	</a>
-</footer>
-
-<style>
-	footer {
-		position: fixed;
-		bottom: 0;
-		text-align: center;
-		font-size: x-small;
-	}
-
-	footer > a {
-		padding: 0 0.2em;
-	}
-</style>
