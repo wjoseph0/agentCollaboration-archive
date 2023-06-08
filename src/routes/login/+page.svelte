@@ -46,6 +46,8 @@
 			required
 		/>
 		<button class="btn btn-primary">Login</button>
-		<a href="/signup" class="link">I need an account!</a>
+		<p class="text-center text-sm">
+			Don't have an account? <a href="/signup" class=" link-primary">Sign Up</a>
+		</p>
 	</form>
 </main>
