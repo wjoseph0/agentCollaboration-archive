@@ -41,16 +41,3 @@
 		</svg>
 	</button>
 </form>
-
-<!-- <style>
-	form {
-		display: grid;
-		grid-template-columns: 8fr 1fr;
-		margin-bottom: 0;
-	}
-
-	input,
-	button {
-		margin-bottom: inherit;
-	}
-</style> -->
