@@ -77,10 +77,8 @@
 		<p class="text-center text-xs">
 			By clicking "Sign Up" below, I accept the <a
 				href="https://app.termly.io/document/terms-and-conditions/ebafceeb-c35c-4515-9797-9f7b45202ab0"
-				class="link link-primary link-hover"
-			>
-				Terms and Conditions
-			</a>. Your
+				class="link link-primary link-hover">Terms and Conditions</a
+			>. Your
 			<a
 				class="link link-primary link-hover"
 				href="https://app.termly.io/document/privacy-policy/bc7e25ed-f732-455f-98f9-e97843ec792a"
