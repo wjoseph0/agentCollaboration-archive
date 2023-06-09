@@ -30,7 +30,7 @@
 <main class="container prose flex flex-col justify-center h-screen">
 	<h1 class="text-center">Login</h1>
 
-	<form on:submit|preventDefault={login} class="flex flex-col space-y-2">
+	<form on:submit|preventDefault={login} class="flex flex-col space-y-3">
 		<input
 			placeholder="Email"
 			type="text"
