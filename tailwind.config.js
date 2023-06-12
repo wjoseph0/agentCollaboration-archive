@@ -12,6 +12,11 @@ export default {
         '2xl': '6rem',
       }
     },
+    extend: {
+      colors: {
+        'nav-border': '#ededed'
+      },
+    },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
