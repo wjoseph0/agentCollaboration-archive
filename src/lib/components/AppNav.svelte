@@ -6,7 +6,7 @@
 </script>
 
 <div class="container btm-nav">
-	<button
+	<!-- <button
 		class={path === '/chat' ? 'active' : ''}
 		on:click={() => {
 			goto('/chat');
@@ -51,7 +51,7 @@
 		</svg>
 
 		<span class="btm-nav-label">Calendar</span>
-	</button>
+	</button> -->
 	<button
 		class={path === '/' ? 'active' : ''}
 		on:click={() => {
