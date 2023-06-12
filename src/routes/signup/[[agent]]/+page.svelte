@@ -4,7 +4,7 @@
 	import { browser } from '$app/environment';
 
 	$: if (browser && $currentUser) {
-		goto('/account');
+		goto('/');
 	}
 
 	export let data;
@@ -34,7 +34,7 @@
 					expand: 'agent,clients,focusedClient'
 				}
 			);
-			goto('/account');
+			goto('/');
 		} catch (err) {
 			console.error(err);
 		}
