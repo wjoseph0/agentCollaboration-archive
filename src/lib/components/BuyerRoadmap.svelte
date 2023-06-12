@@ -47,170 +47,84 @@
 		pb.collection('journeys').unsubscribe();
 	});
 
-	let buyerPhases = [
-		[
-			{
-				numbers: [1, 2],
-				completeNumber: '2',
-				name: 'Preparing Phase',
-				steps: [
-					[
-						{
-							number: '1',
-							name: 'Form Agency',
-							icon: 'bi bi-people-fill',
-							desc: 'This is where you will officially hire your real estate agent to represent you during your journey.',
-							link: 'https://study.com/learn/lesson/real-estate-agency-overview-types.html'
-						}
-					],
-					[
-						{
-							number: '2',
-							name: 'Mortgage Pre-Approval',
-							icon: 'bi bi-hand-thumbs-up-fill',
-							desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
-							link: 'https://www.zillow.com/mortgage-learning/pre-approval/'
-						}
-					]
-				]
-			}
-		],
+	let steps = [
+		{
+			number: '1',
+			name: 'Form Agency',
+			icon: 'bi bi-people-fill',
+			desc: 'This is where you will officially hire your real estate agent to represent you during your journey.',
+			link: 'https://study.com/learn/lesson/real-estate-agency-overview-types.html'
+		},
 
-		[
-			{
-				numbers: [3, 4],
-				completeNumber: '4',
-				name: 'Searching Phase',
-				steps: [
-					[
-						{
-							number: '3',
-							name: 'Preview Homes',
-							icon: 'bi bi-search-heart-fill',
-							desc: 'This is where you will start to tour homes and make offers on the ones you like!',
-							link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
-						}
-					],
-					[
-						{
-							number: '4',
-							name: 'Make Offer',
-							icon: 'bi bi-envelope-paper-fill',
-							desc: 'This is where you will start to tour homes and make offers on the ones you like!',
-							link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
-						}
-					]
-				]
-			}
-		],
-		[
-			{
-				numbers: [5, 6, 7, 8],
-				completeNumber: 8,
-				name: 'Closing Phase',
-				steps: [
-					[
-						{
-							number: '5',
-							name: 'Accepted Offer',
-							icon: 'bi bi-envelope-paper-heart-fill',
-							desc: 'Your closing journey begins!',
-							link: 'https://www.realtor.com/advice/buy/my-offer-was-accepted-now-what/'
-						}
-					],
-					[
-						{
-							number: '6',
-							name: 'Contingencies',
-							icon: 'bi bi-list-ol',
-							desc: 'Now we will handle any contingencies we set in the offer.',
-							link: ''
-						}
-					],
-					[
-						{
-							number: '7',
-							name: 'Final Walk-Through',
-							icon: 'bi bi-arrow-through-heart-fill',
-							desc: '',
-							link: ''
-						}
-					],
-					[
-						{
-							number: '8',
-							name: 'Closing Day',
-							icon: 'bi bi-key-fill',
-							desc: 'The home stretch! This is where you will sign paperwork and recieve the keys!',
-							link: ''
-						}
-					]
-				]
-			}
-		]
+		{
+			number: '2',
+			name: 'Mortgage Pre-Approval',
+			icon: 'bi bi-hand-thumbs-up-fill',
+			desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
+			link: 'https://www.zillow.com/mortgage-learning/pre-approval/'
+		},
+
+		{
+			number: '3',
+			name: 'Preview Homes',
+			icon: 'bi bi-search-heart-fill',
+			desc: 'This is where you will start to tour homes and make offers on the ones you like!',
+			link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
+		},
+		{
+			number: '4',
+			name: 'Make Offer',
+			icon: 'bi bi-envelope-paper-fill',
+			desc: 'This is where you will start to tour homes and make offers on the ones you like!',
+			link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
+		},
+
+		{
+			number: '5',
+			name: 'Accepted Offer',
+			icon: 'bi bi-envelope-paper-heart-fill',
+			desc: 'Your closing journey begins!',
+			link: 'https://www.realtor.com/advice/buy/my-offer-was-accepted-now-what/'
+		},
+		{
+			number: '6',
+			name: 'Contingencies',
+			icon: 'bi bi-list-ol',
+			desc: 'Now we will handle any contingencies we set in the offer.',
+			link: ''
+		},
+		{
+			number: '7',
+			name: 'Final Walk-Through',
+			icon: 'bi bi-arrow-through-heart-fill',
+			desc: '',
+			link: ''
+		},
+		{
+			number: '8',
+			name: 'Closing Day',
+			icon: 'bi bi-key-fill',
+			desc: 'The home stretch! This is where you will sign paperwork and recieve the keys!',
+			link: ''
+		}
 	];
 </script>
 
 {#if journey}
 	<div>
-		{#each buyerPhases as phase}
-			{#if phase[0].completeNumber < journey.step}
-				<details>
-					<summary>
-						<i class="bi bi-check-circle-fill" id="checkmark" />
-						<i class={phase[0].icon} />
-						<strong>{phase[0].name}</strong>
-					</summary>
-				</details>
-			{:else if phase[0].numbers.includes(journey.step)}
-				<details id="open" open>
-					<summary> <strong>{phase[0].name}</strong> </summary>
-					{#each phase[0].steps as step}
-						{#if step[0].number == journey.step}
-							<details id="openStep" open>
-								<summary>
-									<i class={step[0].icon} />
-									{step[0].name}
-								</summary>
-
-								{#if step[0].number == 3}
-									<SearchProfile {journey} />
-								{/if}
-
-								{#if step[0].number == 4}
-									<OfferCheatSheet {journey} />
-								{/if}
-							</details>
-						{:else if step[0].number < journey.step}
-							<details class="completed">
-								<summary>
-									<i class="bi bi-check-circle-fill" id="checkmark" />
-									<i class={step[0].icon} />
-									{step[0].name}
-								</summary>
-
-								{#if step[0].number == 3}
-									<SearchProfile {journey} />
-								{/if}
-							</details>
-						{:else}
-							<details class="future">
-								<summary>
-									<i class={step[0].icon} />
-									{step[0].name}
-								</summary>
-								{#if step[0].number == 4}
-									<OfferCheatSheet {journey} />
-								{/if}
-							</details>
-						{/if}
-					{/each}
-				</details>
-			{:else if phase[0].completeNumber > journey.step}
-				<details class="future">
-					<summary> <strong>{phase[0].name}</strong> </summary>
-				</details>
-			{/if}
+		{#each steps as step}
+			<div class="card w-96 bg-base-100 shadow-xl">
+				<figure>
+					<img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
+				</figure>
+				<div class="card-body h-50">
+					<h2 class="card-title">{step.name}</h2>
+					<p />
+					<div class="card-actions justify-end">
+						<button class="btn btn-primary">Do Action</button>
+					</div>
+				</div>
+			</div>
 		{/each}
 		{#if $currentUser.isAgent}
 			<div>
