@@ -23,7 +23,13 @@
 		<main class="container">
 			<ClientBanner />
 
-			<section>
+			<section class="flex">
+				<ul class="steps steps-vertical">
+					<li class="step step-primary h-screen" />
+					<li class="step step-primary h-screen" />
+					<li class="step h-screen" />
+					<li class="step h-screen" />
+				</ul>
 				<BuyerRoadmap />
 			</section>
 		</main>

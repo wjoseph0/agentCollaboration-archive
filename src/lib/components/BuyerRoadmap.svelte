@@ -152,119 +152,75 @@
 </script>
 
 {#if journey}
-	{#each buyerPhases as phase}
-		{#if phase[0].completeNumber < journey.step}
-			<details>
-				<summary>
-					<i class="bi bi-check-circle-fill" id="checkmark" />
-					<i class={phase[0].icon} />
-					<strong>{phase[0].name}</strong>
-				</summary>
-			</details>
-		{:else if phase[0].numbers.includes(journey.step)}
-			<details id="open" open>
-				<summary> <strong>{phase[0].name}</strong> </summary>
-				{#each phase[0].steps as step}
-					{#if step[0].number == journey.step}
-						<details id="openStep" open>
-							<summary>
-								<i class={step[0].icon} />
-								{step[0].name}
-							</summary>
+	<div>
+		{#each buyerPhases as phase}
+			{#if phase[0].completeNumber < journey.step}
+				<details>
+					<summary>
+						<i class="bi bi-check-circle-fill" id="checkmark" />
+						<i class={phase[0].icon} />
+						<strong>{phase[0].name}</strong>
+					</summary>
+				</details>
+			{:else if phase[0].numbers.includes(journey.step)}
+				<details id="open" open>
+					<summary> <strong>{phase[0].name}</strong> </summary>
+					{#each phase[0].steps as step}
+						{#if step[0].number == journey.step}
+							<details id="openStep" open>
+								<summary>
+									<i class={step[0].icon} />
+									{step[0].name}
+								</summary>
 
-							{#if step[0].number == 3}
-								<SearchProfile {journey} />
-							{/if}
+								{#if step[0].number == 3}
+									<SearchProfile {journey} />
+								{/if}
 
-							{#if step[0].number == 4}
-								<OfferCheatSheet {journey} />
-							{/if}
-						</details>
-					{:else if step[0].number < journey.step}
-						<details class="completed">
-							<summary>
-								<i class="bi bi-check-circle-fill" id="checkmark" />
-								<i class={step[0].icon} />
-								{step[0].name}
-							</summary>
+								{#if step[0].number == 4}
+									<OfferCheatSheet {journey} />
+								{/if}
+							</details>
+						{:else if step[0].number < journey.step}
+							<details class="completed">
+								<summary>
+									<i class="bi bi-check-circle-fill" id="checkmark" />
+									<i class={step[0].icon} />
+									{step[0].name}
+								</summary>
 
-							{#if step[0].number == 3}
-								<SearchProfile {journey} />
-							{/if}
-						</details>
-					{:else}
-						<details class="future">
-							<summary>
-								<i class={step[0].icon} />
-								{step[0].name}
-							</summary>
-							{#if step[0].number == 4}
-								<OfferCheatSheet {journey} />
-							{/if}
-						</details>
-					{/if}
-				{/each}
-			</details>
-		{:else if phase[0].completeNumber > journey.step}
-			<details class="future">
-				<summary> <strong>{phase[0].name}</strong> </summary>
-			</details>
+								{#if step[0].number == 3}
+									<SearchProfile {journey} />
+								{/if}
+							</details>
+						{:else}
+							<details class="future">
+								<summary>
+									<i class={step[0].icon} />
+									{step[0].name}
+								</summary>
+								{#if step[0].number == 4}
+									<OfferCheatSheet {journey} />
+								{/if}
+							</details>
+						{/if}
+					{/each}
+				</details>
+			{:else if phase[0].completeNumber > journey.step}
+				<details class="future">
+					<summary> <strong>{phase[0].name}</strong> </summary>
+				</details>
+			{/if}
+		{/each}
+		{#if $currentUser.isAgent}
+			<div>
+				{#if journey.step > 1}
+					<button on:click={moveBackward(journey)} class="secondary outline"> Move back </button>
+				{/if}
+				{#if journey.step < 8}
+					<button on:click={moveForward(journey)}>Move forward</button>
+				{/if}
+			</div>
 		{/if}
-	{/each}
-	{#if $currentUser.isAgent}
-		<div>
-			{#if journey.step > 1}
-				<button on:click={moveBackward(journey)} class="secondary outline"> Move back </button>
-			{/if}
-			{#if journey.step < 8}
-				<button on:click={moveForward(journey)}>Move forward</button>
-			{/if}
-		</div>
-	{/if}
+	</div>
 {/if}
-
-<style>
-	div {
-		display: flex;
-	}
-
-	#checkmark {
-		color: lightgreen;
-	}
-
-	details {
-		border-bottom: none;
-	}
-
-	details[open] > summary {
-		color: inherit;
-	}
-
-	details summary:focus {
-		color: inherit;
-	}
-
-	#open {
-		border: #1095c1 2px solid;
-		padding: 1.5em 1em 1.5em 1em;
-		border-radius: 1em;
-	}
-
-	#open > summary {
-		font-size: 1.6em;
-		color: inherit;
-		padding-bottom: 2rem;
-	}
-
-	#openStep {
-		border-bottom: #1095c1 2px solid;
-	}
-
-	.completed {
-		font-size: small;
-	}
-
-	.future {
-		font-size: small;
-	}
-</style>
