@@ -5,7 +5,7 @@
 	$: path = $page.url.pathname;
 </script>
 
-<div class="container btm-nav border-t border-nav-border">
+<div class="container btm-nav border-t border-nav-border z-40">
 	<!-- <button
 		class={path === '/chat' ? 'active' : ''}
 		on:click={() => {
