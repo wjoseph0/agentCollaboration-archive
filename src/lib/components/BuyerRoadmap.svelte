@@ -112,20 +112,26 @@
 
 {#if journey}
 	<div>
-		{#each steps as step}
-			<div class="card w-96 bg-base-100 shadow-xl">
-				<figure>
-					<img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
-				</figure>
-				<div class="card-body h-50">
-					<h2 class="card-title">{step.name}</h2>
-					<p />
-					<div class="card-actions justify-end">
-						<button class="btn btn-primary">Do Action</button>
-					</div>
-				</div>
-			</div>
-		{/each}
+		<section class="flex">
+			<ul class="steps steps-vertical">
+				{#each steps as step}
+					<li class="step h-screen">
+						<div class="card w-96 bg-base-100 shadow-xl">
+							<figure>
+								<img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
+							</figure>
+							<div class="card-body h-50">
+								<h2 class="card-title">{step.name}</h2>
+								<p />
+								<div class="card-actions justify-end">
+									<button class="btn btn-primary">Do Action</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				{/each}
+			</ul>
+		</section>
 		{#if $currentUser.isAgent}
 			<div>
 				{#if journey.step > 1}
