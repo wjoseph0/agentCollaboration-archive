@@ -35,11 +35,17 @@
 		<article>
 			<h1>Upload File</h1>
 			<form on:submit|preventDefault={uploadFile}>
-				<input type="text" bind:value={fileName} placeholder="Name" required />
-				<input type="file" bind:files={newFile} required />
+				<input
+					type="text"
+					class="input input-bordered"
+					bind:value={fileName}
+					placeholder="Name"
+					required
+				/>
+				<input type="file" class="file-input" bind:files={newFile} required />
 				<div>
-					<button type="submit">Upload</button>
-					<button type="button" class="secondary outline" on:click={formVisibilty}>Cancel</button>
+					<button type="submit" class="btn">Upload</button>
+					<button type="button" class="btn" on:click={formVisibilty}>Cancel</button>
 				</div>
 			</form>
 		</article>
@@ -47,5 +53,5 @@
 {/if}
 
 {#if !showForm}
-	<button class="outline" on:click={formVisibilty}>New</button>
+	<button class="btn btn-primary" on:click={formVisibilty}>New</button>
 {/if}
