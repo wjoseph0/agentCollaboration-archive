@@ -111,14 +111,14 @@
 </script>
 
 {#if journey}
-	<div>
-		<section class="flex">
+	<div class="">
+		<section class="flex justify-center">
 			<ul class="steps steps-vertical">
 				{#each steps as step}
 					<li class="step h-screen">
 						<div class="card w-96 bg-base-100 shadow-xl">
 							<figure>
-								<img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
+								<img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="" />
 							</figure>
 							<div class="card-body h-50">
 								<h2 class="card-title">{step.name}</h2>
