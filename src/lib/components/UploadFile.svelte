@@ -2,8 +2,8 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 
 	let uploadFileForm;
-	let newFile;
 	let fileName;
+	let newFile;
 
 	const uploadFile = async () => {
 		const formData = new FormData();
@@ -18,6 +18,8 @@
 		}
 		await pb.collection('files').create(formData);
 		uploadFileForm.close();
+		fileName = undefined;
+		newFile = null;
 	};
 </script>
 
@@ -36,7 +38,9 @@
 		<input type="file" class="file-input" bind:files={newFile} required />
 		<div class="modal-action">
 			<!-- if there is a button in form, it will close the modal -->
-			<button class="btn btn-secondary btn-outline" onclick="uploadFile.close()">Cancel</button>
+			<button class="btn btn-secondary btn-outline" type="button" onclick="uploadFile.close()"
+				>Cancel</button
+			>
 			<button class="btn btn-primary" type="submit"> Upload </button>
 		</div>
 	</form>
