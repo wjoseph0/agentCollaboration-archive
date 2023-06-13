@@ -1,7 +1,7 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
 
-	let showForm = false;
+	let uploadFileForm;
 	let newFile;
 	let fileName;
 
@@ -17,41 +17,27 @@
 			formData.append('client', $currentUser.id);
 		}
 		await pb.collection('files').create(formData);
-		formVisibilty();
-	};
-
-	const formVisibilty = () => {
-		if (showForm === true) {
-			showForm = false;
-			return;
-		}
-
-		showForm = true;
+		uploadFileForm.close();
 	};
 </script>
 
-{#if showForm}
-	<dialog open>
-		<article>
-			<h1>Upload File</h1>
-			<form on:submit|preventDefault={uploadFile}>
-				<input
-					type="text"
-					class="input input-bordered"
-					bind:value={fileName}
-					placeholder="Name"
-					required
-				/>
-				<input type="file" class="file-input" bind:files={newFile} required />
-				<div>
-					<button type="submit" class="btn">Upload</button>
-					<button type="button" class="btn" on:click={formVisibilty}>Cancel</button>
-				</div>
-			</form>
-		</article>
-	</dialog>
-{/if}
-
-{#if !showForm}
-	<button class="btn btn-primary" on:click={formVisibilty}>New</button>
-{/if}
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn btn-primary" onclick="uploadFile.showModal()">Upload File</button>
+<dialog bind:this={uploadFileForm} id="uploadFile" class="modal modal-bottom sm:modal-middle">
+	<form method="dialog" class="modal-box" on:submit|preventDefault={uploadFile}>
+		<h3 class="font-bold text-lg">Upload a file</h3>
+		<input
+			type="text"
+			class="input input-bordered"
+			bind:value={fileName}
+			placeholder="File Name"
+			required
+		/>
+		<input type="file" class="file-input" bind:files={newFile} required />
+		<div class="modal-action">
+			<!-- if there is a button in form, it will close the modal -->
+			<button class="btn btn-secondary btn-outline" onclick="uploadFile.close()">Cancel</button>
+			<button class="btn btn-primary" type="submit"> Upload </button>
+		</div>
+	</form>
+</dialog>
