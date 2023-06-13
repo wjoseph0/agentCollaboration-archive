@@ -4,7 +4,7 @@
 	const shareData = {
 		title: 'Agentpad',
 		text: "Hi! Let's use Agentpad to collaborate!",
-		url: `https://agentpadapp.com/signup/${$currentUser.id}`
+		url: `https://app.agentpadapp.com/signup/${$currentUser.id}`
 	};
 
 	const share = async () => {
@@ -12,4 +12,4 @@
 	};
 </script>
 
-<a href="#top" role="button" on:click={share}>Invite</a>
+<button class="btn" on:click={share}>Invite</button>
