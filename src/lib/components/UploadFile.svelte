@@ -26,7 +26,7 @@
 <!-- Open the modal using ID.showModal() method -->
 <button class="btn btn-primary" onclick="uploadFile.showModal()">Upload File</button>
 <dialog bind:this={uploadFileForm} id="uploadFile" class="modal modal-bottom sm:modal-middle">
-	<form method="dialog" class="modal-box" on:submit|preventDefault={uploadFile}>
+	<form method="dialog" class="modal-box space-y-3" on:submit|preventDefault={uploadFile}>
 		<h3 class="font-bold text-lg">Upload a file</h3>
 		<input
 			type="text"
