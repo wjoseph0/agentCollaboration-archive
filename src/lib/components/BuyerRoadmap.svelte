@@ -51,60 +51,45 @@
 		{
 			number: '1',
 			name: 'Form Agency',
-			icon: 'bi bi-people-fill',
-			desc: 'This is where you will officially hire your real estate agent to represent you during your journey.',
-			link: 'https://study.com/learn/lesson/real-estate-agency-overview-types.html'
+			desc: 'This is where you will hire your real estate agent to represent you during your journey.'
 		},
 
 		{
 			number: '2',
 			name: 'Mortgage Pre-Approval',
-			icon: 'bi bi-hand-thumbs-up-fill',
-			desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
-			link: 'https://www.zillow.com/mortgage-learning/pre-approval/'
+			desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*'
 		},
 
 		{
 			number: '3',
 			name: 'Preview Homes',
-			icon: 'bi bi-search-heart-fill',
-			desc: 'This is where you will start to tour homes and make offers on the ones you like!',
-			link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
+			desc: 'This is where you will start to tour homes and make offers on the ones you like!'
 		},
 		{
 			number: '4',
 			name: 'Make Offer',
-			icon: 'bi bi-envelope-paper-fill',
-			desc: 'This is where you will start to tour homes and make offers on the ones you like!',
-			link: 'https://www.realtor.com/advice/buy/the-basics-of-making-an-offer-on-a-house/'
+			desc: 'This is where you will start to tour homes and make offers on the ones you like!'
 		},
 
 		{
 			number: '5',
 			name: 'Accepted Offer',
-			icon: 'bi bi-envelope-paper-heart-fill',
-			desc: 'Your closing journey begins!',
-			link: 'https://www.realtor.com/advice/buy/my-offer-was-accepted-now-what/'
+			desc: 'Your closing journey begins!'
 		},
 		{
 			number: '6',
 			name: 'Contingencies',
-			icon: 'bi bi-list-ol',
-			desc: 'Now we will handle any contingencies we set in the offer.',
-			link: ''
+			desc: 'Now we will handle any contingencies we set in the offer.'
 		},
 		{
 			number: '7',
 			name: 'Final Walk-Through',
-			icon: 'bi bi-arrow-through-heart-fill',
-			desc: '',
-			link: ''
+			desc: ''
 		},
 		{
 			number: '8',
 			name: 'Closing Day',
-			icon: 'bi bi-key-fill',
-			desc: 'The home stretch! This is where you will sign paperwork and recieve the keys!',
+			desc: 'The home stretch! This is where you will sign paperwork and receive the keys!',
 			link: ''
 		}
 	];
@@ -118,13 +103,15 @@
 					<li class="step h-screen w-fit">
 						<div class="card w-auto bg-base-100 shadow-xl">
 							<figure>
-								<img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="" />
+								<img src={step.img} alt="" />
 							</figure>
 							<div class="card-body h-50">
 								<h2 class="card-title">{step.name}</h2>
 								<p />
 								<div class="card-actions justify-end">
-									<button class="btn btn-primary">Do Action</button>
+									{#if step.name === 'Make Offer'}
+										<OfferCheatSheet {journey} />
+									{/if}
 								</div>
 							</div>
 						</div>
@@ -132,15 +119,5 @@
 				{/each}
 			</ul>
 		</section>
-		{#if $currentUser.isAgent}
-			<div>
-				{#if journey.step > 1}
-					<button on:click={moveBackward(journey)} class="secondary outline"> Move back </button>
-				{/if}
-				{#if journey.step < 8}
-					<button on:click={moveForward(journey)}>Move forward</button>
-				{/if}
-			</div>
-		{/if}
 	</div>
 {/if}
