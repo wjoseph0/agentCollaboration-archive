@@ -107,7 +107,7 @@
 							</figure>
 							<div class="card-body h-50">
 								<h2 class="card-title">{step.name}</h2>
-								<p />
+								<p>{step.desc}</p>
 								<div class="card-actions justify-end">
 									{#if step.name === 'Preview Homes'}
 										<SearchProfile {journey} />
