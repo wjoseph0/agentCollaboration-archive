@@ -4,7 +4,7 @@
 	const shareData = {
 		title: 'Agentpad',
 		text: "Hi! Let's use Agentpad to collaborate!",
-		url: `https://app.agentpadapp.com/signup/${$currentUser.id}`
+		url: `https://agentpadapp.com/signup/${$currentUser.id}`
 	};
 
 	const share = async () => {
