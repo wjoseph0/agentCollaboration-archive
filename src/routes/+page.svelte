@@ -22,28 +22,7 @@
 	{:else}
 		<main class="container">
 			<ClientBanner />
-
-			<section>
-				<BuyerRoadmap />
-			</section>
+			<BuyerRoadmap />
 		</main>
 	{/if}
 {/if}
-
-<style>
-	main {
-		height: 90vh;
-		padding-top: 0;
-		padding-bottom: 0;
-		overflow-y: scroll;
-		scrollbar-width: none;
-	}
-
-	section {
-		margin-top: 4rem;
-	}
-
-	::-webkit-scrollbar {
-		display: none;
-	}
-</style>

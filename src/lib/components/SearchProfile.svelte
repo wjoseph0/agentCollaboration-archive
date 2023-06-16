@@ -12,7 +12,7 @@
 	let bed;
 	let bath;
 	let timelineToClose;
-	let modalVisible = false;
+	let searchProfileForm;
 
 	$: if ($currentUser.isAgent) {
 		buyerName = `${$currentUser.expand.focusedClient.fname} ${$currentUser.expand.focusedClient.lname}`;
@@ -49,95 +49,79 @@
 	async function setSearchProfile() {
 		if (searchProfile) {
 			searchProfile = await pb.collection('search_profiles').update(searchProfile.id, data);
-			toggleModal();
+			searchProfileForm.close();
 			return;
 		}
 
 		searchProfile = await pb.collection('search_profiles').create(data);
-		toggleModal();
-	}
-
-	function toggleModal() {
-		if (modalVisible === true) {
-			modalVisible = false;
-			return;
-		}
-		modalVisible = true;
+		searchProfileForm.close();
 	}
 </script>
 
-<div class="container">
-	{#if searchProfile}
-		<a href="#top" on:click={toggleModal}>View search profile</a>
-	{:else}
-		{#await searchProfilePromise}
-			<!-- svelte-ignore a11y-missing-content -->
-			<a href="#top" aria-busy="true" />
-		{:then}
-			<a href="#top" on:click={toggleModal}>View search profile</a>
-		{:catch}
-			<a href="#top" on:click={toggleModal}>Fill out search profile</a>
-		{/await}
-	{/if}
-</div>
+<button class="btn btn-primary" onclick="searchProfile.showModal()">Search Profile</button>
+<dialog bind:this={searchProfileForm} id="searchProfile" class="modal modal-bottom sm:modal-middle">
+	<form
+		method="dialog"
+		class="modal-box space-y-3 overflow-y-auto prose"
+		on:submit|preventDefault={setSearchProfile}
+	>
+		<h3>Search Profile</h3>
 
-{#if modalVisible}
-	<dialog open>
-		<article>
-			<!-- svelte-ignore a11y-missing-content -->
-			<a
-				href="#top"
-				aria-label="Close"
-				class="close"
-				data-target="modal-example"
-				on:click={toggleModal}
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="buyerName">
+				<span class="label-text">Buyer's Name</span>
+			</label>
+			<input bind:value={buyerName} type="text" name="buyerName" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="priceRange">
+				<span class="label-text">Price Range</span>
+			</label>
+			<input bind:value={priceRange} type="text" name="priceRange" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="location">
+				<span class="label-text">Location</span>
+			</label>
+			<input bind:value={location} type="text" name="location" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="bed">
+				<span class="label-text">Bedrooms</span>
+			</label>
+			<input bind:value={bed} type="number" name="bed" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="bath">
+				<span class="label-text">Bathrooms</span>
+			</label>
+			<input bind:value={bath} type="number" name="bath" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="timelineToClose">
+				<span class="label-text">Closing Date</span>
+			</label>
+			<input
+				bind:value={timelineToClose}
+				type="date"
+				name="timelineToClose"
+				class="input input-bordered"
 			/>
-			<h1>Search Profile</h1>
-			<form>
-				<label>
-					Buyer's Name
-					<input bind:value={buyerName} type="text" />
-				</label>
+		</div>
 
-				<label>
-					Price Range
-					<input bind:value={priceRange} type="text" />
-				</label>
+		<div class="divider" />
 
-				<label>
-					Location
-					<input bind:value={location} type="text" />
-				</label>
-
-				<label>
-					Bedrooms
-					<input bind:value={bed} type="number" />
-				</label>
-
-				<label>
-					Bathrooms
-					<input bind:value={bath} type="number" />
-				</label>
-
-				<label>
-					Closing Date
-					<input bind:value={timelineToClose} type="date" />
-				</label>
-			</form>
-			<footer>
-				<a href="#top" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
-				{#if searchProfile}
-					<a href="#top" role="button" on:click={setSearchProfile}>Update</a>
-				{:else}
-					<a href="#top" role="button" on:click={setSearchProfile}>Submit</a>
-				{/if}
-			</footer>
-		</article>
-	</dialog>
-{/if}
-
-<style>
-	.container {
-		padding-top: 0.5em;
-	}
-</style>
+		<div class="modal-action">
+			<!-- if there is a button in form, it will close the modal -->
+			<button class="btn btn-secondary btn-outline" type="button" onclick="searchProfile.close()"
+				>Cancel</button
+			>
+			<button class="btn btn-primary" type="submit"> Save </button>
+		</div>
+	</form>
+</dialog>

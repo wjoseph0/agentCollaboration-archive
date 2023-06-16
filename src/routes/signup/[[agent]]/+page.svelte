@@ -4,7 +4,7 @@
 	import { browser } from '$app/environment';
 
 	$: if (browser && $currentUser) {
-		goto('/account');
+		goto('/');
 	}
 
 	export let data;
@@ -34,58 +34,62 @@
 					expand: 'agent,clients,focusedClient'
 				}
 			);
-			goto('/account');
+			goto('/');
 		} catch (err) {
 			console.error(err);
 		}
 	};
 </script>
 
-<main class="container">
-	<h1>Create an account</h1>
+<main class="container prose flex flex-col justify-center h-screen">
+	<h1 class="text-center">Sign Up</h1>
 
-	<form on:submit|preventDefault={signUp}>
-		<input placeholder="First Name" type="text" bind:value={fname} required />
-		<input placeholder="Last Name" type="text" bind:value={lname} required />
-		<input placeholder="Email" type="email" bind:value={email} required />
-		<input placeholder="Password" type="password" bind:value={password} minlength="8" required />
-		<button>Signup</button>
+	<form on:submit|preventDefault={signUp} class="flex flex-col space-y-3">
+		<input
+			placeholder="First Name"
+			type="text"
+			class="input input-bordered"
+			bind:value={fname}
+			required
+		/>
+		<input
+			placeholder="Last Name"
+			type="text"
+			class="input input-bordered"
+			bind:value={lname}
+			required
+		/>
+		<input
+			placeholder="Email"
+			type="email"
+			class="input input-bordered"
+			bind:value={email}
+			required
+		/>
+		<input
+			placeholder="Password"
+			type="password"
+			class="input input-bordered"
+			bind:value={password}
+			minlength="8"
+			required
+		/>
+		<p class="text-center text-xs">
+			By clicking "Sign Up" below, I accept the <a
+				href="https://app.termly.io/document/terms-and-conditions/ebafceeb-c35c-4515-9797-9f7b45202ab0"
+				class="link link-primary link-hover">Terms and Conditions</a
+			>. Your
+			<a
+				class="link link-primary link-hover"
+				href="https://app.termly.io/document/privacy-policy/bc7e25ed-f732-455f-98f9-e97843ec792a"
+			>
+				privacy
+			</a> is protected.
+		</p>
+		<button class="btn btn-primary">Sign Up</button>
 	</form>
 
-	<a href="/login">I have an account!</a>
+	<p class="text-center text-sm">
+		Have an account already? <a href="/login" class="link link-primary link-hover">Sign in</a> here now.
+	</p>
 </main>
-
-<footer>
-	<a href="https://app.termly.io/document/privacy-policy/bc7e25ed-f732-455f-98f9-e97843ec792a">
-		Privacy Policy
-	</a>
-
-	<a
-		href="https://app.termly.io/document/terms-and-conditions/ebafceeb-c35c-4515-9797-9f7b45202ab0"
-	>
-		Terms and Conditions
-	</a>
-
-	<a href="https://app.termly.io/document/disclaimer/80837b1b-cd4d-47e0-bec7-b39ceb8646d2">
-		Disclaimer
-	</a>
-
-	<a
-		href="https://app.termly.io/document/acceptable-use-policy/c8445309-d475-4d68-bf8e-675ca412faf3"
-	>
-		Acceptable Use Policy
-	</a>
-</footer>
-
-<style>
-	footer {
-		position: fixed;
-		bottom: 0;
-		text-align: center;
-		font-size: x-small;
-	}
-
-	footer > a {
-		padding: 0 0.2em;
-	}
-</style>

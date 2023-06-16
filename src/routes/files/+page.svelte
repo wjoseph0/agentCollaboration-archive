@@ -53,7 +53,6 @@
 		</div>
 	{:else}
 		<main class="container">
-			<ClientBanner />
 			{#if $currentUser.isAgent}
 				<section id="filesContainerAgent">
 					<Files {files} />
@@ -63,6 +62,7 @@
 					<MyFiles {files} />
 				</section>
 			{:else}
+				<ClientBanner />
 				<section id="filesContainerClient">
 					<Files {files} />
 				</section>

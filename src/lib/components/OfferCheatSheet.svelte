@@ -23,10 +23,11 @@
 	let radonTest;
 	let sellerClosingCostCredit;
 	let homeWarranty;
+	let condo;
 	let condoFee;
 	let parking;
 	let storageUnit;
-	let modalVisible = false;
+	let cheatsheetForm;
 
 	if ($currentUser.isAgent) {
 		buyerName = `${$currentUser.expand.focusedClient.fname} ${$currentUser.expand.focusedClient.lname}`;
@@ -89,162 +90,239 @@
 	async function setOfferCheatSheet() {
 		if (cheatsheet) {
 			cheatsheet = await pb.collection('cheatsheets').update(cheatsheet.id, data);
-			toggleModal();
+			cheatsheetForm.close();
 			return;
 		}
 
 		cheatsheet = await pb.collection('cheatsheets').create(data);
-		toggleModal();
-	}
-
-	function toggleModal() {
-		if (modalVisible === true) {
-			modalVisible = false;
-			return;
-		}
-		modalVisible = true;
+		cheatsheetForm.close();
 	}
 </script>
 
-<div class="container">
-	{#if cheatsheet}
-		<a href="#top" on:click={toggleModal}>View cheat sheet</a>
-	{:else}
-		{#await cheatsheetPromise}
-			<!-- svelte-ignore a11y-missing-content -->
-			<a href="#top" aria-busy="true" />
-		{:then}
-			<a href="#top" on:click={toggleModal}>View cheat sheet</a>
-		{:catch}
-			<a href="#top" on:click={toggleModal}>Fill out cheat sheet</a>
-		{/await}
-	{/if}
-</div>
-
-{#if modalVisible}
-	<dialog open>
-		<article>
-			<!-- svelte-ignore a11y-missing-content -->
-			<a
-				href="#top"
-				aria-label="Close"
-				class="close"
-				data-target="modal-example"
-				on:click={toggleModal}
+<button class="btn btn-primary" onclick="cheatsheet.showModal()">Offer Cheatsheet</button>
+<dialog bind:this={cheatsheetForm} id="cheatsheet" class="modal modal-bottom sm:modal-middle">
+	<form
+		method="dialog"
+		class="modal-box space-y-3 overflow-y-auto prose"
+		on:submit|preventDefault={setOfferCheatSheet}
+	>
+		<h3>Offer Cheatsheet</h3>
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="buyerName">
+				<span class="label-text">Buyer's name</span>
+			</label>
+			<input
+				bind:value={buyerName}
+				type="text"
+				name="buyerName"
+				class="input input-bordered"
+				required
 			/>
-			<h1>Offer to Purchase</h1>
-			<form>
-				<label>
-					Buyer's name
-					<input bind:value={buyerName} type="text" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="purchasePrice">
+				<span class="label-text">Purchase price</span>
+			</label>
+			<input
+				bind:value={purchasePrice}
+				type="text"
+				name="purchasePrice"
+				class="input input-bordered"
+			/>
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="earnestMoney">
+				<span class="label-text">Earnest money</span>
+			</label>
+			<input
+				bind:value={earnestMoney}
+				type="text"
+				name="earnestMoney"
+				class="input input-bordered"
+			/>
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="inclusions">
+				<span class="label-text">Inclusions</span>
+			</label>
+			<input bind:value={inclusions} type="text" name="inclusions" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="exclusions">
+				<span class="label-text">Exclusions</span>
+			</label>
+			<input bind:value={exclusions} type="text" name="exclusions" class="input input-bordered" />
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="bindingAcceptance">
+				<span class="label-text">Binding Acceptance</span>
+			</label>
+			<input
+				bind:value={bindingAcceptance}
+				type="date"
+				name="bindingAcceptance"
+				class="input input-bordered"
+			/>
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="closingDate">
+				<span class="label-text">Closing date</span>
+			</label>
+			<input bind:value={closingDate} type="date" name="closingDate" class="input input-bordered" />
+		</div>
+
+		<div class="divider" />
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="financingContingency">
+				<span class="label-text">Financing Contingency</span>
+			</label>
+			<input
+				bind:checked={financingContingency}
+				type="checkbox"
+				name="financingContingency"
+				class="checkbox"
+			/>
+		</div>
+
+		{#if financingContingency}
+			<div class="form-control w-full max-w-xs">
+				<label class="label" for="loanType">
+					<span class="label-text">Loan Type </span>
 				</label>
+				<input type="text" bind:value={loanType} name="loanType" class="input input-bordered" />
 
-				<label>
-					Purchase price
-					<input bind:value={purchasePrice} type="text" />
+				<label class="label" for="downPayment">
+					<span class="label-text">Down Payment </span>
 				</label>
+				<input
+					type="text"
+					bind:value={downPayment}
+					name="downPayment"
+					class="input input-bordered"
+				/>
 
-				<label>
-					Earnest money
-					<input bind:value={earnestMoney} type="text" />
+				<label class="label" for="interestRate">
+					<span class="label-text">Interest Rate </span>
 				</label>
+				<input
+					type="text"
+					bind:value={interestRate}
+					name="interestRate"
+					class="input input-bordered"
+				/>
+			</div>
+		{/if}
 
-				<label>
-					Inclusions
-					<input bind:value={inclusions} type="text" />
+		<div class="divider" />
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="appraisalContingency">
+				<span class="label-text">Appraisal Contingency</span>
+			</label>
+			<input
+				bind:checked={appraisalContingency}
+				type="checkbox"
+				name="appraisalContingency"
+				class="checkbox"
+			/>
+		</div>
+
+		<div class="divider" />
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="inspectionContingency">
+				<span class="label-text">Inspection Contingency</span>
+			</label>
+			<input
+				bind:checked={inspectionContingency}
+				type="checkbox"
+				name="inspectionContingency"
+				class="checkbox"
+			/>
+		</div>
+
+		{#if inspectionContingency}
+			<div class="form-control w-full max-w-xs">
+				<label class="label" for="rightToCure">
+					<span class="label-text">Right to Cure</span>
 				</label>
-
-				<label>
-					Exclusions
-					<input bind:value={exclusions} type="text" />
+				<input bind:checked={rightToCure} type="checkbox" name="rightToCure" class="checkbox" />
+				<label class="label" for="radonTest">
+					<span class="label-text">Radon Test</span>
 				</label>
+				<input bind:checked={radonTest} type="checkbox" name="radonTest" class="checkbox" />
+			</div>
+		{/if}
 
-				<label>
-					Binding Acceptance
-					<input bind:value={bindingAcceptance} type="date" />
+		<div class="divider" />
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="sellerClosingCostCredit">
+				<span class="label-text">Seller Closing Cost Credit</span>
+			</label>
+			<input
+				bind:value={sellerClosingCostCredit}
+				type="text"
+				name="sellerClosingCostCredit"
+				class="input input-bordered"
+			/>
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="homeWarranty">
+				<span class="label-text">Home Warranty</span>
+			</label>
+			<input bind:checked={homeWarranty} type="checkbox" name="homeWarranty" class="checkbox" />
+		</div>
+
+		<div class="divider" />
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="condo">
+				<span class="label-text">Condo</span>
+			</label>
+			<input bind:checked={condo} type="checkbox" name="condo" class="checkbox" />
+		</div>
+
+		{#if condo}
+			<div class="form-control w-full max-w-xs">
+				<label class="label" for="condoFee">
+					<span class="label-text">Fee per month</span>
 				</label>
+				<input bind:value={condoFee} type="text" name="condoFee" class="input input-bordered" />
 
-				<label>
-					Closing date
-					<input bind:value={closingDate} type="date" />
+				<label class="label" for="parking">
+					<span class="label-text">Parking</span>
 				</label>
+				<input bind:value={parking} type="text" name="parking" class="input input-bordered" />
 
-				<label>
-					Financing Contingency
-					<input bind:checked={financingContingency} type="checkbox" />
+				<label class="label" for="storageUnit">
+					<span class="label-text">Storage unit</span>
 				</label>
+				<input
+					bind:value={storageUnit}
+					type="text"
+					name="storageUnit"
+					class="input input-bordered"
+				/>
+			</div>
+		{/if}
 
-				{#if financingContingency}
-					<label>Loan Type <input type="text" bind:value={loanType} /></label>
-					<label>Down Payment <input type="text" bind:value={downPayment} /></label>
-					<label>Interest Rate <input type="text" bind:value={interestRate} /></label>
-				{/if}
+		<div class="divider" />
 
-				<label>
-					Appraisal Contingency
-					<input bind:checked={appraisalContingency} type="checkbox" />
-				</label>
-
-				<label>
-					Inspection Contingency
-					<input bind:checked={inspectionContingency} type="checkbox" />
-				</label>
-
-				{#if inspectionContingency}
-					<label>Right to Cure <input bind:checked={rightToCure} type="checkbox" /></label>
-					<label>Radon Test <input bind:checked={radonTest} type="checkbox" /></label>
-				{/if}
-
-				<label id="sellerCredit">
-					Seller Closing Cost Credit
-					<input bind:value={sellerClosingCostCredit} type="text" />
-				</label>
-
-				<label>
-					Home Warranty?
-					<input bind:checked={homeWarranty} type="checkbox" />
-				</label>
-
-				<details>
-					<summary>Condo?</summary>
-					<label>
-						Fee per month
-						<input bind:value={condoFee} type="text" />
-					</label>
-
-					<label>
-						Parking
-						<input bind:value={parking} type="text" />
-					</label>
-
-					<label>
-						Storage unit
-						<input bind:value={storageUnit} type="text" />
-					</label>
-				</details>
-			</form>
-			<footer>
-				<a href="#top" role="button" class="secondary" on:click={toggleModal}> Cancel </a>
-				{#if cheatsheet}
-					<a href="#top" role="button" on:click={setOfferCheatSheet}>Update</a>
-				{:else}
-					<a href="#top" role="button" on:click={setOfferCheatSheet}>Submit</a>
-				{/if}
-			</footer>
-		</article>
-	</dialog>
-{/if}
-
-<style>
-	.container {
-		padding-top: 0.5em;
-	}
-
-	#sellerCredit {
-		padding-top: 1em;
-	}
-
-	details {
-		padding-top: 2em;
-	}
-</style>
+		<div class="modal-action">
+			<!-- if there is a button in form, it will close the modal -->
+			<button class="btn btn-secondary btn-outline" type="button" onclick="cheatsheet.close()"
+				>Cancel</button
+			>
+			<button class="btn btn-primary" type="submit"> Save </button>
+		</div>
+	</form>
+</dialog>
