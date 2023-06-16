@@ -109,6 +109,9 @@
 								<h2 class="card-title">{step.name}</h2>
 								<p />
 								<div class="card-actions justify-end">
+									{#if step.name === 'Preview Homes'}
+										<SearchProfile {journey} />
+									{/if}
 									{#if step.name === 'Make Offer'}
 										<OfferCheatSheet {journey} />
 									{/if}

@@ -103,10 +103,10 @@
 <dialog bind:this={cheatsheetForm} id="cheatsheet" class="modal modal-bottom sm:modal-middle">
 	<form
 		method="dialog"
-		class="modal-box space-y-3 overflow-y-auto"
+		class="modal-box space-y-3 overflow-y-auto prose"
 		on:submit|preventDefault={setOfferCheatSheet}
 	>
-		<h3 class="font-bold text-lg">Offer Cheatsheet</h3>
+		<h3>Offer Cheatsheet</h3>
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="buyerName">
 				<span class="label-text">Buyer's name</span>
