@@ -51,46 +51,53 @@
 		{
 			number: '1',
 			name: 'Form Agency',
-			desc: 'This is where you will hire your real estate agent to represent you during your journey.'
+			desc: 'This is where you will hire your real estate agent to represent you during your journey.',
+			tasks: ['Make appoinment with your trusted Realtor']
 		},
 
 		{
 			number: '2',
 			name: 'Mortgage Pre-Approval',
-			desc: '*Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*'
+			desc: 'Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
+			tasks: ['Contact preferred lender']
 		},
 
 		{
 			number: '3',
 			name: 'Preview Homes',
-			desc: 'This is where you will start to tour homes and make offers on the ones you like!'
+			desc: 'This is where you will start to tour homes and make offers on the ones you like!',
+			tasks: ['']
 		},
 		{
 			number: '4',
 			name: 'Make Offer',
-			desc: 'This is where you will start to tour homes and make offers on the ones you like!'
+			desc: 'This is where you will start to tour homes and make offers on the ones you like!',
+			tasks: ['']
 		},
 
 		{
 			number: '5',
 			name: 'Accepted Offer',
-			desc: 'Your closing journey begins!'
+			desc: 'Your closing journey begins!',
+			tasks: ['']
 		},
 		{
 			number: '6',
 			name: 'Contingencies',
-			desc: 'Now we will handle any contingencies we set in the offer.'
+			desc: 'Now we will handle any contingencies we set in the offer.',
+			tasks: ['']
 		},
 		{
 			number: '7',
 			name: 'Final Walk-Through',
-			desc: ''
+			desc: '',
+			tasks: ['']
 		},
 		{
 			number: '8',
 			name: 'Closing Day',
 			desc: 'The home stretch! This is where you will sign paperwork and receive the keys!',
-			link: ''
+			tasks: ['']
 		}
 	];
 </script>
@@ -108,6 +115,13 @@
 							<div class="card-body h-50">
 								<h2 class="card-title">{step.name}</h2>
 								<p>{step.desc}</p>
+								<ul>
+									{#each step.tasks as task}
+										<li>
+											{task}
+										</li>
+									{/each}
+								</ul>
 								<div class="card-actions justify-end">
 									{#if step.name === 'Preview Homes'}
 										<SearchProfile {journey} />
