@@ -58,7 +58,7 @@
 		{
 			number: '2',
 			name: 'Mortgage Pre-Approval',
-			desc: 'Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.*',
+			desc: 'Getting pre-approved for a mortgage lets you know how much money you can borrow, the range of interest rates you qualify for and the different mortgage options available to you.',
 			tasks: ['Contact preferred lender']
 		},
 
