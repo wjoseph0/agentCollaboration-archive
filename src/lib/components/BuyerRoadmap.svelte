@@ -3,8 +3,10 @@
 	import { onMount, onDestroy } from 'svelte';
 	import OfferCheatSheet from '$lib/components/OfferCheatSheet.svelte';
 	import SearchProfile from '$lib/components/SearchProfile.svelte';
+	import StartJourney from './StartJourney.svelte';
 
 	let journey;
+	let noJourney;
 	let agent;
 	let client;
 
@@ -32,15 +34,19 @@
 		await pb.collection('journeys').update(journey.id, data);
 	}
 
-	$: onMount(async () => {
-		journey = await pb
-			.collection('journeys')
-			.getFirstListItem(`agent='${agent}' && client='${client}'`);
+	onMount(async () => {
+		try {
+			journey = await pb
+				.collection('journeys')
+				.getFirstListItem(`agent='${agent}' && client='${client}'`);
 
-		// Subscribe to changes only in the specified record
-		await pb.collection('journeys').subscribe(journey.id, async (e) => {
-			journey = e.record;
-		});
+			// Subscribe to changes only in the specified record
+			await pb.collection('journeys').subscribe(journey.id, async (e) => {
+				journey = e.record;
+			});
+		} catch (error) {
+			noJourney = true;
+		}
 	});
 
 	onDestroy(() => {
@@ -103,7 +109,7 @@
 </script>
 
 {#if journey}
-	<div class="">
+	<div>
 		<section class="flex justify-center">
 			<ul class="steps steps-vertical">
 				{#each steps as step}
@@ -136,5 +142,9 @@
 				{/each}
 			</ul>
 		</section>
+	</div>
+{:else if noJourney}
+	<div class="h-screen flex justify-center items-center">
+		<StartJourney />
 	</div>
 {/if}
