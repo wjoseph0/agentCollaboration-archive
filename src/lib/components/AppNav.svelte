@@ -54,7 +54,7 @@
 	</button> -->
 
 	<button
-		class={path === '/' ? 'bg-secondary/5 text-primary' : 'text-primary'}
+		class={path === '/' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
 		on:click={() => {
 			goto('/');
 		}}
@@ -92,7 +92,7 @@
 		{/if}
 	</button>
 	<button
-		class={path === '/files' ? 'bg-secondary/5 text-primary' : 'text-primary'}
+		class={path === '/files' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
 		on:click={() => {
 			goto('/files');
 		}}
@@ -129,7 +129,7 @@
 	</button>
 
 	<button
-		class={path === '/account' ? 'bg-secondary/5 text-primary' : 'text-primary'}
+		class={path === '/account' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
 		on:click={() => {
 			goto('/account');
 		}}
