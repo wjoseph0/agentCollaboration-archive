@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.agentpadapp.twa",
+        "sha256_cert_fingerprints": ["73:06:E9:5A:7A:38:EC:02:3B:F6:03:4E:36:49:12:B8:B2:0E:41:10:12:9A:E9:2F:3A:11:94:F3:C4:8E:43:D9"]
+      }
+    }]
