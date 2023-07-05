@@ -12,37 +12,67 @@
 	});
 </script>
 
-<div class="container prose">
-	<h1>Active Clients</h1>
-
-	<div class="container prose">
-		<h2>Preparation</h2>
-		{#each journeys as journey}
-			{#if journey.step == 1 || journey.step == 2}
-				<p>{journey.expand.client.fname} {journey.expand.client.lname}</p>
-				<p>{journey.step}</p>
-			{/if}
-		{/each}
-		<h2>Searching</h2>
-		{#each journeys as journey}
-			{#if journey.step == 3 || journey.step == 4}
-				<p>{journey.expand.client.fname} {journey.expand.client.lname}</p>
-				<p>{journey.step}</p>
-			{/if}
-		{/each}
-		<h2>Accepted Offer</h2>
-		{#each journeys as journey}
-			{#if journey.step == 5}
-				<p>{journey.expand.client.fname} {journey.expand.client.lname}</p>
-				<p>{journey.step}</p>
-			{/if}
-		{/each}
-		<h2>Closing</h2>
-		{#each journeys as journey}
-			{#if journey.step == 6 || journey.step == 7}
-				<p>{journey.expand.client.fname} {journey.expand.client.lname}</p>
-				<p>{journey.step}</p>
-			{/if}
-		{/each}
+<div class="container">
+	<div class="prose">
+		<h1>Active Clients</h1>
+	</div>
+	<div class="overflow-x-auto">
+		<table class="table">
+			<!-- head -->
+			<thead>
+				<tr>
+					<th>
+						<label>
+							<input type="checkbox" class="checkbox" />
+						</label>
+					</th>
+					<th>Name</th>
+					<th>Job</th>
+					<th>Favorite Color</th>
+					<th />
+				</tr>
+			</thead>
+			<tbody>
+				{#each journeys as journey}
+					<tr>
+						<th>
+							<label>
+								<input type="checkbox" class="checkbox" />
+							</label>
+						</th>
+						<td>
+							<div class="flex items-center space-x-3">
+								<div class="avatar placeholder">
+									<div class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12">
+										<span>JO</span>
+									</div>
+								</div>
+								<div>
+									<div class="font-bold">
+										{journey.expand.client.fname}
+										{journey.expand.client.lname}
+									</div>
+								</div>
+							</div>
+						</td>
+						<td> Zemlak, Daniel and Leannon </td>
+						<td>Purple</td>
+						<th>
+							<button class="btn btn-ghost btn-xs">details</button>
+						</th>
+					</tr>
+				{/each}
+			</tbody>
+			<!-- foot -->
+			<tfoot>
+				<tr>
+					<th />
+					<th>Name</th>
+					<th>Job</th>
+					<th>Favorite Color</th>
+					<th />
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 </div>
