@@ -44,8 +44,12 @@
 						<td>
 							<div class="flex items-center space-x-3">
 								<div class="avatar placeholder">
-									<div class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12">
-										<span>JO</span>
+									<div
+										class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12 prose"
+									>
+										<span>
+											{journey.expand.client.fname[0]}{journey.expand.client.lname[0]}
+										</span>
 									</div>
 								</div>
 								<div>
@@ -56,8 +60,17 @@
 								</div>
 							</div>
 						</td>
-						<td><div class="badge badge-primary">Searching</div> </td>
-
+						<td>
+							{#if journey.step < 3}
+								<div class="badge badge-neutral">Preparation</div>
+							{:else if journey.step < 5}
+								<div class="badge badge-secondary">Searching</div>
+							{:else if journey.step < 6}
+								<div class="badge badge-primary">Accepted Offer</div>
+							{:else if journey.step > 5}
+								<div class="badge badge-accent">Closing</div>
+							{/if}
+						</td>
 						<th>
 							<button class="btn btn-ghost btn-xs">details</button>
 						</th>
