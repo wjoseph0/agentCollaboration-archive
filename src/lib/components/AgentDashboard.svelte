@@ -16,8 +16,9 @@
 	<div class="prose">
 		<h1>Active Clients</h1>
 	</div>
+	<br />
 	<div class="overflow-x-auto">
-		<table class="table">
+		<table class="table sm:table-xs">
 			<!-- head -->
 			<thead>
 				<tr>
@@ -27,8 +28,8 @@
 						</label>
 					</th>
 					<th>Name</th>
-					<th>Job</th>
-					<th>Favorite Color</th>
+					<th>Stage</th>
+
 					<th />
 				</tr>
 			</thead>
@@ -55,8 +56,8 @@
 								</div>
 							</div>
 						</td>
-						<td> Zemlak, Daniel and Leannon </td>
-						<td>Purple</td>
+						<td><div class="badge badge-primary">Searching</div> </td>
+
 						<th>
 							<button class="btn btn-ghost btn-xs">details</button>
 						</th>
@@ -68,8 +69,7 @@
 				<tr>
 					<th />
 					<th>Name</th>
-					<th>Job</th>
-					<th>Favorite Color</th>
+					<th>Stage</th>
 					<th />
 				</tr>
 			</tfoot>
