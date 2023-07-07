@@ -15,7 +15,7 @@
 	let searchProfileForm;
 
 	$: if ($currentUser.isAgent) {
-		buyerName = `${$currentUser.expand.focusedClient.fname} ${$currentUser.expand.focusedClient.lname}`;
+		buyerName = `${journey.expand.client.fname} ${journey.expand.client.lname}`;
 	} else {
 		buyerName = `${$currentUser.fname} ${$currentUser.lname}`;
 	}
@@ -58,13 +58,21 @@
 	}
 </script>
 
-<button class="btn btn-primary" onclick="searchProfile.showModal()">Search Profile</button>
-<dialog bind:this={searchProfileForm} id="searchProfile" class="modal modal-bottom sm:modal-middle">
+<span class="btn btn-primary" onclick="sp{journey.id}.showModal()">Search Profile</span>
+<dialog
+	bind:this={searchProfileForm}
+	id="sp{journey.id}"
+	class="modal modal-bottom sm:modal-middle"
+>
 	<form
 		method="dialog"
 		class="modal-box space-y-3 overflow-y-auto prose"
 		on:submit|preventDefault={setSearchProfile}
 	>
+		<span
+			class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+			onclick="sp{journey.id}.close()">✕</span
+		>
 		<h3>Search Profile</h3>
 
 		<div class="form-control w-full max-w-xs">
@@ -118,10 +126,13 @@
 
 		<div class="modal-action">
 			<!-- if there is a button in form, it will close the modal -->
-			<button class="btn btn-secondary btn-outline" type="button" onclick="searchProfile.close()"
+			<button class="btn btn-secondary btn-outline" type="button" onclick="sp{journey.id}.close()"
 				>Cancel</button
 			>
 			<button class="btn btn-primary" type="submit"> Save </button>
 		</div>
+	</form>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
 	</form>
 </dialog>

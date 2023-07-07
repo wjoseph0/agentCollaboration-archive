@@ -1,6 +1,4 @@
 <script>
-	import { pb, currentUser } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
 	import OfferCheatSheet from '$lib/components/OfferCheatSheet.svelte';
 	import SearchProfile from '$lib/components/SearchProfile.svelte';
 	import Files from './Files.svelte';
