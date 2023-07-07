@@ -5,7 +5,7 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Name</th>
+			<th />
 		</tr>
 	</thead>
 	<tbody>

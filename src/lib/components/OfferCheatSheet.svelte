@@ -30,7 +30,7 @@
 	let cheatsheetForm;
 
 	if ($currentUser.isAgent) {
-		buyerName = `${$currentUser.expand.focusedClient.fname} ${$currentUser.expand.focusedClient.lname}`;
+		buyerName = `${journey.expand.client.fname} ${journey.expand.client.lname}`;
 	} else {
 		buyerName = `${$currentUser.fname} ${$currentUser.lname}`;
 	}
@@ -99,13 +99,17 @@
 	}
 </script>
 
-<button class="btn btn-primary" onclick="cheatsheet.showModal()">Offer Cheatsheet</button>
-<dialog bind:this={cheatsheetForm} id="cheatsheet" class="modal modal-bottom sm:modal-middle">
+<span class="btn btn-primary" onclick="m{journey.id}.showModal()">Offer Cheatsheet</span>
+<dialog bind:this={cheatsheetForm} id="m{journey.id}" class="modal modal-bottom sm:modal-middle">
 	<form
 		method="dialog"
 		class="modal-box space-y-3 overflow-y-auto prose"
 		on:submit|preventDefault={setOfferCheatSheet}
 	>
+		<span
+			class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+			onclick="m{journey.id}.close()">✕</span
+		>
 		<h3>Offer Cheatsheet</h3>
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="buyerName">
@@ -319,9 +323,7 @@
 
 		<div class="modal-action">
 			<!-- if there is a button in form, it will close the modal -->
-			<button class="btn btn-secondary btn-outline" type="button" onclick="cheatsheet.close()"
-				>Cancel</button
-			>
+			<span class="btn btn-secondary btn-outline" onclick="m{journey.id}.close()">Cancel</span>
 			<button class="btn btn-primary" type="submit"> Save </button>
 		</div>
 	</form>

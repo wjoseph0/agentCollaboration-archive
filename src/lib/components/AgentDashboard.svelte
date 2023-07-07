@@ -1,13 +1,19 @@
 <script>
 	import { pb } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
+	import Client from '$lib/components/Client.svelte';
 
 	let journeys = [];
+	let files = [];
 
 	onMount(async () => {
 		journeys = await pb.collection('journeys').getFullList(200, {
 			sort: '+step',
 			expand: 'client'
+		});
+
+		files = await pb.collection('files').getFullList(200, {
+			sort: '-created'
 		});
 	});
 </script>
@@ -22,26 +28,24 @@
 			<!-- head -->
 			<thead>
 				<tr>
-					<th>
+					<!-- <th>
 						<label>
 							<input type="checkbox" class="checkbox" />
 						</label>
-					</th>
+					</th> -->
 					<th>Name</th>
 					<th>Stage</th>
-
-					<th />
 				</tr>
 			</thead>
 			<tbody>
 				{#each journeys as journey}
-					<tr>
-						<th>
+					<tr onclick="{journey.expand.client.fname}Modal.showModal()">
+						<!-- <th>
 							<label>
 								<input type="checkbox" class="checkbox" />
 							</label>
-						</th>
-						<td>
+						</th> -->
+						<td onclick="">
 							<div class="flex items-center space-x-3">
 								<div class="avatar placeholder">
 									<div
@@ -61,29 +65,25 @@
 							</div>
 						</td>
 						<td>
-							{#if journey.step < 3}
+							{#if journey.step === 1}
 								<div class="badge badge-neutral">Preparation</div>
-							{:else if journey.step < 5}
+							{:else if journey.step === 2}
 								<div class="badge badge-secondary">Searching</div>
-							{:else if journey.step < 6}
-								<div class="badge badge-primary">Accepted Offer</div>
-							{:else if journey.step > 5}
-								<div class="badge badge-accent">Closing</div>
+							{:else if journey.step === 3}
+								<div class="badge badge-primary">Closing</div>
+							{:else if journey.step === 4}
+								<div class="badge badge-accent">Closed</div>
 							{/if}
 						</td>
-						<th>
-							<button class="btn btn-ghost btn-xs">details</button>
-						</th>
 					</tr>
+					<Client {journey} {files} />
 				{/each}
 			</tbody>
 			<!-- foot -->
 			<tfoot>
 				<tr>
-					<th />
 					<th>Name</th>
 					<th>Stage</th>
-					<th />
 				</tr>
 			</tfoot>
 		</table>
