@@ -27,21 +27,21 @@
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
-<dialog id="{journey.expand.client.fname}Modal" class="modal">
+<dialog id="c{journey.id}" class="modal">
 	<form method="dialog" class="modal-box prose">
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div on:click={updateStage}>
-			{#if journey.step === 1}
-				<div class="badge badge-neutral">Preparation</div>
-			{:else if journey.step === 2}
-				<div class="badge badge-secondary">Searching</div>
-			{:else if journey.step === 3}
-				<div class="badge badge-primary">Closing</div>
-			{:else if journey.step === 4}
-				<div class="badge badge-accent">Closed</div>
-			{/if}
-		</div>
+
+		{#if journey.step === 1}
+			<div class="btn btn-neutral" on:click={updateStage}>Preparation</div>
+		{:else if journey.step === 2}
+			<div class="btn btn-secondary" on:click={updateStage}>Searching</div>
+		{:else if journey.step === 3}
+			<div class="btn btn-primary" on:click={updateStage}>Closing</div>
+		{:else if journey.step === 4}
+			<div class="btn btn-accent" on:click={updateStage}>Closed</div>
+		{/if}
+
 		<h2>
 			{journey.expand.client.fname}
 			{journey.expand.client.lname}

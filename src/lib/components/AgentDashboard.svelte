@@ -53,7 +53,7 @@
 			</thead>
 			<tbody>
 				{#each journeys as journey}
-					<tr onclick="{journey.expand.client.fname}Modal.showModal()">
+					<tr onclick="c{journey.id}.showModal()">
 						<!-- <th>
 							<label>
 								<input type="checkbox" class="checkbox" />
