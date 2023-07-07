@@ -30,8 +30,9 @@
 </script>
 
 <div class="container">
-	<div class="prose">
-		<h1>Active Clients</h1>
+	<br />
+	<div class="prose text-center sm:text-left">
+		<h1>Dashboard</h1>
 	</div>
 	<br />
 	<div class="overflow-x-auto">
