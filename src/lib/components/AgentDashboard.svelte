@@ -6,10 +6,6 @@
 	let journeys = [];
 	let files = [];
 
-	const sortFunction = (a, b) => {
-		return a.step - b.step;
-	};
-
 	onMount(async () => {
 		journeys = await pb.collection('journeys').getFullList(200, {
 			sort: '+step',

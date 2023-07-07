@@ -49,7 +49,7 @@
 
 		<div class="divider" />
 
-		<div class="prose">
+		<div>
 			<SearchProfile {journey} />
 		</div>
 		<br />
