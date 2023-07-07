@@ -3,11 +3,11 @@
 </script>
 
 <table class="table">
-	<thead>
+	<!-- <thead>
 		<tr>
 			<th />
 		</tr>
-	</thead>
+	</thead> -->
 	<tbody>
 		{#each files as file}
 			<tr class="hover">
