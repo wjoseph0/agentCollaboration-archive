@@ -6,10 +6,24 @@
 	let journeys = [];
 	let files = [];
 
+	const sortFunction = (a, b) => {
+		return a.step - b.step;
+	};
+
 	onMount(async () => {
 		journeys = await pb.collection('journeys').getFullList(200, {
 			sort: '+step',
 			expand: 'client'
+		});
+
+		pb.collection('journeys').subscribe('*', async ({ action, record }) => {
+			if (action === 'update') {
+				const i = journeys.findIndex((e) => e.id === record.id);
+				const client = await pb.collection('users').getOne(record.client);
+				record.expand = { client };
+				journeys.splice(i, 1, record);
+				journeys = journeys.sort(sortFunction);
+			}
 		});
 
 		files = await pb.collection('files').getFullList(200, {
