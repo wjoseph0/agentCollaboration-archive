@@ -33,13 +33,13 @@
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 
 		{#if journey.step === 1}
-			<div class="btn btn-neutral" on:click={updateStage}>Preparation</div>
+			<div class="btn btn-xs btn-neutral" on:click={updateStage}>Preparation</div>
 		{:else if journey.step === 2}
-			<div class="btn btn-secondary" on:click={updateStage}>Searching</div>
+			<div class="btn btn-xs btn-secondary" on:click={updateStage}>Searching</div>
 		{:else if journey.step === 3}
-			<div class="btn btn-primary" on:click={updateStage}>Closing</div>
+			<div class="btn btn-xs btn-primary" on:click={updateStage}>Closing</div>
 		{:else if journey.step === 4}
-			<div class="btn btn-accent" on:click={updateStage}>Closed</div>
+			<div class="btn btn-xs btn-accent" on:click={updateStage}>Closed</div>
 		{/if}
 
 		<h2>

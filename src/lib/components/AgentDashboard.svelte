@@ -16,14 +16,11 @@
 			expand: 'client'
 		});
 
-		pb.collection('journeys').subscribe('*', async ({ action, record }) => {
-			if (action === 'update') {
-				const i = journeys.findIndex((e) => e.id === record.id);
-				const client = await pb.collection('users').getOne(record.client);
-				record.expand = { client };
-				journeys.splice(i, 1, record);
-				journeys = journeys.sort(sortFunction);
-			}
+		pb.collection('journeys').subscribe('*', async () => {
+			journeys = await pb.collection('journeys').getFullList(200, {
+				sort: '+step',
+				expand: 'client'
+			});
 		});
 
 		files = await pb.collection('files').getFullList(200, {
@@ -53,7 +50,7 @@
 			</thead>
 			<tbody>
 				{#each journeys as journey}
-					<tr onclick="c{journey.id}.showModal()">
+					<tr onclick="c{journey.id}.showModal()" class="cursor-pointer">
 						<!-- <th>
 							<label>
 								<input type="checkbox" class="checkbox" />
@@ -80,13 +77,13 @@
 						</td>
 						<td>
 							{#if journey.step === 1}
-								<div class="badge badge-neutral">Preparation</div>
+								<div class="badge badge-neutral">PREPARATION</div>
 							{:else if journey.step === 2}
-								<div class="badge badge-secondary">Searching</div>
+								<div class="badge badge-secondary">SEARCHING</div>
 							{:else if journey.step === 3}
-								<div class="badge badge-primary">Closing</div>
+								<div class="badge badge-primary">CLOSING</div>
 							{:else if journey.step === 4}
-								<div class="badge badge-accent">Closed</div>
+								<div class="badge badge-accent">CLOSED</div>
 							{/if}
 						</td>
 					</tr>
@@ -94,12 +91,12 @@
 				{/each}
 			</tbody>
 			<!-- foot -->
-			<tfoot>
+			<!-- <tfoot>
 				<tr>
 					<th>Name</th>
 					<th>Stage</th>
 				</tr>
-			</tfoot>
+			</tfoot> -->
 		</table>
 	</div>
 </div>
