@@ -99,7 +99,7 @@
 	}
 </script>
 
-<span class="btn btn-primary" onclick="oc{journey.id}.showModal()">Offer Cheatsheet</span>
+<span class="btn" onclick="oc{journey.id}.showModal()">Offer Cheatsheet</span>
 <dialog bind:this={cheatsheetForm} id="oc{journey.id}" class="modal modal-bottom sm:modal-middle">
 	<form
 		method="dialog"

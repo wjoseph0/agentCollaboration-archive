@@ -13,9 +13,7 @@
 <dialog id="{journey.expand.client.fname}Modal" class="modal">
 	<form method="dialog" class="modal-box prose">
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-		<h2 class="">
-			{journey.expand.client.fname}
-			{journey.expand.client.lname}
+		<div>
 			{#if journey.step === 1}
 				<div class="badge badge-neutral">Preparation</div>
 			{:else if journey.step === 2}
@@ -25,6 +23,10 @@
 			{:else if journey.step === 4}
 				<div class="badge badge-accent">Closed</div>
 			{/if}
+		</div>
+		<h2 class="">
+			{journey.expand.client.fname}
+			{journey.expand.client.lname}
 		</h2>
 
 		<div class="divider" />
