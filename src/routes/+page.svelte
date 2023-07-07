@@ -1,11 +1,10 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
-	import BuyerRoadmap from '$lib/components/BuyerRoadmap.svelte';
-	import ClientBanner from '$lib/components/ClientBanner.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import ChooseClient from '$lib/components/ChooseClient.svelte';
+	import AgentDashboard from '../lib/components/AgentDashboard.svelte';
+	import BuyerRoadmap from '$lib/components/BuyerRoadmap.svelte';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -17,12 +16,9 @@
 </script>
 
 {#if $currentUser}
-	{#if $currentUser.isAgent && !$currentUser.focusedClient}
-		<ChooseClient />
+	{#if $currentUser.isAgent}
+		<AgentDashboard />
 	{:else}
-		<main class="container">
-			<ClientBanner />
-			<BuyerRoadmap />
-		</main>
+		<BuyerRoadmap />
 	{/if}
 {/if}
