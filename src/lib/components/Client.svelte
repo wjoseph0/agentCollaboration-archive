@@ -1,4 +1,5 @@
 <script>
+	import { pb } from '$lib/pocketbase';
 	import OfferCheatSheet from '$lib/components/OfferCheatSheet.svelte';
 	import SearchProfile from '$lib/components/SearchProfile.svelte';
 	import Files from './Files.svelte';
@@ -7,13 +8,30 @@
 	export let files;
 
 	$: filteredFiles = files.filter((file) => file.client === journey.client);
+
+	const updateStage = async () => {
+		let data;
+
+		if (journey.step === 1) {
+			data = { step: 2 };
+		} else if (journey.step === 2) {
+			data = { step: 3 };
+		} else if (journey.step === 3) {
+			data = { step: 4 };
+		} else if (journey.step === 4) {
+			data = { step: 1 };
+		}
+
+		await pb.collection('journeys').update(journey.id, data);
+	};
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
 <dialog id="{journey.expand.client.fname}Modal" class="modal">
 	<form method="dialog" class="modal-box prose">
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-		<div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div on:click={updateStage}>
 			{#if journey.step === 1}
 				<div class="badge badge-neutral">Preparation</div>
 			{:else if journey.step === 2}
@@ -24,7 +42,7 @@
 				<div class="badge badge-accent">Closed</div>
 			{/if}
 		</div>
-		<h2 class="">
+		<h2>
 			{journey.expand.client.fname}
 			{journey.expand.client.lname}
 		</h2>
