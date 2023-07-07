@@ -46,14 +46,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each journeys as journey}
+				{#each journeys as journey (journey.id)}
 					<tr onclick="c{journey.id}.showModal()" class="cursor-pointer">
 						<!-- <th>
 							<label>
 								<input type="checkbox" class="checkbox" />
 							</label>
 						</th> -->
-						<td onclick="">
+						<td>
 							<div class="flex items-center space-x-3">
 								<div class="avatar placeholder">
 									<div
