@@ -42,9 +42,22 @@
 	});
 </script>
 
-{#if $currentUser}
-	<div class="container">
+<div
+	class="prose text-center sm:mx-auto sm:w-screen bg-base-100 py-6 fixed inset-x-0 top-0 z-40 w-full"
+>
+	<h1>Files</h1>
+</div>
+<div class="container">
+	<br />
+	<br />
+	<div class="overflow-y-auto h-auto">
+		<br />
 		<Files {files} />
-		<UploadFile />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
 	</div>
-{/if}
+</div>
+<UploadFile />
