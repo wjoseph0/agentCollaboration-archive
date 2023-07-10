@@ -32,7 +32,7 @@
 	</div>
 	<br />
 	<div class="overflow-x-auto">
-		<table class="table sm:table-xs">
+		<table class="table">
 			<!-- head -->
 			<thead>
 				<tr>

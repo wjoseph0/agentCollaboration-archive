@@ -42,16 +42,19 @@
 	});
 </script>
 
-<div
-	class="prose text-center sm:mx-auto sm:w-screen bg-base-100 py-6 fixed inset-x-0 top-0 z-40 w-full"
->
-	<h1>Files</h1>
-</div>
 <div class="container">
 	<br />
+	{#if $currentUser.isAgent}
+		<div class="prose text-center sm:text-left">
+			<h1>Files</h1>
+		</div>
+	{:else}
+		<div class="prose text-center mx-auto">
+			<h1>Files</h1>
+		</div>
+	{/if}
 	<br />
 	<div class="overflow-y-auto h-auto">
-		<br />
 		<Files {files} />
 		<br />
 		<br />
