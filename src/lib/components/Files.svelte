@@ -1,26 +1,54 @@
 <script>
+	import { page } from '$app/stores';
+	import File from '$lib/components/File.svelte';
+
 	export let files;
+
+	$: path = $page.url.pathname;
 </script>
 
-<table class="table">
-	<!-- <thead>
-		<tr>
-			<th />
-		</tr>
-	</thead> -->
-	<tbody>
-		{#each files as file}
-			<tr class="hover">
-				<a
-					target="_blank"
-					rel="noreferrer"
-					href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
-				>
-					<td>
-						{file.name}
-					</td>
-				</a>
+{#if path === '/files'}
+	<table class="table">
+		<!-- head -->
+		<thead>
+			<tr>
+				<!-- <th>
+				<label>
+					<input type="checkbox" class="checkbox" />
+				</label>
+			</th> -->
+				<th>Name</th>
 			</tr>
-		{/each}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			{#each files as file}
+				<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
+					<td class="py-5">
+						<div class="font-bold">
+							{file.name}
+						</div>
+					</td>
+				</tr>
+				<File {file} />
+			{/each}
+		</tbody>
+	</table>
+{:else}
+	<table class="table">
+		<tbody>
+			{#each files as file}
+				<tr class="hover">
+					<a
+						target="_blank"
+						rel="noreferrer"
+						href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
+					>
+						<td>
+							{file.name}
+						</td>
+					</a>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+{/if}
