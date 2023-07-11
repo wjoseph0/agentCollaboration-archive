@@ -8,20 +8,17 @@
 
 <div class="container">
 	<br />
-	{#if $currentUser.isAgent}
-		<div class="prose text-center sm:text-left">
-			<h1>Settings</h1>
-		</div>
-	{:else}
-		<div class="prose text-center mx-auto">
-			<h1>Settings</h1>
-		</div>
-	{/if}
+
+	<div class="prose text-center mx-auto">
+		<h1>Settings</h1>
+	</div>
+
 	<br /><br /><br />
 
 	<MyProfile />
 
 	{#if $currentUser.isAgent}
+		<br /><br /><br />
 		<Invite />
 	{/if}
 
