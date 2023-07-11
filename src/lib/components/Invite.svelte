@@ -12,4 +12,6 @@
 	};
 </script>
 
-<button class="btn" on:click={share}>Invite</button>
+<div class="mx-auto xl:w-1/2">
+	<button class="btn btn-primary w-full mx-auto" on:click={share}>Invite</button>
+</div>
