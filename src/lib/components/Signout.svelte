@@ -7,7 +7,12 @@
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
-<button class="btn btn-outline btn-error" onclick="confirmSignout.showModal()">Sign Out</button>
+<div class="mx-auto xl:w-1/2">
+	<button class="btn btn-outline btn-error w-full mx-auto" onclick="confirmSignout.showModal()"
+		>Sign Out</button
+	>
+</div>
+
 <dialog id="confirmSignout" class="modal modal-bottom sm:modal-middle">
 	<form method="dialog" class="modal-box">
 		<h3 class="font-bold text-lg">Confirm Sign Out</h3>
