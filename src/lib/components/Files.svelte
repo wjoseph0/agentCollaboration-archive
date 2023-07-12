@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each files as file}
+			{#each files as file (file.id)}
 				<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
 					<td class="py-5">
 						<div class="font-bold">
@@ -36,18 +36,15 @@
 {:else}
 	<table class="table">
 		<tbody>
-			{#each files as file}
-				<tr class="hover">
-					<a
-						target="_blank"
-						rel="noreferrer"
-						href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
-					>
-						<td>
+			{#each files as file (file.id)}
+				<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
+					<td class="py-5">
+						<div class="font-bold">
 							{file.name}
-						</td>
-					</a>
+						</div>
+					</td>
 				</tr>
+				<File {file} />
 			{/each}
 		</tbody>
 	</table>
