@@ -11,6 +11,7 @@
 
 	const uploadFile = async () => {
 		const formData = new FormData();
+		formData.append('owner', $currentUser.id);
 		formData.append('file', newFile[0]);
 		formData.append('name', fileName);
 		if ($currentUser.isAgent) {
