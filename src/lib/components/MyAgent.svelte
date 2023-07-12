@@ -21,6 +21,7 @@
 			{/if}
 		</figure>
 		<div class="card-body">
+			<div class="badge badge-secondary badge-outline">My Agent</div>
 			<h2 class="card-title">
 				{$currentUser.expand.agent.fname}
 				{$currentUser.expand.agent.lname}
