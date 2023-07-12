@@ -8,12 +8,19 @@
 	let uploadFileForm;
 	let fileName;
 	let newFile;
+	let privateFile = true;
+	let publicFile = false;
 
 	const uploadFile = async () => {
 		const formData = new FormData();
 		formData.append('owner', $currentUser.id);
 		formData.append('file', newFile[0]);
 		formData.append('name', fileName);
+
+		if (publicFile) {
+			formData.append('isPublic', true);
+		}
+
 		if ($currentUser.isAgent) {
 			formData.append('agent', $currentUser.id);
 			if (journey) {
@@ -23,6 +30,7 @@
 			formData.append('agent', $currentUser.agent);
 			formData.append('client', $currentUser.id);
 		}
+
 		await pb.collection('files').create(formData);
 		uploadFileForm.close();
 		fileName = undefined;
@@ -46,9 +54,9 @@
 			<input type="file" class="file-input" bind:files={newFile} required />
 			<div class="modal-action">
 				<!-- if there is a button in form, it will close the modal -->
-				<button class="btn btn-secondary btn-outline" type="button" onclick="uf{journey.id}.close()"
+				<!-- <button class="btn btn-secondary btn-outline" type="button" onclick="uf{journey.id}.close()"
 					>Cancel</button
-				>
+				> -->
 				<button class="btn btn-primary" type="submit"> Upload </button>
 			</div>
 		</form>
@@ -73,10 +81,60 @@
 			/>
 			<input type="file" class="file-input" bind:files={newFile} required />
 			<div class="modal-action">
+				{#if privateFile}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<div
+						class="flex flex-row items-center cursor-pointer"
+						on:click={() => {
+							publicFile = true;
+							privateFile = false;
+						}}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="w-5 h-5"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+						<span>Private</span>
+					</div>
+				{:else if publicFile}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<div
+						class="flex flex-row items-center cursor-pointer"
+						on:click={() => {
+							publicFile = false;
+							privateFile = true;
+						}}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="w-5 h-5"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M14.5 1A4.5 4.5 0 0010 5.5V9H3a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1.5V5.5a3 3 0 116 0v2.75a.75.75 0 001.5 0V5.5A4.5 4.5 0 0014.5 1z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+
+						<span>Public</span>
+					</div>
+				{/if}
+
 				<!-- if there is a button in form, it will close the modal -->
-				<button class="btn btn-secondary btn-outline" type="button" onclick="uploadFile.close()"
+				<!-- <button class="btn btn-secondary btn-outline" type="button" onclick="uploadFile.close()"
 					>Cancel</button
-				>
+				> -->
+				<br />
 				<button class="btn btn-primary" type="submit"> Upload </button>
 			</div>
 		</form>
