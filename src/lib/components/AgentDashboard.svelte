@@ -1,10 +1,16 @@
 <script>
 	import { pb } from '$lib/pocketbase';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import Client from '$lib/components/Client.svelte';
 
 	let journeys = [];
 	let files = [];
+
+	const sortFunction = (a, b) => {
+		const date1 = new Date(a.created);
+		const date2 = new Date(b.created);
+		return date2 - date1;
+	};
 
 	onMount(async () => {
 		journeys = await pb.collection('journeys').getFullList(200, {
@@ -22,6 +28,23 @@
 		files = await pb.collection('files').getFullList(200, {
 			sort: '-created'
 		});
+
+		pb.collection('files').subscribe('*', async ({ action, record }) => {
+			if (action === 'create') {
+				files.push(record);
+				files = files.sort(sortFunction);
+			} else if (action === 'update') {
+				const i = files.findIndex((e) => e.id === record.id);
+				files.splice(i, 1, record);
+				files = files.sort(sortFunction);
+			} else if (action === 'delete') {
+				files = files.filter((f) => f.id !== record.id);
+			}
+		});
+	});
+
+	onDestroy(async () => {
+		pb.collection('files').unsubscribe();
 	});
 </script>
 
