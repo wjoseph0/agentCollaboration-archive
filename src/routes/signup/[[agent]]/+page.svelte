@@ -13,6 +13,19 @@
 	let lname = '';
 	let email = '';
 	let password = '';
+	let agentID = data.agent;
+	let agentIdInput;
+
+	const validateAgent = async () => {
+		try {
+			await pb.collection('users').getOne(`${agentID}`);
+			agentIdInput.classList.remove('input-error');
+			agentIdInput.classList.add('input-success');
+		} catch (error) {
+			agentIdInput.classList.add('input-error');
+			console.log(agentIdInput);
+		}
+	};
 
 	const signUp = async () => {
 		try {
@@ -23,7 +36,7 @@
 				emailVisibility: true,
 				password: password,
 				passwordConfirm: password,
-				agent: data.agent
+				agent: agentID
 			};
 			await pb.collection('users').create(info);
 			await pb.collection('users').authWithPassword(
@@ -79,6 +92,16 @@
 			class="input input-bordered"
 			bind:value={password}
 			minlength="8"
+			required
+		/>
+
+		<input
+			placeholder="Agent ID"
+			type="text"
+			class="input input-bordered"
+			bind:this={agentIdInput}
+			bind:value={agentID}
+			on:change={validateAgent}
 			required
 		/>
 		<p class="text-center text-xs">
