@@ -45,20 +45,27 @@
 	<h1 class="text-center">Sign Up</h1>
 
 	<form on:submit|preventDefault={signUp} class="flex flex-col space-y-3">
-		<input
-			placeholder="First Name"
-			type="text"
-			class="input input-bordered"
-			bind:value={fname}
-			required
-		/>
-		<input
-			placeholder="Last Name"
-			type="text"
-			class="input input-bordered"
-			bind:value={lname}
-			required
-		/>
+		<div class="tabs tabs-boxed flex justify-center mx-auto">
+			<span class="tab tab-active">Client</span>
+			<span class="tab">Agent</span>
+		</div>
+
+		<div class="flex flex-row gap-2 w-full">
+			<input
+				placeholder="First Name"
+				type="text"
+				class="input input-bordered w-1/2"
+				bind:value={fname}
+				required
+			/>
+			<input
+				placeholder="Last Name"
+				type="text"
+				class="input input-bordered w-1/2"
+				bind:value={lname}
+				required
+			/>
+		</div>
 		<input
 			placeholder="Email"
 			type="email"
