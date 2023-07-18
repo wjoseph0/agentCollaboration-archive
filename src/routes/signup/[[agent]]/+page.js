@@ -1,5 +1,7 @@
 export async function load({ params }) {
-	return {
-		agent: params.agent
+	if (params.agent) {
+		return {
+			agent: params.agent
+		}
 	};
 }
