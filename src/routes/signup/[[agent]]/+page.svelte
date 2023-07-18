@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	$: if (browser && $currentUser) {
 		goto('/');
@@ -13,6 +14,22 @@
 	let lname = '';
 	let email = '';
 	let password = '';
+	let agentID;
+	let agentIdInput;
+	let isClient = true;
+	let isAgent = false;
+	let brokerage = '';
+
+	const validateAgent = async () => {
+		try {
+			await pb.collection('users').getOne(`${agentID}`);
+			agentIdInput.classList.remove('input-error');
+			agentIdInput.classList.add('input-success');
+		} catch (err) {
+			agentIdInput.classList.remove('input-success');
+			agentIdInput.classList.add('input-error');
+		}
+	};
 
 	const signUp = async () => {
 		try {
@@ -22,9 +39,15 @@
 				email: email.toLowerCase(),
 				emailVisibility: true,
 				password: password,
-				passwordConfirm: password,
-				agent: data.agent
+				passwordConfirm: password
 			};
+			if (isClient) {
+				info.agent = agentID;
+			} else if (isAgent) {
+				info.isAgent = true;
+				info.brokerage = brokerage;
+			}
+
 			await pb.collection('users').create(info);
 			await pb.collection('users').authWithPassword(
 				email.toLowerCase(),
@@ -39,26 +62,35 @@
 			console.error(err);
 		}
 	};
+
+	onMount(async () => {
+		if (data.agent) {
+			agentID = data.agent;
+			validateAgent();
+		}
+	});
 </script>
 
 <main class="container prose flex flex-col justify-center h-screen">
 	<h1 class="text-center">Sign Up</h1>
 
 	<form on:submit|preventDefault={signUp} class="flex flex-col space-y-3">
-		<input
-			placeholder="First Name"
-			type="text"
-			class="input input-bordered"
-			bind:value={fname}
-			required
-		/>
-		<input
-			placeholder="Last Name"
-			type="text"
-			class="input input-bordered"
-			bind:value={lname}
-			required
-		/>
+		<div class="flex flex-row gap-2 w-full">
+			<input
+				placeholder="First Name"
+				type="text"
+				class="input input-bordered w-1/2"
+				bind:value={fname}
+				required
+			/>
+			<input
+				placeholder="Last Name"
+				type="text"
+				class="input input-bordered w-1/2"
+				bind:value={lname}
+				required
+			/>
+		</div>
 		<input
 			placeholder="Email"
 			type="email"
@@ -74,6 +106,63 @@
 			minlength="8"
 			required
 		/>
+
+		<br />
+		<span class="text-xs text-center">Which one are you?</span>
+		{#if isClient}
+			<div class="flex gap-2 mx-auto">
+				<span class="btn btn-neutral btn-sm">Client</span>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span
+					class="btn btn-neutral btn-outline btn-sm"
+					on:click={() => {
+						isAgent = true;
+						isClient = false;
+					}}>Agent</span
+				>
+			</div>
+			<div class="form-control w-full">
+				<label class="label" for="agentid">
+					<span class="label-text">My Agent's ID</span>
+				</label>
+				<input
+					name="agentid"
+					placeholder=""
+					type="text"
+					class="input input-bordered"
+					bind:this={agentIdInput}
+					bind:value={agentID}
+					on:change={validateAgent}
+					required
+				/>
+			</div>
+		{:else if isAgent}
+			<div class="flex flex-row gap-2 mx-auto">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span
+					class="btn btn-neutral btn-outline btn-sm"
+					on:click={() => {
+						isClient = true;
+						isAgent = false;
+					}}>Client</span
+				>
+				<span class="btn btn-neutral btn-sm">Agent</span>
+			</div>
+			<div class="form-control w-full">
+				<label class="label" for="brokerage">
+					<span class="label-text">My Brokerage</span>
+				</label>
+				<input
+					name="brokerage"
+					placeholder=""
+					type="text"
+					class="input input-bordered"
+					bind:value={brokerage}
+					required
+				/>
+			</div>
+		{/if}
+
 		<p class="text-center text-xs">
 			By clicking "Sign Up" below, I accept the <a
 				href="https://app.termly.io/document/terms-and-conditions/ebafceeb-c35c-4515-9797-9f7b45202ab0"
