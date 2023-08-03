@@ -97,13 +97,15 @@
 						</td>
 						<td>
 							{#if journey.step === 1}
-								<div class="badge badge-neutral">PREPARATION</div>
+								<div class="btn btn-xs">Preparation</div>
 							{:else if journey.step === 2}
-								<div class="badge badge-secondary">SEARCHING</div>
+								<div class="btn btn-xs btn-secondary">Searching</div>
 							{:else if journey.step === 3}
-								<div class="badge badge-primary">CLOSING</div>
+								<div class="btn btn-xs btn-neutral">Accepted Offer</div>
 							{:else if journey.step === 4}
-								<div class="badge badge-accent">CLOSED</div>
+								<div class="btn btn-xs btn-primary">Closing</div>
+							{:else if journey.step === 5}
+								<div class="btn btn-xs btn-accent">Closed</div>
 							{/if}
 						</td>
 					</tr>
