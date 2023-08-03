@@ -20,6 +20,8 @@
 		} else if (journey.step === 3) {
 			data = { step: 4 };
 		} else if (journey.step === 4) {
+			data = { step: 5 };
+		} else if (journey.step === 5) {
 			data = { step: 1 };
 		}
 
@@ -35,12 +37,14 @@
 
 		<div class="flex flex-row items-end">
 			{#if journey.step === 1}
-				<div class="btn btn-xs btn-neutral" on:click={updateStage}>Preparation</div>
+				<div class="btn btn-xs" on:click={updateStage}>Preparation</div>
 			{:else if journey.step === 2}
 				<div class="btn btn-xs btn-secondary" on:click={updateStage}>Searching</div>
 			{:else if journey.step === 3}
-				<div class="btn btn-xs btn-primary" on:click={updateStage}>Closing</div>
+				<div class="btn btn-xs btn-neutral" on:click={updateStage}>Accepted Offer</div>
 			{:else if journey.step === 4}
+				<div class="btn btn-xs btn-primary" on:click={updateStage}>Closing</div>
+			{:else if journey.step === 5}
 				<div class="btn btn-xs btn-accent" on:click={updateStage}>Closed</div>
 			{/if}
 			<svg
