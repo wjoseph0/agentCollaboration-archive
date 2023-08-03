@@ -6,6 +6,7 @@
 	import StartJourney from './StartJourney.svelte';
 	import preparationImg from '$lib/assets/preparation-img.jpg';
 	import searchingImg from '$lib/assets/searching-img.jpg';
+	import acceptedofferImg from '$lib/assets/acceptedoffer-img.jpg';
 	import closingImg from '$lib/assets/closing-img.jpg';
 	import closedImg from '$lib/assets/closed-img.jpg';
 
@@ -34,8 +35,9 @@
 	let stages = [
 		{ name: 'Preparation', step: 1 },
 		{ name: 'Searching', step: 2 },
-		{ name: 'Closing', step: 3 },
-		{ name: 'Closed', step: 4 }
+		{ name: 'Accepted Offer', step: 3 },
+		{ name: 'Closing', step: 4 },
+		{ name: 'Closed', step: 5 }
 	];
 </script>
 
@@ -57,8 +59,10 @@
 								{:else if stage.step === 2}
 									<img src={searchingImg} alt="" />
 								{:else if stage.step === 3}
-									<img src={closingImg} alt="" />
+									<img src={acceptedofferImg} alt="" />
 								{:else if stage.step === 4}
+									<img src={closingImg} alt="" />
+								{:else if stage.step === 5}
 									<img src={closedImg} alt="" />
 								{/if}
 							</figure>
