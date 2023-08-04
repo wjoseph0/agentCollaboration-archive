@@ -68,16 +68,30 @@
 
 		<div class="divider" />
 
-		<div class="flex flex-row gap-1">
-			<div>
-				<SearchProfile {journey} />
+		{#if journey.step >= 3}
+			<div class="flex flex-row gap-1">
+				<div class="w-1/2">
+					<SearchProfile {journey} />
+				</div>
+
+				<div class="w-1/2">
+					<OfferCheatSheet {journey} />
+				</div>
 			</div>
 			<br />
-			<div>
-				<OfferCheatSheet {journey} />
-			</div>
-		</div>
+			<button class="btn btn-block btn-neutral btn-outline">Accepted Offer</button>
+		{:else}
+			<div class="flex flex-row gap-1">
+				<div class="w-1/2">
+					<SearchProfile {journey} />
+				</div>
 
+				<div class="w-1/2">
+					<OfferCheatSheet {journey} />
+				</div>
+			</div>
+		{/if}
+		<div class="divider" />
 		<div>
 			<div class="flex flex-row justify-between items-end">
 				<h4>Files</h4>

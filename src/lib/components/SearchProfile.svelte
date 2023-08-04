@@ -58,7 +58,7 @@
 	}
 </script>
 
-<span class="btn" onclick="sp{journey.id}.showModal()">Search Profile</span>
+<span class="btn w-full" onclick="sp{journey.id}.showModal()">Search Profile</span>
 <dialog
 	bind:this={searchProfileForm}
 	id="sp{journey.id}"
