@@ -4,6 +4,7 @@
 	import SearchProfile from '$lib/components/SearchProfile.svelte';
 	import Files from './Files.svelte';
 	import UploadFile from './UploadFile.svelte';
+	import AcceptedOffer from './AcceptedOffer.svelte';
 
 	export let journey;
 	export let files;
@@ -79,7 +80,7 @@
 				</div>
 			</div>
 			<br />
-			<button class="btn btn-block btn-neutral btn-outline">Accepted Offer</button>
+			<AcceptedOffer {journey} />
 		{:else}
 			<div class="flex flex-row gap-1">
 				<div class="w-1/2">

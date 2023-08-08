@@ -9,6 +9,7 @@
 	import acceptedofferImg from '$lib/assets/acceptedoffer-img.jpg';
 	import closingImg from '$lib/assets/closing-img.jpg';
 	import closedImg from '$lib/assets/closed-img.jpg';
+	import AcceptedOffer from '$lib/components/AcceptedOffer.svelte';
 
 	let journey;
 	let noJourney;
@@ -72,6 +73,8 @@
 									{#if stage.step === 2}
 										<SearchProfile {journey} />
 										<OfferCheatSheet {journey} />
+									{:else if stage.step === 3}
+										<AcceptedOffer {journey} />
 									{/if}
 								</div>
 							</div>
