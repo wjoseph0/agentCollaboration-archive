@@ -4,6 +4,7 @@
 	import SearchProfile from '$lib/components/SearchProfile.svelte';
 	import Files from './Files.svelte';
 	import UploadFile from './UploadFile.svelte';
+	import AcceptedOffer from './AcceptedOffer.svelte';
 
 	export let journey;
 	export let files;
@@ -68,16 +69,30 @@
 
 		<div class="divider" />
 
-		<div class="flex flex-row gap-1">
-			<div>
-				<SearchProfile {journey} />
+		{#if journey.step >= 3}
+			<div class="flex flex-row gap-1">
+				<div class="w-1/2">
+					<SearchProfile {journey} />
+				</div>
+
+				<div class="w-1/2">
+					<OfferCheatSheet {journey} />
+				</div>
 			</div>
 			<br />
-			<div>
-				<OfferCheatSheet {journey} />
-			</div>
-		</div>
+			<AcceptedOffer {journey} />
+		{:else}
+			<div class="flex flex-row gap-1">
+				<div class="w-1/2">
+					<SearchProfile {journey} />
+				</div>
 
+				<div class="w-1/2">
+					<OfferCheatSheet {journey} />
+				</div>
+			</div>
+		{/if}
+		<div class="divider" />
 		<div>
 			<div class="flex flex-row justify-between items-end">
 				<h4>Files</h4>
