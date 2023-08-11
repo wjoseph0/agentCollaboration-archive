@@ -10,24 +10,12 @@
 	export let journey;
 	export let files;
 
+	let stageSelector;
+
 	$: filteredFiles = files.filter((file) => file.client === journey.client);
 
-	const updateStage = async () => {
-		let data;
-
-		if (journey.step === 1) {
-			data = { step: 2 };
-		} else if (journey.step === 2) {
-			data = { step: 3 };
-		} else if (journey.step === 3) {
-			data = { step: 4 };
-		} else if (journey.step === 4) {
-			data = { step: 5 };
-		} else if (journey.step === 5) {
-			data = { step: 1 };
-		}
-
-		await pb.collection('journeys').update(journey.id, data);
+	const updateStage = async (num) => {
+		await pb.collection('journeys').update(journey.id, { step: num });
 	};
 </script>
 
@@ -35,32 +23,53 @@
 <dialog id="c{journey.id}" class="modal">
 	<form method="dialog" class="modal-box prose">
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
 
-		<div class="flex flex-row items-end">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class="flex flex-row items-center">
 			{#if journey.step === 1}
-				<div class="btn btn-xs" on:click={updateStage}>Preparation</div>
+				<span class="badge badge-ghost badge-lg" />
 			{:else if journey.step === 2}
-				<div class="btn btn-xs btn-secondary" on:click={updateStage}>Searching</div>
+				<span class="badge badge-secondary badge-lg" />
 			{:else if journey.step === 3}
-				<div class="btn btn-xs btn-neutral" on:click={updateStage}>Accepted Offer</div>
+				<span class="badge badge-neutral badge-lg" />
 			{:else if journey.step === 4}
-				<div class="btn btn-xs btn-primary" on:click={updateStage}>Closing</div>
+				<span class="badge badge-primary badge-lg" />
 			{:else if journey.step === 5}
-				<div class="btn btn-xs btn-accent" on:click={updateStage}>Closed</div>
+				<span class="badge badge-success badge-lg" />
 			{/if}
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 20 20"
-				fill="currentColor"
-				class="w-5 h-5 scale-75 -rotate-12"
+			<select
+				bind:this={stageSelector}
+				class="select select-sm max-w-xs"
+				on:change={() => {
+					updateStage(stageSelector.value);
+				}}
 			>
-				<path
-					fill-rule="evenodd"
-					d="M10 1a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 1zM5.05 3.05a.75.75 0 011.06 0l1.062 1.06A.75.75 0 116.11 5.173L5.05 4.11a.75.75 0 010-1.06zm9.9 0a.75.75 0 010 1.06l-1.06 1.062a.75.75 0 01-1.062-1.061l1.061-1.06a.75.75 0 011.06 0zM3 8a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 013 8zm11 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 0114 8zm-6.828 2.828a.75.75 0 010 1.061L6.11 12.95a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm3.594-3.317a.75.75 0 00-1.37.364l-.492 6.861a.75.75 0 001.204.65l1.043-.799.985 3.678a.75.75 0 001.45-.388l-.978-3.646 1.292.204a.75.75 0 00.74-1.16l-3.874-5.764z"
-					clip-rule="evenodd"
-				/>
-			</svg>
+				{#if journey.step === 1}
+					<option value="1" selected> Preparation </option>
+				{:else}
+					<option value="1"> Preparation </option>
+				{/if}
+				{#if journey.step === 2}
+					<option value="2" selected>Searching</option>
+				{:else}
+					<option value="2">Searching</option>
+				{/if}
+				{#if journey.step === 3}
+					<option value="3" selected>Accepted Offer</option>
+				{:else}
+					<option value="3">Accepted Offer</option>
+				{/if}
+				{#if journey.step === 4}
+					<option value="4" selected>Closing</option>
+				{:else}
+					<option value="4">Closing</option>
+				{/if}
+				{#if journey.step === 5}
+					<option value="5" selected>Closed</option>
+				{:else}
+					<option value="5">Closed</option>
+				{/if}
+			</select>
 		</div>
 
 		<h2>
