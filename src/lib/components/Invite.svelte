@@ -9,13 +9,11 @@ After downloading, please sign up and enter my ID. My ID is ${$currentUser.id}`;
 
 	const data = {
 		title: 'Agentpad',
-		text: shareText,
-		url: 'https://agentpadapp.com/signup'
+		text: shareText
 	};
 
 	const share = async () => {
 		await navigator.share(data);
-		console.log(data);
 	};
 </script>
 
