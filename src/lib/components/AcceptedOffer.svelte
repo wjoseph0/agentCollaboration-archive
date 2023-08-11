@@ -38,15 +38,10 @@
 	}
 </script>
 
-{#if $currentUser.isAgent}
-	<span class="btn btn-block btn-neutral btn-outline" onclick="ao{journey.id}.showModal()">
-		Accepted Offer
-	</span>
-{:else}
-	<span class="btn btn-block btn-neutral btn-outline" onclick="ao{journey.id}.showModal()">
-		Deadlines
-	</span>
-{/if}
+<span class="btn btn-block btn-neutral btn-outline" onclick="ao{journey.id}.showModal()">
+	Deadlines
+</span>
+
 <dialog bind:this={aoForm} id="ao{journey.id}" class="modal modal-bottom sm:modal-middle">
 	<form method="dialog" class="modal-box space-y-3 overflow-y-auto prose">
 		<span
