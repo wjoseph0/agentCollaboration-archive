@@ -1,14 +1,25 @@
 <script>
 	import { currentUser } from '$lib/pocketbase';
 
-	const shareData = {
+	const shareText = `Hi! Let's use Agentpad to collaborate!
+
+Please download the app from your app store:
+
+Apple App Store: https://apps.apple.com/us/app/agentpad/id6453560305
+
+Google Play Store: https://play.google.com/store/apps/details?id=com.agentpadapp.twa
+
+After downloading, please sign up and enter my ID.
+
+My ID: ${$currentUser.id}`;
+
+	const data = {
 		title: 'Agentpad',
-		text: "Hi! Let's use Agentpad to collaborate!",
-		url: `https://agentpadapp.com/signup/${$currentUser.id}`
+		text: shareText
 	};
 
 	const share = async () => {
-		await navigator.share(shareData);
+		await navigator.share(data);
 	};
 </script>
 
