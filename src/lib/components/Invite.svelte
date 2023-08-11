@@ -10,8 +10,7 @@
 				
 				Google Play Store: https://play.google.com/store/apps/details?id=com.agentpadapp.twa
 				
-				After downloading, please sign up and enter my ID. My ID is ${$currentUser.id}`,
-		url: `https://agentpadapp.com/signup/${$currentUser.id}`
+				After downloading, please sign up and enter my ID. My ID is ${$currentUser.id}`
 	};
 
 	const share = async () => {
