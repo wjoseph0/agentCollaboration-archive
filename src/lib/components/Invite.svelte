@@ -11,7 +11,7 @@ Google Play Store: https://play.google.com/store/apps/details?id=com.agentpadapp
 
 After downloading, please sign up and enter my ID.
 
-My ID is ${$currentUser.id}`;
+My ID: ${$currentUser.id}`;
 
 	const data = {
 		title: 'Agentpad',
