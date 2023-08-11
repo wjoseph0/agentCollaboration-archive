@@ -4,17 +4,17 @@
 	const shareData = {
 		title: 'Agentpad',
 		text: `Hi! Let's use Agentpad to collaborate!
+Please download the app from your app store:
+Apple App Store: https://apps.apple.com/us/app/agentpad/id6453560305
 
-				Please download the app from your app store:
-				Apple App Store: https://apps.apple.com/us/app/agentpad/id6453560305
-				
-				Google Play Store: https://play.google.com/store/apps/details?id=com.agentpadapp.twa
-				
-				After downloading, please sign up and enter my ID. My ID is ${$currentUser.id}`
+Google Play Store: https://play.google.com/store/apps/details?id=com.agentpadapp.twa
+
+After downloading, please sign up and enter my ID. My ID is ${$currentUser.id}`
 	};
 
 	const share = async () => {
 		await navigator.share(shareData);
+		console.log(shareData);
 	};
 </script>
 
