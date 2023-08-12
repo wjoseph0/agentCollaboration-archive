@@ -14,24 +14,24 @@
 		<thead>
 			<tr>
 				<!-- <th>
-				<label>
-					<input type="checkbox" class="checkbox" />
-				</label>
-			</th> -->
+					<label>
+						<input type="checkbox" class="checkbox" />
+					</label>
+				</th> -->
 				<th>Name</th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each files as file (file.id)}
-				<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
-					<td class="py-5">
-						<div class="font-bold">
-							{file.name}
-						</div>
-					</td>
-					<td>
-						{#if $currentUser.isAgent}
-							{#if file.isPublic}
+				{#if $currentUser.isAgent}
+					{#if file.isPublic}
+						<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
+							<td class="py-5">
+								<div class="font-bold">
+									{file.name}
+								</div>
+							</td>
+							<td>
 								<div class="flex flex-row justify-end items-center">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,16 @@
 
 									<span>Public</span>
 								</div>
-							{:else if !file.isPublic && !file.client}
+							</td>
+						</tr>
+					{:else if file.clientsOnly}
+						<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
+							<td class="py-5">
+								<div class="font-bold">
+									{file.name}
+								</div>
+							</td>
+							<td>
 								<div class="flex flex-row justify-end items-center">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -62,18 +71,32 @@
 											clip-rule="evenodd"
 										/>
 									</svg>
-									<span>Private</span>
+									<span>Clients Only</span>
 								</div>
-							{:else if file.client}
+							</td>
+						</tr>
+					{:else if !file.client}
+						<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
+							<td class="py-5">
+								<div class="font-bold">
+									{file.name}
+								</div>
+							</td>
+							<td>
 								<div class="flex flex-row justify-end items-center">
-									<div class="avatar placeholder">
-										<div class="bg-neutral-focus text-neutral-content rounded-full w-8">
-											<span class="text-xs" />
-										</div>
-									</div>
+									<span>Archive</span>
 								</div>
-							{/if}
-						{:else if !$currentUser.isAgent}
+							</td>
+						</tr>
+					{/if}
+				{:else if !$currentUser.isAgent}
+					<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
+						<td class="py-5">
+							<div class="font-bold">
+								{file.name}
+							</div>
+						</td>
+						<td>
 							{#if file.owner === $currentUser.id}
 								<div class="flex flex-row justify-end items-center">
 									<div class="avatar placeholder">
@@ -95,9 +118,9 @@
 									</div>
 								</div>
 							{/if}
-						{/if}
-					</td>
-				</tr>
+						</td>
+					</tr>
+				{/if}
 				<File {file} />
 			{/each}
 		</tbody>

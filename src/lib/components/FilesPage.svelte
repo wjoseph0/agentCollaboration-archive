@@ -46,7 +46,7 @@
 	<br />
 	{#if $currentUser.isAgent}
 		<div class="prose text-center sm:text-left">
-			<h1>Files</h1>
+			<h1>My Files</h1>
 		</div>
 	{:else}
 		<div class="prose text-center mx-auto">

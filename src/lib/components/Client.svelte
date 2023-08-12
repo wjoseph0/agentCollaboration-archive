@@ -11,11 +11,16 @@
 	export let files;
 
 	let stageSelector;
+	let clientStatusSelector;
 
 	$: filteredFiles = files.filter((file) => file.client === journey.client);
 
 	const updateStage = async (num) => {
 		await pb.collection('journeys').update(journey.id, { step: num });
+	};
+
+	const updateClientStatus = async (bool) => {
+		await pb.collection('users').update(journey.client, { isClient: bool });
 	};
 </script>
 
@@ -68,6 +73,25 @@
 					<option value="5" selected>Closed</option>
 				{:else}
 					<option value="5">Closed</option>
+				{/if}
+			</select>
+
+			<select
+				bind:this={clientStatusSelector}
+				class="select select-sm max-w-xs"
+				on:change={() => {
+					updateClientStatus(clientStatusSelector.value);
+				}}
+			>
+				{#if !journey.expand.client.isClient}
+					<option value="false" selected>Customer</option>
+				{:else}
+					<option value="false">Customer</option>
+				{/if}
+				{#if journey.expand.client.isClient}
+					<option value="true" selected>Client</option>
+				{:else}
+					<option value="true">Client</option>
 				{/if}
 			</select>
 		</div>
