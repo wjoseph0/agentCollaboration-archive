@@ -5,11 +5,13 @@
 
 	let fileName = file.name;
 	let isPublic = file.isPublic;
+	let clientsOnly = file.clientsOnly;
 
 	const updateFile = async () => {
 		const data = {
 			name: fileName,
-			isPublic: isPublic
+			isPublic: isPublic,
+			clientsOnly: clientsOnly
 		};
 
 		await pb.collection('files').update(file.id, data);
@@ -34,6 +36,7 @@
 						class="flex flex-row justify-end items-center cursor-pointer"
 						on:click={() => {
 							isPublic = false;
+							clientsOnly = true;
 							updateFile();
 						}}
 					>
@@ -55,6 +58,7 @@
 						class="flex flex-row items-center cursor-pointer"
 						on:click={() => {
 							isPublic = true;
+							clientsOnly = false;
 							updateFile();
 						}}
 					>

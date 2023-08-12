@@ -8,7 +8,7 @@
 	let uploadFileForm;
 	let fileName;
 	let newFile;
-	let privateFile = true;
+	let clientsOnly = true;
 	let publicFile = false;
 
 	const uploadFile = async () => {
@@ -19,6 +19,8 @@
 
 		if (publicFile) {
 			formData.append('isPublic', true);
+		} else if (clientsOnly) {
+			formData.append('clientsOnly', true);
 		}
 
 		if ($currentUser.isAgent) {
@@ -82,13 +84,13 @@
 			<input type="file" class="file-input" bind:files={newFile} required />
 			<div class="modal-action">
 				{#if $currentUser.isAgent}
-					{#if privateFile}
+					{#if clientsOnly}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<div
 							class="flex flex-row items-center cursor-pointer"
 							on:click={() => {
 								publicFile = true;
-								privateFile = false;
+								clientsOnly = false;
 							}}
 						>
 							<svg
@@ -103,7 +105,7 @@
 									clip-rule="evenodd"
 								/>
 							</svg>
-							<span>Private</span>
+							<span>Clients Only</span>
 						</div>
 					{:else if publicFile}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -111,7 +113,7 @@
 							class="flex flex-row items-center cursor-pointer"
 							on:click={() => {
 								publicFile = false;
-								privateFile = true;
+								clientsOnly = true;
 							}}
 						>
 							<svg
