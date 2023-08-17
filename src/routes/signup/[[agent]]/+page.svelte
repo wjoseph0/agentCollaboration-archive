@@ -181,12 +181,12 @@
 
 		<p class="text-center text-xs">
 			By clicking "Sign Up" below, I accept the <a
-				href="https://app.termly.io/document/terms-and-conditions/ebafceeb-c35c-4515-9797-9f7b45202ab0"
+				href="https://www.freeprivacypolicy.com/live/1c0ba0e1-eeab-497f-ab10-35a5fe5bffe3"
 				class="link link-primary link-hover">Terms and Conditions</a
 			>. Your
 			<a
 				class="link link-primary link-hover"
-				href="https://app.termly.io/document/privacy-policy/bc7e25ed-f732-455f-98f9-e97843ec792a"
+				href="https://www.freeprivacypolicy.com/live/7a5ad8b3-b864-4fb1-85a7-471501d01620"
 			>
 				privacy
 			</a> is protected.
