@@ -9,9 +9,9 @@ Apple App Store: https://apps.apple.com/us/app/agentpad/id6453560305
 
 Google Play Store: https://play.google.com/store/apps/details?id=com.agentpadapp.twa
 
-After downloading, please sign up and enter my ID.
+After downloading, please sign up and enter my license number.
 
-My ID: ${$currentUser.id}`;
+My license number: ${$currentUser.licenseNumber}`;
 
 	const data = {
 		title: 'Agentpad',
