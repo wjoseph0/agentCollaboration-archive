@@ -8,13 +8,15 @@
 	let earnest_money;
 	let inspection;
 	let appraisal;
+	let financing;
 	let aoForm;
 
 	$: data = {
 		journey: journey.id,
 		earnest_money: earnest_money,
 		inspection: inspection,
-		appraisal: appraisal
+		appraisal: appraisal,
+		financing: financing
 	};
 
 	onMount(async () => {
@@ -25,6 +27,7 @@
 		earnest_money = acceptedOffer.earnest_money?.substring(0, 10);
 		inspection = acceptedOffer.inspection?.substring(0, 10);
 		appraisal = acceptedOffer.appraisal?.substring(0, 10);
+		financing = acceptedOffer.financing?.substring(0, 10);
 	});
 
 	async function setAO() {
@@ -103,6 +106,23 @@
 				/>
 			{:else}
 				<input bind:value={appraisal} type="date" name="appraisal" class="input input-bordered" />
+			{/if}
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="financing">
+				<span class="label-text">Loan Commitment</span>
+			</label>
+			{#if !$currentUser.isAgent}
+				<input
+					bind:value={financing}
+					type="date"
+					name="financing"
+					class="input input-bordered"
+					disabled
+				/>
+			{:else}
+				<input bind:value={financing} type="date" name="financing" class="input input-bordered" />
 			{/if}
 		</div>
 
