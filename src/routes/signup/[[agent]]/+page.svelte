@@ -18,6 +18,7 @@
 	let agentIdInput;
 	let isClient = true;
 	let isAgent = false;
+	let licenseNumber = '';
 	let brokerage = '';
 
 	const validateAgent = async () => {
@@ -45,6 +46,7 @@
 				info.agent = agentID;
 			} else if (isAgent) {
 				info.isAgent = true;
+				info.licenseNumber = licenseNumber;
 				info.brokerage = brokerage;
 			}
 
@@ -149,12 +151,23 @@
 				<span class="btn btn-neutral btn-sm">Agent</span>
 			</div>
 			<div class="form-control w-full">
+				<label class="label" for="licenseNumber">
+					<span class="label-text">My License Number</span>
+				</label>
+				<input
+					name="licenseNumber"
+					type="text"
+					class="input input-bordered"
+					bind:value={licenseNumber}
+					required
+				/>
+			</div>
+			<div class="form-control w-full">
 				<label class="label" for="brokerage">
 					<span class="label-text">My Brokerage</span>
 				</label>
 				<input
 					name="brokerage"
-					placeholder=""
 					type="text"
 					class="input input-bordered"
 					bind:value={brokerage}
