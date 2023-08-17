@@ -14,20 +14,24 @@
 	let lname = '';
 	let email = '';
 	let password = '';
-	let agentID;
-	let agentIdInput;
+	let agentLicenseNumber;
+	let agentLicenseNumberInput;
 	let isClient = true;
 	let isAgent = false;
+	let licenseNumber = '';
 	let brokerage = '';
 
 	const validateAgent = async () => {
 		try {
-			await pb.collection('users').getOne(`${agentID}`);
-			agentIdInput.classList.remove('input-error');
-			agentIdInput.classList.add('input-success');
+			const record = await pb
+				.collection('users')
+				.getFirstListItem(`licenseNumber="${agentLicenseNumber}"`, {});
+			agentLicenseNumberInput.classList.remove('input-error');
+			agentLicenseNumberInput.classList.add('input-success');
+			return record.id;
 		} catch (err) {
-			agentIdInput.classList.remove('input-success');
-			agentIdInput.classList.add('input-error');
+			agentLicenseNumberInput.classList.remove('input-success');
+			agentLicenseNumberInput.classList.add('input-error');
 		}
 	};
 
@@ -42,9 +46,10 @@
 				passwordConfirm: password
 			};
 			if (isClient) {
-				info.agent = agentID;
+				info.agent = await validateAgent();
 			} else if (isAgent) {
 				info.isAgent = true;
+				info.licenseNumber = licenseNumber;
 				info.brokerage = brokerage;
 			}
 
@@ -65,7 +70,7 @@
 
 	onMount(async () => {
 		if (data.agent) {
-			agentID = data.agent;
+			agentLicenseNumber = data.agent;
 			validateAgent();
 		}
 	});
@@ -122,16 +127,16 @@
 				>
 			</div>
 			<div class="form-control w-full">
-				<label class="label" for="agentid">
-					<span class="label-text">My Agent's ID</span>
+				<label class="label" for="agentLicenseNumberInput">
+					<span class="label-text">My Agent's License Number</span>
 				</label>
 				<input
-					name="agentid"
+					name="agentLicenseNumberInput"
 					placeholder=""
 					type="text"
 					class="input input-bordered"
-					bind:this={agentIdInput}
-					bind:value={agentID}
+					bind:this={agentLicenseNumberInput}
+					bind:value={agentLicenseNumber}
 					on:change={validateAgent}
 					required
 				/>
@@ -149,12 +154,23 @@
 				<span class="btn btn-neutral btn-sm">Agent</span>
 			</div>
 			<div class="form-control w-full">
+				<label class="label" for="licenseNumber">
+					<span class="label-text">License Number</span>
+				</label>
+				<input
+					name="licenseNumber"
+					type="text"
+					class="input input-bordered"
+					bind:value={licenseNumber}
+					required
+				/>
+			</div>
+			<div class="form-control w-full">
 				<label class="label" for="brokerage">
-					<span class="label-text">My Brokerage</span>
+					<span class="label-text">Brokerage</span>
 				</label>
 				<input
 					name="brokerage"
-					placeholder=""
 					type="text"
 					class="input input-bordered"
 					bind:value={brokerage}
