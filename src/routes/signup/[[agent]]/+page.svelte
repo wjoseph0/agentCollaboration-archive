@@ -23,9 +23,12 @@
 
 	const validateAgent = async () => {
 		try {
-			await pb.collection('users').getOne(`${agentLicenseNumber}`);
+			const record = await pb
+				.collection('users')
+				.getFirstListItem(`licenseNumber="${agentLicenseNumber}"`, {});
 			agentLicenseNumberInput.classList.remove('input-error');
 			agentLicenseNumberInput.classList.add('input-success');
+			return record.id;
 		} catch (err) {
 			agentLicenseNumberInput.classList.remove('input-success');
 			agentLicenseNumberInput.classList.add('input-error');
@@ -43,7 +46,7 @@
 				passwordConfirm: password
 			};
 			if (isClient) {
-				info.agent = agentLicenseNumber;
+				info.agent = await validateAgent();
 			} else if (isAgent) {
 				info.isAgent = true;
 				info.licenseNumber = licenseNumber;
