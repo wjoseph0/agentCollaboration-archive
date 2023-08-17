@@ -125,7 +125,7 @@
 			</div>
 			<div class="form-control w-full">
 				<label class="label" for="agentid">
-					<span class="label-text">My Agent's ID</span>
+					<span class="label-text">My Agent's License Number</span>
 				</label>
 				<input
 					name="agentid"
@@ -152,7 +152,7 @@
 			</div>
 			<div class="form-control w-full">
 				<label class="label" for="licenseNumber">
-					<span class="label-text">My License Number</span>
+					<span class="label-text">License Number</span>
 				</label>
 				<input
 					name="licenseNumber"
@@ -164,7 +164,7 @@
 			</div>
 			<div class="form-control w-full">
 				<label class="label" for="brokerage">
-					<span class="label-text">My Brokerage</span>
+					<span class="label-text">Brokerage</span>
 				</label>
 				<input
 					name="brokerage"
