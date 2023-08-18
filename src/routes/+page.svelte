@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import AgentDashboard from '../lib/components/AgentDashboard.svelte';
-	import BuyerRoadmap from '$lib/components/BuyerRoadmap.svelte';
+	import ClientRoadmap from '$lib/components/ClientRoadmap.svelte';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -19,6 +19,6 @@
 	{#if $currentUser.isAgent}
 		<AgentDashboard />
 	{:else}
-		<BuyerRoadmap />
+		<ClientRoadmap />
 	{/if}
 {/if}

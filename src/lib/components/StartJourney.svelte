@@ -24,4 +24,4 @@
 	};
 </script>
 
-<button on:click={createJourney} class="btn btn-primary w-full">Start Journey</button>
+<button on:click={createJourney} class="btn btn-primary w-full max-w-md">Start Journey</button>
