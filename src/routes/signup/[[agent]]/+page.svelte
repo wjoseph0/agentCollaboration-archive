@@ -16,6 +16,7 @@
 	let password = '';
 	let agentLicenseNumber;
 	let agentLicenseNumberInput;
+	let clientType = '';
 	let isClient = true;
 	let isAgent = false;
 	let licenseNumber = '';
@@ -46,6 +47,7 @@
 				passwordConfirm: password
 			};
 			if (isClient) {
+				info.clientType = clientType;
 				info.agent = await validateAgent();
 			} else if (isAgent) {
 				info.isAgent = true;
@@ -59,7 +61,7 @@
 				password,
 				{},
 				{
-					expand: 'agent,clients,focusedClient'
+					expand: 'agent'
 				}
 			);
 			goto('/');
@@ -125,6 +127,22 @@
 						isClient = false;
 					}}>Agent</span
 				>
+			</div>
+			<div class="form-control w-full">
+				<label class="label" for="clientType">
+					<span class="label-text">Buying or Selling</span>
+				</label>
+				<select
+					bind:value={clientType}
+					name="clientType"
+					class="select select-bordered w-full"
+					required
+				>
+					<option disabled selected />
+					<option value="buyer">Buying</option>
+					<option value="seller">Selling</option>
+					<option value="both">Both</option>
+				</select>
 			</div>
 			<div class="form-control w-full">
 				<label class="label" for="agentLicenseNumberInput">

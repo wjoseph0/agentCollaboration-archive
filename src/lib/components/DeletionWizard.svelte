@@ -39,9 +39,13 @@
 				await pb.collection('files').delete(files[index].id);
 			}
 		} else if (!$currentUser.isAgent) {
-			await pb.collection('search_profiles').delete(searchProfile.id);
-			await pb.collection('cheatsheets').delete(cheatsheet.id);
-			await pb.collection('journeys').delete(journey.id);
+			if (searchProfile) {
+				await pb.collection('search_profiles').delete(searchProfile.id);
+			} else if (cheatsheet) {
+				await pb.collection('cheatsheets').delete(cheatsheet.id);
+			} else if (journey) {
+				await pb.collection('journeys').delete(journey.id);
+			}
 		}
 
 		await pb.collection('users').delete($currentUser.id);
