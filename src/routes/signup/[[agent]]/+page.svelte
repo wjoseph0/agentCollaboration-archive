@@ -141,7 +141,6 @@
 					<option disabled selected />
 					<option value="buyer">Buying</option>
 					<option value="seller">Selling</option>
-					<option value="both">Both</option>
 				</select>
 			</div>
 			<div class="form-control w-full">

@@ -36,7 +36,7 @@
 
 	let stages = [
 		{ name: 'Preparing', step: 1 },
-		{ name: 'Searching', step: 2 },
+		{ name: 'Listed', step: 2 },
 		{ name: 'Accepted Offer', step: 3 },
 		{ name: 'Closing', step: 4 },
 		{ name: 'Closed', step: 5 }
@@ -47,7 +47,7 @@
 	<div class="container">
 		<br />
 		<div class="prose text-center mx-auto">
-			<h1>My Buying Journey</h1>
+			<h1>My Selling Journey</h1>
 		</div>
 		<br />
 		<div class="flex justify-center">
@@ -72,10 +72,9 @@
 								<h2 class="card-title">{stage.name}</h2>
 								<div class="card-actions">
 									{#if stage.step === 1 && journey.step >= 1}
-										<BuyerConsultation {journey} />
+										<div />
 									{:else if stage.step === 2 && journey.step >= 2}
-										<SearchProfile {journey} />
-										<OfferCheatSheet {journey} />
+										<div />
 									{:else if stage.step === 3 && journey.step >= 3}
 										<AcceptedOffer {journey} />
 									{/if}
