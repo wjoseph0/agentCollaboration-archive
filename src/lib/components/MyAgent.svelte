@@ -19,8 +19,8 @@
 					</div>
 				{:else}
 					<div class="avatar placeholder">
-						<div class="rounded bg-neutral-focus text-neutral-content w-24 md:w-32 prose">
-							<span class="text-3xl md:text-5xl">
+						<div class="rounded bg-neutral-focus text-neutral-content w-20 md:w-24 prose">
+							<span class="text-3xl">
 								{$currentUser.expand.agent.fname[0]}{$currentUser.expand.agent.lname[0]}
 							</span>
 						</div>
