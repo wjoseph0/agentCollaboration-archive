@@ -17,10 +17,12 @@
 		formData.append('file', newFile[0]);
 		formData.append('name', fileName);
 
-		if (publicFile) {
-			formData.append('isPublic', true);
-		} else if (clientsOnly) {
-			formData.append('clientsOnly', true);
+		if (path === '/files') {
+			if (publicFile) {
+				formData.append('isPublic', true);
+			} else if (clientsOnly) {
+				formData.append('clientsOnly', true);
+			}
 		}
 
 		if ($currentUser.isAgent) {
