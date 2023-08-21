@@ -51,7 +51,7 @@
 		</div>
 		<br />
 		{#if $currentUser.expand.agent.teamLogo}
-			<div class="flex justify-center items-center gap-2 md:mt-3">
+			<div class="flex justify-center items-center gap-2 mb-3 md:mt-3">
 				<span class="prose italic">powered by</span>
 				<img
 					class="w-20 md:w-28"
@@ -61,13 +61,13 @@
 				/>
 			</div>
 		{:else if $currentUser.expand.agent.brokerageLogo}
-			<div class="flex justify-center items-center gap-2 md:mt-3">
+			<div class="flex justify-center items-center gap-2 mb-3 md:mt-3">
 				<span class="prose italic">powered by</span>
 				<img
 					class="w-20 md:w-28"
 					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
 						.expand.agent.brokerageLogo}"
-					alt="Team Logo"
+					alt="Brokerage Logo"
 				/>
 			</div>
 		{/if}
