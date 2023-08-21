@@ -47,9 +47,30 @@
 	<div class="container">
 		<br />
 		<div class="prose text-center mx-auto">
-			<h1>My Selling Journey</h1>
+			<h1>My Journey</h1>
 		</div>
 		<br />
+		{#if $currentUser.expand.agent.teamLogo}
+			<div class="flex justify-center items-center gap-2 md:mt-3">
+				<span class="prose italic">powered by</span>
+				<img
+					class="w-20 md:w-28"
+					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+						.expand.agent.teamLogo}"
+					alt="Team Logo"
+				/>
+			</div>
+		{:else if $currentUser.expand.agent.brokerageLogo}
+			<div class="flex justify-center items-center gap-2 md:mt-3">
+				<span class="prose italic">powered by</span>
+				<img
+					class="w-20 md:w-28"
+					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+						.expand.agent.brokerageLogo}"
+					alt="Team Logo"
+				/>
+			</div>
+		{/if}
 		<div class="flex justify-center">
 			<ul class="steps steps-vertical">
 				{#each stages as stage}

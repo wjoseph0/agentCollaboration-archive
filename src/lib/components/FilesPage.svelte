@@ -54,6 +54,29 @@
 		</div>
 	{/if}
 	<br />
+	{#if !$currentUser.isAgent}
+		{#if $currentUser.expand.agent.teamLogo}
+			<div class="flex justify-center items-center gap-2 md:mt-3">
+				<span class="prose italic">powered by</span>
+				<img
+					class="w-20 md:w-28"
+					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+						.expand.agent.teamLogo}"
+					alt="Team Logo"
+				/>
+			</div>
+		{:else if $currentUser.expand.agent.brokerageLogo}
+			<div class="flex justify-center items-center gap-2 md:mt-3">
+				<span class="prose italic">powered by</span>
+				<img
+					class="w-20 md:w-28"
+					src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+						.expand.agent.brokerageLogo}"
+					alt="Team Logo"
+				/>
+			</div>
+		{/if}
+	{/if}
 	<div class="overflow-y-auto h-auto">
 		<Files {files} />
 		<br />
