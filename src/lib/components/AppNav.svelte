@@ -69,28 +69,30 @@
 					class="w-6 h-6"
 				>
 					<path
-						d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"
-					/>
-					<path
-						d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"
+						fill-rule="evenodd"
+						d="M3 2.25a.75.75 0 000 1.5v16.5h-.75a.75.75 0 000 1.5H15v-18a.75.75 0 000-1.5H3zM6.75 19.5v-2.25a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v2.25a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 010 1.5h-.75A.75.75 0 016 6.75zM6.75 9a.75.75 0 000 1.5h.75a.75.75 0 000-1.5h-.75zM6 12.75a.75.75 0 01.75-.75h.75a.75.75 0 010 1.5h-.75a.75.75 0 01-.75-.75zM10.5 6a.75.75 0 000 1.5h.75a.75.75 0 000-1.5h-.75zm-.75 3.75A.75.75 0 0110.5 9h.75a.75.75 0 010 1.5h-.75a.75.75 0 01-.75-.75zM10.5 12a.75.75 0 000 1.5h.75a.75.75 0 000-1.5h-.75zM16.5 6.75v15h5.25a.75.75 0 000-1.5H21v-12a.75.75 0 000-1.5h-4.5zm1.5 4.5a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75h-.008a.75.75 0 01-.75-.75v-.008zm.75 2.25a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75v-.008a.75.75 0 00-.75-.75h-.008zM18 17.25a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75h-.008a.75.75 0 01-.75-.75v-.008z"
+						clip-rule="evenodd"
 					/>
 				</svg>
-				<span class="btm-nav-label font-bold">Dashboard</span>
+
+				<!-- <span class="btm-nav-label font-bold">Dashboard</span> -->
 			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-5 w-5"
 					fill="none"
 					viewBox="0 0 24 24"
+					stroke-width="1.5"
 					stroke="currentColor"
-					><path
+					class="w-6 h-6"
+				>
+					<path
 						stroke-linecap="round"
 						stroke-linejoin="round"
-						stroke-width="2"
-						d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-					/></svg
-				>
-				<span class="btm-nav-label">Dashboard</span>
+						d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"
+					/>
+				</svg>
+
+				<!-- <span class="btm-nav-label">Dashboard</span> -->
 			{/if}
 		{:else if !$currentUser.isAgent}
 			{#if path === '/'}
@@ -107,7 +109,7 @@
 					/>
 				</svg>
 
-				<span class="btm-nav-label font-bold">Journey</span>
+				<!-- <span class="btm-nav-label font-bold">Journey</span> -->
 			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -124,10 +126,57 @@
 					/>
 				</svg>
 
-				<span class="btm-nav-label">Journey</span>
+				<!-- <span class="btm-nav-label">Journey</span> -->
 			{/if}
 		{/if}
 	</button>
+
+	{#if $currentUser.isAgent}
+		<button
+			class={path === '/deadlines' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
+			on:click={() => {
+				goto('/deadlines');
+			}}
+		>
+			{#if path === '/deadlines'}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 24 24"
+					fill="currentColor"
+					class="w-6 h-6"
+				>
+					<path
+						d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z"
+					/>
+					<path
+						fill-rule="evenodd"
+						d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+
+				<!-- <span class="btm-nav-label font-bold">Deadlines</span> -->
+			{:else}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-6 h-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+					/>
+				</svg>
+
+				<!-- <span class="btm-nav-label">Deadlines</span> -->
+			{/if}
+		</button>
+	{/if}
+
 	<button
 		class={path === '/files' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
 		on:click={() => {
@@ -145,7 +194,7 @@
 					d="M19.906 9c.382 0 .749.057 1.094.162V9a3 3 0 00-3-3h-3.879a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H6a3 3 0 00-3 3v3.162A3.756 3.756 0 014.094 9h15.812zM4.094 10.5a2.25 2.25 0 00-2.227 2.568l.857 6A2.25 2.25 0 004.951 21H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-2.227-2.568H4.094z"
 				/>
 			</svg>
-			<span class="btm-nav-label font-bold">Files</span>
+			<!-- <span class="btm-nav-label font-bold">Files</span> -->
 		{:else}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +210,7 @@
 					d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
 				/>
 			</svg>
-			<span class="btm-nav-label">Files</span>
+			<!-- <span class="btm-nav-label">Files</span> -->
 		{/if}
 	</button>
 
@@ -185,7 +234,7 @@
 				/>
 			</svg>
 
-			<span class="btm-nav-label font-bold">Account</span>
+			<!-- <span class="btm-nav-label font-bold">Account</span> -->
 		{:else}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +251,7 @@
 				/>
 			</svg>
 
-			<span class="btm-nav-label">Account</span>
+			<!-- <span class="btm-nav-label">Account</span> -->
 		{/if}
 	</button>
 </div>
