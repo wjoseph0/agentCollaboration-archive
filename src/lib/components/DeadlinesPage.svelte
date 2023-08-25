@@ -1,9 +1,16 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
+	import Deadline from '$lib/components/Deadline.svelte';
 
 	let acceptedOffers = [];
 	let acceptedOffersSorted = [];
+
+	let today = new Date();
+	let dd = String(today.getDate()).padStart(2, '0');
+	let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	let yyyy = today.getFullYear();
+	today = new Date(`${yyyy + '-' + mm + '-' + dd}`);
 
 	const sortAscending = (a, b) => {
 		const date1 = new Date(a.date);
@@ -11,16 +18,17 @@
 		return date1 - date2;
 	};
 
-	const onAfterToday = (d) => {
-		let date1 = new Date(d);
-		date1.setDate(date1.getDate() + 1);
-		let today = new Date();
+	const isOnOrAfterToday = (d) => {
+		let deadlineDate = new Date(d);
+
+		const diffTime = deadlineDate - today;
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
 		if (!d) {
 			return false;
 		}
 
-		if (date1 < today) {
+		if (diffDays < 0) {
 			return false;
 		}
 
@@ -35,43 +43,51 @@
 				.collection('journeys')
 				.getOne(acceptedOffers[i].journey, { expand: 'client' });
 
-			if (onAfterToday(acceptedOffers[i].earnest_money.substring(0, 10))) {
+			if (isOnOrAfterToday(acceptedOffers[i].earnest_money.substring(0, 10))) {
 				acceptedOffersSorted.push({
+					id: `EM_${journey.client}`,
 					type: 'Earnest Money',
 					date: acceptedOffers[i].earnest_money.substring(0, 10),
 					client:
 						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1)
+						journey.expand.client.lname.substring(0, 1),
+					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
 				});
 			}
 
-			if (onAfterToday(acceptedOffers[i].inspection.substring(0, 10))) {
+			if (isOnOrAfterToday(acceptedOffers[i].inspection.substring(0, 10))) {
 				acceptedOffersSorted.push({
+					id: `I_${journey.client}`,
 					type: 'Inspection',
 					date: acceptedOffers[i].inspection.substring(0, 10),
 					client:
 						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1)
+						journey.expand.client.lname.substring(0, 1),
+					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
 				});
 			}
 
-			if (onAfterToday(acceptedOffers[i].appraisal.substring(0, 10))) {
+			if (isOnOrAfterToday(acceptedOffers[i].appraisal.substring(0, 10))) {
 				acceptedOffersSorted.push({
+					id: `A_${journey.client}`,
 					type: 'Appraisal',
 					date: acceptedOffers[i].appraisal.substring(0, 10),
 					client:
 						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1)
+						journey.expand.client.lname.substring(0, 1),
+					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
 				});
 			}
 
-			if (onAfterToday(acceptedOffers[i].financing.substring(0, 10))) {
+			if (isOnOrAfterToday(acceptedOffers[i].financing.substring(0, 10))) {
 				acceptedOffersSorted.push({
+					id: `LC_${journey.client}`,
 					type: 'Loan Commitment',
 					date: acceptedOffers[i].financing.substring(0, 10),
 					client:
 						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1)
+						journey.expand.client.lname.substring(0, 1),
+					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
 				});
 			}
 		}
@@ -101,8 +117,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each acceptedOffersSorted as acceptedOffer}
-				<tr class="hover cursor-pointer">
+			{#each acceptedOffersSorted as deadline (deadline.id)}
+				<tr class="hover cursor-pointer" onclick="c{deadline.id}.showModal()">
 					<td
 						><div class="flex items-center gap-2">
 							<div class="avatar placeholder">
@@ -110,17 +126,18 @@
 									class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12 prose"
 								>
 									<span>
-										{acceptedOffer.client}
+										{deadline.client}
 									</span>
 								</div>
 							</div>
 							<div class="font-bold">
-								{acceptedOffer.type}
+								{deadline.type}
 							</div>
 						</div>
 					</td>
-					<td><input type="date" value={acceptedOffer.date} disabled /></td>
+					<td><input type="date" value={deadline.date} disabled /></td>
 				</tr>
+				<Deadline {deadline} />
 			{/each}
 			<br /><br /><br />
 		</tbody>
