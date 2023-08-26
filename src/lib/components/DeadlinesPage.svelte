@@ -5,6 +5,7 @@
 
 	let acceptedOffers = [];
 	let acceptedOffersSorted = [];
+	let loading = true;
 
 	let today = new Date();
 	let dd = String(today.getDate()).padStart(2, '0');
@@ -38,61 +39,66 @@
 	onMount(async () => {
 		acceptedOffers = await pb.collection('accepted_offers').getFullList();
 
-		for (let i = 0; i < acceptedOffers.length; i++) {
-			let journey = await pb
-				.collection('journeys')
-				.getOne(acceptedOffers[i].journey, { expand: 'client' });
+		if (acceptedOffers.length > 0) {
+			for (let i = 0; i < acceptedOffers.length; i++) {
+				let journey = await pb
+					.collection('journeys')
+					.getOne(acceptedOffers[i].journey, { expand: 'client' });
 
-			if (isOnOrAfterToday(acceptedOffers[i].earnest_money.substring(0, 10))) {
-				acceptedOffersSorted.push({
-					id: `EM_${journey.client}`,
-					type: 'Earnest Money',
-					date: acceptedOffers[i].earnest_money.substring(0, 10),
-					client:
-						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1),
-					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
-				});
-			}
+				if (journey.step === 3) {
+					if (isOnOrAfterToday(acceptedOffers[i].earnest_money.substring(0, 10))) {
+						acceptedOffersSorted.push({
+							id: `EM_${journey.client}`,
+							type: 'Earnest Money',
+							date: acceptedOffers[i].earnest_money.substring(0, 10),
+							client:
+								journey.expand.client.fname.substring(0, 1) +
+								journey.expand.client.lname.substring(0, 1),
+							clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
+						});
+					}
 
-			if (isOnOrAfterToday(acceptedOffers[i].inspection.substring(0, 10))) {
-				acceptedOffersSorted.push({
-					id: `I_${journey.client}`,
-					type: 'Inspection',
-					date: acceptedOffers[i].inspection.substring(0, 10),
-					client:
-						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1),
-					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
-				});
-			}
+					if (isOnOrAfterToday(acceptedOffers[i].inspection.substring(0, 10))) {
+						acceptedOffersSorted.push({
+							id: `I_${journey.client}`,
+							type: 'Inspection',
+							date: acceptedOffers[i].inspection.substring(0, 10),
+							client:
+								journey.expand.client.fname.substring(0, 1) +
+								journey.expand.client.lname.substring(0, 1),
+							clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
+						});
+					}
 
-			if (isOnOrAfterToday(acceptedOffers[i].appraisal.substring(0, 10))) {
-				acceptedOffersSorted.push({
-					id: `A_${journey.client}`,
-					type: 'Appraisal',
-					date: acceptedOffers[i].appraisal.substring(0, 10),
-					client:
-						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1),
-					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
-				});
-			}
+					if (isOnOrAfterToday(acceptedOffers[i].appraisal.substring(0, 10))) {
+						acceptedOffersSorted.push({
+							id: `A_${journey.client}`,
+							type: 'Appraisal',
+							date: acceptedOffers[i].appraisal.substring(0, 10),
+							client:
+								journey.expand.client.fname.substring(0, 1) +
+								journey.expand.client.lname.substring(0, 1),
+							clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
+						});
+					}
 
-			if (isOnOrAfterToday(acceptedOffers[i].financing.substring(0, 10))) {
-				acceptedOffersSorted.push({
-					id: `LC_${journey.client}`,
-					type: 'Loan Commitment',
-					date: acceptedOffers[i].financing.substring(0, 10),
-					client:
-						journey.expand.client.fname.substring(0, 1) +
-						journey.expand.client.lname.substring(0, 1),
-					clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
-				});
+					if (isOnOrAfterToday(acceptedOffers[i].financing.substring(0, 10))) {
+						acceptedOffersSorted.push({
+							id: `LC_${journey.client}`,
+							type: 'Loan Commitment',
+							date: acceptedOffers[i].financing.substring(0, 10),
+							client:
+								journey.expand.client.fname.substring(0, 1) +
+								journey.expand.client.lname.substring(0, 1),
+							clientFullName: `${journey.expand.client.fname} ${journey.expand.client.lname}`
+						});
+					}
+				}
+
+				acceptedOffersSorted = acceptedOffersSorted.sort(sortAscending);
 			}
+			loading = false;
 		}
-
-		acceptedOffersSorted = acceptedOffersSorted.sort(sortAscending);
 	});
 </script>
 
@@ -117,28 +123,41 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each acceptedOffersSorted as deadline (deadline.id)}
-				<tr class="hover cursor-pointer" onclick="c{deadline.id}.showModal()">
-					<td
-						><div class="flex items-center gap-2">
-							<div class="avatar placeholder">
-								<div
-									class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12 prose"
-								>
-									<span>
-										{deadline.client}
-									</span>
+			{#if loading}
+				<tr><td><span class="loading loading-spinner loading-sm" /></td></tr>
+			{:else if acceptedOffersSorted.length > 0}
+				{#each acceptedOffersSorted as deadline (deadline.id)}
+					<tr class="hover cursor-pointer" onclick="c{deadline.id}.showModal()">
+						<td
+							><div class="flex items-center gap-2">
+								<div class="avatar placeholder">
+									<div class="mask mask-squircle bg-neutral-focus text-neutral-content w-8 prose">
+										<span class="text-xs">
+											{deadline.client}
+										</span>
+									</div>
+								</div>
+								<div class="font-bold">
+									{deadline.type}
 								</div>
 							</div>
-							<div class="font-bold">
-								{deadline.type}
-							</div>
-						</div>
-					</td>
-					<td><input type="date" value={deadline.date} disabled /></td>
+						</td>
+						<td
+							><p class="text-xs md:text-base prose">
+								{deadline.date.substring(5, 7)}/{deadline.date.substring(
+									8,
+									10
+								)}/{deadline.date.substring(0, 4)}
+							</p>
+						</td>
+					</tr>
+					<Deadline {deadline} />
+				{/each}
+			{:else}
+				<tr>
+					<td class="text-xs prose"> No deadlines to show </td>
 				</tr>
-				<Deadline {deadline} />
-			{/each}
+			{/if}
 			<br /><br /><br />
 		</tbody>
 	</table>
