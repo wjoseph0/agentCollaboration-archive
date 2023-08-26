@@ -21,9 +21,9 @@
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 
 		<span>{deadline.clientFullName}</span>
-		<div class="flex flex-row justify-between items-center">
-			<p class="font-bold text-lg">{deadline.type}</p>
-		</div>
+
+		<h3 class="font-bold text-xl">{deadline.type}</h3>
+		<br /> <br />
 
 		{#if diffDays === 0}
 			<div class="flex flex-row justify-start items-center text-error gap-1">
@@ -78,9 +78,15 @@
 							d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
-					<p>{diffDays} days</p>
+					<span>{diffDays} days</span>
 				</div>
-				<input type="date" value={deadline.date} disabled />
+
+				<span>
+					{deadline.date.substring(5, 7)}/{deadline.date.substring(8, 10)}/{deadline.date.substring(
+						0,
+						4
+					)}
+				</span>
 			</div>
 		{/if}
 	</form>
