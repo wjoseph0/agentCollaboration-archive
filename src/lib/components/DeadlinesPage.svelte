@@ -2,6 +2,7 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
 	import Deadline from '$lib/components/Deadline.svelte';
+	import { fade } from 'svelte/transition';
 
 	let acceptedOffers = [];
 	let acceptedOffersSorted = [];
@@ -36,7 +37,7 @@
 		return true;
 	};
 
-	onMount(async () => {
+	$: onMount(async () => {
 		acceptedOffers = await pb.collection('accepted_offers').getFullList();
 
 		if (acceptedOffers.length > 0) {
@@ -48,8 +49,10 @@
 				if (journey.step === 3) {
 					if (isOnOrAfterToday(acceptedOffers[i].earnest_money.substring(0, 10))) {
 						acceptedOffersSorted.push({
+							parentID: acceptedOffers[i].id,
 							id: `EM_${journey.client}`,
 							type: 'Earnest Money',
+							isComplete: acceptedOffers[i].em_complete,
 							date: acceptedOffers[i].earnest_money.substring(0, 10),
 							client:
 								journey.expand.client.fname.substring(0, 1) +
@@ -60,8 +63,10 @@
 
 					if (isOnOrAfterToday(acceptedOffers[i].inspection.substring(0, 10))) {
 						acceptedOffersSorted.push({
+							parentID: acceptedOffers[i].id,
 							id: `I_${journey.client}`,
 							type: 'Inspection',
+							isComplete: acceptedOffers[i].i_complete,
 							date: acceptedOffers[i].inspection.substring(0, 10),
 							client:
 								journey.expand.client.fname.substring(0, 1) +
@@ -72,8 +77,10 @@
 
 					if (isOnOrAfterToday(acceptedOffers[i].appraisal.substring(0, 10))) {
 						acceptedOffersSorted.push({
+							parentID: acceptedOffers[i].id,
 							id: `A_${journey.client}`,
 							type: 'Appraisal',
+							isComplete: acceptedOffers[i].a_complete,
 							date: acceptedOffers[i].appraisal.substring(0, 10),
 							client:
 								journey.expand.client.fname.substring(0, 1) +
@@ -84,8 +91,10 @@
 
 					if (isOnOrAfterToday(acceptedOffers[i].financing.substring(0, 10))) {
 						acceptedOffersSorted.push({
+							parentID: acceptedOffers[i].id,
 							id: `LC_${journey.client}`,
 							type: 'Loan Commitment',
+							isComplete: acceptedOffers[i].f_complete,
 							date: acceptedOffers[i].financing.substring(0, 10),
 							client:
 								journey.expand.client.fname.substring(0, 1) +
@@ -117,7 +126,7 @@
 						<input type="checkbox" class="checkbox" />
 					</label>
 				</th> -->
-
+				<th>Status</th>
 				<th>Type</th>
 				<th>Date</th>
 			</tr>
@@ -127,7 +136,14 @@
 				<tr><td><span class="loading loading-spinner loading-sm" /></td></tr>
 			{:else if acceptedOffersSorted.length > 0}
 				{#each acceptedOffersSorted as deadline (deadline.id)}
-					<tr class="hover cursor-pointer" onclick="c{deadline.id}.showModal()">
+					<tr in:fade class="hover cursor-pointer" onclick="c{deadline.id}.showModal()">
+						<td
+							>{#if !deadline.isComplete}
+								<span class="badge badge-ghost badge-lg" />
+							{:else if deadline.isComplete}
+								<span class="badge badge-success badge-lg" />
+							{/if}</td
+						>
 						<td
 							><div class="flex items-center gap-2">
 								<div class="avatar placeholder">

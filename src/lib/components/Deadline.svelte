@@ -3,6 +3,9 @@
 
 	export let deadline;
 
+	let deadlineStatusSelector;
+	$: deadlineStatus = deadlineStatusSelector?.value;
+
 	let today = new Date();
 	let dd = String(today.getDate()).padStart(2, '0');
 	let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -13,6 +16,38 @@
 
 	const diffTime = Math.abs(deadlineDate - today);
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+	const updateDeadlineStatus = async (value) => {
+		if (value === 'completed') {
+			deadline.isComplete = true;
+		} else if (value === 'created') {
+			deadline.isComplete = false;
+		}
+
+		if (deadline.type === 'Earnest Money' && value === 'completed') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { em_complete: true });
+		} else if (deadline.type === 'Earnest Money' && value === 'created') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { em_complete: false });
+		}
+
+		if (deadline.type === 'Inspection' && value === 'completed') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { i_complete: true });
+		} else if (deadline.type === 'Inspection' && value === 'created') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { i_complete: false });
+		}
+
+		if (deadline.type === 'Appraisal' && value === 'completed') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { a_complete: true });
+		} else if (deadline.type === 'Appraisal' && value === 'created') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { a_complete: false });
+		}
+
+		if (deadline.type === 'Loan Commitment' && value === 'completed') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { f_complete: true });
+		} else if (deadline.type === 'Loan Commitment' && value === 'created') {
+			await pb.collection('accepted_offers').update(deadline.parentID, { f_complete: false });
+		}
+	};
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
@@ -20,9 +55,38 @@
 	<form method="dialog" class="modal-box prose">
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 
-		<span>{deadline.clientFullName}</span>
+		<div class="flex items-center">
+			{#if deadlineStatus === 'created'}
+				<span class="badge badge-ghost badge-lg" />
+			{:else if deadlineStatus === 'completed'}
+				<span class="badge badge-success badge-lg" />
+			{/if}
+			<select
+				bind:this={deadlineStatusSelector}
+				class="select select-sm max-w-xs"
+				on:change={() => {
+					updateDeadlineStatus(deadlineStatusSelector.value);
+					deadlineStatus = deadlineStatusSelector.value;
+				}}
+			>
+				{#if !deadline.isComplete}
+					<option value="created" selected>Created</option>
+				{:else}
+					<option value="created">Created</option>
+				{/if}
+				{#if deadline.isComplete}
+					<option value="completed" selected>Completed</option>
+				{:else}
+					<option value="completed">Completed</option>
+				{/if}
+			</select>
+		</div>
+		<br /><br />
+		<span class="italic">{deadline.clientFullName}</span>
 
-		<h3 class="font-bold text-xl">{deadline.type}</h3>
+		<div class="flex justify-between items-center">
+			<p class="font-bold text-xl">{deadline.type}</p>
+		</div>
 		<br /> <br />
 
 		{#if diffDays === 0}
