@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import { browser } from '$app/environment';
+	import PasswordReset from '$lib/components/PasswordReset.svelte';
 
 	$: if (browser && $currentUser) {
 		goto('/');
@@ -33,7 +34,7 @@
 	<form on:submit|preventDefault={login} class="flex flex-col space-y-3">
 		<input
 			placeholder="Email"
-			type="text"
+			type="email"
 			class="input input-bordered"
 			bind:value={email}
 			required
@@ -45,6 +46,7 @@
 			bind:value={password}
 			required
 		/>
+		<PasswordReset />
 		<button class="btn btn-primary">Login</button>
 		<p class="text-center text-sm">
 			Don't have an account? <a href="/signup" class="link link-primary link-hover">Sign up</a> to create
