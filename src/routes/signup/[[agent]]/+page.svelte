@@ -56,6 +56,7 @@
 			}
 
 			await pb.collection('users').create(info);
+			await pb.collection('users').requestVerification(info.email);
 			await pb.collection('users').authWithPassword(
 				email.toLowerCase(),
 				password,
