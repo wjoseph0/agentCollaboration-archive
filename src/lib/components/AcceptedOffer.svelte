@@ -51,11 +51,11 @@
 			class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
 			onclick="ao{journey.id}.close()">✕</span
 		>
-		<h3>Accepted Offer Deadlines</h3>
+		<h3>Accepted Offer</h3>
 
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="earnest_money">
-				<span class="label-text">Earnest Money</span>
+				<span class="label-text">Earnest Money Deadline</span>
 			</label>
 			{#if !$currentUser.isAgent}
 				<input
@@ -77,7 +77,7 @@
 
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="inspection">
-				<span class="label-text">Inspection</span>
+				<span class="label-text">Inspection Deadline</span>
 			</label>
 			{#if !$currentUser.isAgent}
 				<input
@@ -94,7 +94,7 @@
 
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="appraisal">
-				<span class="label-text">Appraisal</span>
+				<span class="label-text">Appraisal Deadline</span>
 			</label>
 			{#if !$currentUser.isAgent}
 				<input
@@ -111,7 +111,7 @@
 
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="financing">
-				<span class="label-text">Loan Commitment</span>
+				<span class="label-text">Loan Commitment Deadline</span>
 			</label>
 			{#if !$currentUser.isAgent}
 				<input
