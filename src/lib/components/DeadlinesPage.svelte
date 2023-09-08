@@ -106,8 +106,8 @@
 
 				acceptedOffersSorted = acceptedOffersSorted.sort(sortAscending);
 			}
-			loading = false;
 		}
+		loading = false;
 	});
 </script>
 
