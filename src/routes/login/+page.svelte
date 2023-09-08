@@ -12,7 +12,6 @@
 	let password;
 	let loading = false;
 	let failed = false;
-	let errMsg = '';
 
 	export const login = async () => {
 		loading = true;
@@ -27,7 +26,6 @@
 			);
 			goto('/');
 		} catch (error) {
-			errMsg = error;
 			console.error(error);
 			failed = true;
 			setTimeout(() => {
@@ -72,7 +70,7 @@
 {#if failed}
 	<div class="toast toast-center">
 		<div class="alert alert-error">
-			<span>Login failed! {errMsg}</span>
+			<span>Login failed.</span>
 		</div>
 	</div>
 {/if}

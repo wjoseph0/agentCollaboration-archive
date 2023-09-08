@@ -22,6 +22,9 @@
 	let licenseNumber = '';
 	let brokerage = '';
 
+	let loading = false;
+	let failed = false;
+
 	const validateAgent = async () => {
 		try {
 			const record = await pb
@@ -37,6 +40,7 @@
 	};
 
 	const signUp = async () => {
+		loading = true;
 		try {
 			const info = {
 				fname: fname,
@@ -68,7 +72,12 @@
 			goto('/');
 		} catch (err) {
 			console.error(err);
+			failed = true;
+			setTimeout(() => {
+				failed = false;
+			}, 7000);
 		}
+		loading = false;
 	};
 
 	onMount(async () => {
@@ -209,10 +218,22 @@
 				privacy
 			</a> is protected.
 		</p>
-		<button class="btn btn-primary">Sign Up</button>
+		{#if loading}
+			<button class="btn btn-primary"><span class="loading loading-spinner loading-sm" /></button>
+		{:else}
+			<button class="btn btn-primary">Sign Up</button>
+		{/if}
 	</form>
 
 	<p class="text-center text-sm">
 		Have an account already? <a href="/login" class="link link-primary link-hover">Sign in</a> here now.
 	</p>
 </main>
+
+{#if failed}
+	<div class="toast toast-center">
+		<div class="alert alert-error">
+			<span>Sign up failed.</span>
+		</div>
+	</div>
+{/if}
