@@ -10,8 +10,12 @@
 
 	let email;
 	let password;
+	let loading = false;
+	let failed = false;
+	let errMsg = '';
 
 	export const login = async () => {
+		loading = true;
 		try {
 			await pb.collection('users').authWithPassword(
 				email.toLowerCase(),
@@ -23,8 +27,14 @@
 			);
 			goto('/');
 		} catch (error) {
+			errMsg = error;
 			console.error(error);
+			failed = true;
+			setTimeout(() => {
+				failed = false;
+			}, 7000);
 		}
+		loading = false;
 	};
 </script>
 
@@ -47,10 +57,22 @@
 			required
 		/>
 		<PasswordReset />
-		<button class="btn btn-primary">Login</button>
+		{#if loading}
+			<button class="btn btn-primary"><span class="loading loading-spinner loading-sm" /></button>
+		{:else}
+			<button class="btn btn-primary">Login</button>
+		{/if}
 		<p class="text-center text-sm">
 			Don't have an account? <a href="/signup" class="link link-primary link-hover">Sign up</a> to create
 			one.
 		</p>
 	</form>
 </main>
+
+{#if failed}
+	<div class="toast toast-center">
+		<div class="alert alert-error">
+			<span>Login failed! {errMsg}</span>
+		</div>
+	</div>
+{/if}
