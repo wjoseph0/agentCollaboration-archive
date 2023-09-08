@@ -7,6 +7,7 @@
 	let cheatsheetPromise;
 	let cheatsheet;
 	let buyerName;
+	let address;
 	let purchasePrice;
 	let earnestMoney;
 	let inclusions;
@@ -38,6 +39,7 @@
 	$: data = {
 		journey: journey.id,
 		buyerName: buyerName,
+		address: address,
 		purchasePrice: purchasePrice,
 		earnestMoney: earnestMoney,
 		inclusions: inclusions,
@@ -65,6 +67,7 @@
 		cheatsheetPromise.then((result) => {
 			cheatsheet = result;
 			buyerName = result.buyerName;
+			address = result.address;
 			purchasePrice = result.purchasePrice;
 			earnestMoney = result.earnestMoney;
 			inclusions = result.inclusions;
@@ -124,6 +127,13 @@
 				class="input input-bordered"
 				required
 			/>
+		</div>
+
+		<div class="form-control w-full max-w-xs">
+			<label class="label" for="address">
+				<span class="label-text">Address</span>
+			</label>
+			<input bind:value={address} type="text" name="address" class="input input-bordered" />
 		</div>
 
 		<div class="form-control w-full max-w-xs">
