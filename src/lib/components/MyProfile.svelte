@@ -170,7 +170,7 @@
 							<input
 								bind:this={contact_email_input}
 								value={$currentUser.contact_email}
-								type="text"
+								type="email"
 								placeholder="Email"
 								class="input input-bordered w-full max-w-xs"
 							/>
@@ -194,7 +194,7 @@
 							<input
 								bind:this={contact_number_input}
 								value={$currentUser.contact_number}
-								type="text"
+								type="tel"
 								placeholder="Phone Number"
 								class="input input-bordered w-full max-w-xs"
 							/>
