@@ -31,6 +31,33 @@
 	<div class="card border shadow-2xl xl:w-2/4 mx-auto">
 		<div class="card-body">
 			<div class="flex flex-col justify-center items-center gap-4">
+				{#if $currentUser.profilePic}
+					<div class="avatar">
+						<div class="w-24 md:w-32 rounded">
+							<img
+								src="https://wjoseph0.cloud/api/files/{$currentUser.collectionId}/{$currentUser.id}/{$currentUser.profilePic}"
+								alt="profile_photo"
+							/>
+						</div>
+					</div>
+				{:else}
+					<div class="avatar placeholder">
+						<div class="rounded bg-neutral-focus text-neutral-content w-24 md:w-32 prose">
+							<span class="text-3xl md:text-5xl">
+								{$currentUser.fname[0]}{$currentUser.lname[0]}
+							</span>
+						</div>
+					</div>
+				{/if}
+
+				<div class="flex flex-col justify-center items-center">
+					<h2 class="card-title">
+						{$currentUser.fname}
+						{$currentUser.lname}
+					</h2>
+					<p>{$currentUser.email}</p>
+				</div>
+
 				{#if $currentUser.verified}
 					<div class="badge badge-success badge-outline badge-xs gap-1 p-3 rounded">
 						<svg
@@ -70,32 +97,6 @@
 						verification email sent
 					</div>
 				{/if}
-				{#if $currentUser.profilePic}
-					<div class="avatar">
-						<div class="w-24 md:w-32 rounded">
-							<img
-								src="https://wjoseph0.cloud/api/files/{$currentUser.collectionId}/{$currentUser.id}/{$currentUser.profilePic}"
-								alt="profile_photo"
-							/>
-						</div>
-					</div>
-				{:else}
-					<div class="avatar placeholder">
-						<div class="rounded bg-neutral-focus text-neutral-content w-24 md:w-32 prose">
-							<span class="text-3xl md:text-5xl">
-								{$currentUser.fname[0]}{$currentUser.lname[0]}
-							</span>
-						</div>
-					</div>
-				{/if}
-
-				<div class="flex flex-col justify-center items-center">
-					<h2 class="card-title">
-						{$currentUser.fname}
-						{$currentUser.lname}
-					</h2>
-					<p>{$currentUser.email}</p>
-				</div>
 			</div>
 			{#if $currentUser.isAgent && $currentUser.teamLogo && $currentUser.brokerageLogo}
 				<div class="flex justify-center items-center gap-2 mt-5">
