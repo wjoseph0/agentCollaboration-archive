@@ -37,7 +37,7 @@
 		return true;
 	};
 
-	$: onMount(async () => {
+	onMount(async () => {
 		acceptedOffers = await pb.collection('accepted_offers').getFullList();
 
 		if (acceptedOffers.length > 0) {
@@ -138,12 +138,12 @@
 				{#each acceptedOffersSorted as deadline (deadline.id)}
 					<tr in:fade class="hover cursor-pointer" onclick="c{deadline.id}.showModal()">
 						<td
-							>{#if !deadline.isComplete}
-								<span class="badge badge-ghost badge-lg" />
-							{:else if deadline.isComplete}
+							>{#if deadline.isComplete}
 								<span class="badge badge-success badge-lg" />
-							{/if}</td
-						>
+							{:else}
+								<span class="badge badge-ghost badge-lg" />
+							{/if}
+						</td>
 						<td
 							><div class="flex items-center gap-2">
 								<div class="avatar placeholder">
@@ -167,7 +167,7 @@
 							</p>
 						</td>
 					</tr>
-					<Deadline {deadline} />
+					<Deadline bind:deadline />
 				{/each}
 			{:else}
 				<tr>
