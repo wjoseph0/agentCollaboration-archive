@@ -87,7 +87,7 @@
 								<span class="text-sm"
 									><a
 										class="link link-primary link-hover"
-										href="tel:{$currentUser.expand.agent.contact_number.replace(/\D/g, '')}"
+										href="tel:1{$currentUser.expand.agent.contact_number.replace(/\D/g, '')}"
 										>{$currentUser.expand.agent.contact_number}</a
 									></span
 								>
