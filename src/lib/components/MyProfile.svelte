@@ -8,7 +8,7 @@
 
 	const setContactInfo = async () => {
 		const data = {
-			contact_email: contact_email_input.value,
+			contact_email: contact_email_input.value.toLowerCase(),
 			contact_number: contact_number_input.value
 		};
 
@@ -16,6 +16,7 @@
 			loading = true;
 			await pb.collection('users').update($currentUser.id, data);
 			loading = false;
+			contact_email_input.value = $currentUser.contact_email;
 			success = true;
 			setTimeout(() => {
 				success = false;
@@ -226,7 +227,11 @@
 						</div>
 					</form>
 					<form method="dialog" class="modal-backdrop">
-						<button>close</button>
+						<button
+							on:click={() => {
+								contact_email_input.value = $currentUser.contact_email;
+							}}>close</button
+						>
 					</form>
 				</dialog>
 			</div>
