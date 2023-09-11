@@ -5,6 +5,7 @@
 
 	let journeys = [];
 	let files = [];
+	let loading = false;
 
 	const sortFunction = (a, b) => {
 		const date1 = new Date(a.created);
@@ -13,6 +14,7 @@
 	};
 
 	onMount(async () => {
+		loading = true;
 		journeys = await pb.collection('journeys').getFullList(200, {
 			sort: '+step',
 			expand: 'client'
@@ -41,6 +43,7 @@
 				files = files.filter((f) => f.id !== record.id);
 			}
 		});
+		loading = false;
 	});
 
 	onDestroy(async () => {
@@ -69,48 +72,56 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each journeys as journey (journey.id)}
-					<tr onclick="c{journey.id}.showModal()" class="cursor-pointer">
-						<!-- <th>
+				{#if loading}
+					<tr><td><span class="loading loading-spinner loading-sm" /></td></tr>
+				{:else if journeys.length > 0}
+					{#each journeys as journey (journey.id)}
+						<tr onclick="c{journey.id}.showModal()" class="cursor-pointer">
+							<!-- <th>
 							<label>
 								<input type="checkbox" class="checkbox" />
 							</label>
 						</th> -->
-						<td>
-							<div class="flex items-center space-x-3">
-								<div class="avatar placeholder">
-									<div
-										class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12 prose"
-									>
-										<span>
-											{journey.expand.client.fname[0]}{journey.expand.client.lname[0]}
-										</span>
+							<td>
+								<div class="flex items-center space-x-3">
+									<div class="avatar placeholder">
+										<div
+											class="mask mask-squircle bg-neutral-focus text-neutral-content w-12 h-12 prose"
+										>
+											<span>
+												{journey.expand.client.fname[0]}{journey.expand.client.lname[0]}
+											</span>
+										</div>
+									</div>
+									<div>
+										<div class="font-bold">
+											{journey.expand.client.fname}
+											{journey.expand.client.lname}
+										</div>
 									</div>
 								</div>
-								<div>
-									<div class="font-bold">
-										{journey.expand.client.fname}
-										{journey.expand.client.lname}
-									</div>
-								</div>
-							</div>
-						</td>
-						<td>
-							{#if journey.step === 1}
-								<div class="btn btn-xs">Preparation</div>
-							{:else if journey.step === 2}
-								<div class="btn btn-xs btn-secondary">Searching</div>
-							{:else if journey.step === 3}
-								<div class="btn btn-xs btn-neutral">Accepted Offer</div>
-							{:else if journey.step === 4}
-								<div class="btn btn-xs btn-primary">Closing</div>
-							{:else if journey.step === 5}
-								<div class="btn btn-xs btn-accent">Closed</div>
-							{/if}
-						</td>
+							</td>
+							<td>
+								{#if journey.step === 1}
+									<div class="btn btn-xs">Preparation</div>
+								{:else if journey.step === 2}
+									<div class="btn btn-xs btn-secondary">Searching</div>
+								{:else if journey.step === 3}
+									<div class="btn btn-xs btn-neutral">Accepted Offer</div>
+								{:else if journey.step === 4}
+									<div class="btn btn-xs btn-primary">Closing</div>
+								{:else if journey.step === 5}
+									<div class="btn btn-xs btn-accent">Closed</div>
+								{/if}
+							</td>
+						</tr>
+						<Client {journey} {files} />
+					{/each}
+				{:else}
+					<tr>
+						<td class="text-xs prose"> No journeys to show </td>
 					</tr>
-					<Client {journey} {files} />
-				{/each}
+				{/if}
 			</tbody>
 			<!-- foot -->
 			<!-- <tfoot>

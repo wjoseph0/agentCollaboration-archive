@@ -11,6 +11,7 @@
 	}
 
 	let files = [];
+	let loading = false;
 
 	const sortFunction = (a, b) => {
 		const date1 = new Date(a.created);
@@ -19,6 +20,7 @@
 	};
 
 	onMount(async () => {
+		loading = true;
 		await pb.collection('users').authRefresh({}, { expand: 'agent,clients,focusedClient' });
 
 		files = await pb.collection('files').getFullList(200, { sort: '-created' });
@@ -35,6 +37,7 @@
 				files = files.filter((f) => f.id !== record.id);
 			}
 		});
+		loading = false;
 	});
 
 	onDestroy(async () => {
@@ -78,7 +81,7 @@
 		{/if}
 	{/if}
 	<div class="overflow-y-auto h-auto">
-		<Files {files} />
+		<Files {files} {loading} />
 		<br />
 		<br />
 		<br />
