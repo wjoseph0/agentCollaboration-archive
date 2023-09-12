@@ -5,13 +5,18 @@
 	$: path = $page.url.pathname;
 
 	export let journey;
+	let uploadFileModal;
 	let uploadFileForm;
 	let fileName;
 	let newFile;
 	let clientsOnly = true;
 	let publicFile = false;
+	let loading = false;
+	let success = false;
+	let failed = false;
 
 	const uploadFile = async () => {
+		loading = true;
 		const formData = new FormData();
 		formData.append('owner', $currentUser.id);
 		formData.append('file', newFile[0]);
@@ -35,18 +40,40 @@
 			formData.append('client', $currentUser.id);
 		}
 
-		await pb.collection('files').create(formData);
-		uploadFileForm.close();
-		fileName = undefined;
-		newFile = null;
+		try {
+			await pb.collection('files').create(formData);
+			success = true;
+			setTimeout(() => {
+				success = false;
+			}, 2000);
+		} catch (error) {
+			failed = true;
+			setTimeout(() => {
+				failed = false;
+			}, 2000);
+		}
+
+		loading = false;
+		uploadFileForm.reset();
+
+		// uploadFileModal.close();
 	};
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
 {#if path === '/'}
 	<span class="btn btn-primary btn-sm" onclick="uf{journey.id}.showModal()">Upload</span>
-	<dialog bind:this={uploadFileForm} id="uf{journey.id}" class="modal modal-bottom sm:modal-middle">
-		<form method="dialog" class="modal-box space-y-3" on:submit|preventDefault={uploadFile}>
+	<dialog
+		bind:this={uploadFileModal}
+		id="uf{journey.id}"
+		class="modal modal-bottom sm:modal-middle"
+	>
+		<form
+			bind:this={uploadFileForm}
+			method="dialog"
+			class="modal-box space-y-3"
+			on:submit|preventDefault={uploadFile}
+		>
 			<h3 class="font-bold text-lg">Upload a file</h3>
 			<input
 				type="text"
@@ -61,7 +88,51 @@
 				<!-- <button class="btn btn-secondary btn-outline" type="button" onclick="uf{journey.id}.close()"
 					>Cancel</button
 				> -->
-				<button class="btn btn-primary" type="submit"> Upload </button>
+				{#if success}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 text-success"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+				{:else if failed}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 text-fail"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+				{:else if loading}
+					<span class="btn btn-primary" type="submit">
+						<span class="loading loading-spinner loading-xs" />
+					</span>
+				{:else}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						class="btn btn-primary"
+						on:click={() => {
+							uploadFileForm.requestSubmit();
+						}}
+					>
+						Upload
+					</span>
+				{/if}
 			</div>
 		</form>
 		<form method="dialog" class="modal-backdrop">
@@ -73,8 +144,13 @@
 		class="btn btn-primary w-full sm:mx-auto sm:w-3/4 fixed inset-x-0 bottom-16 z-40"
 		onclick="uploadFile.showModal()">Upload</button
 	>
-	<dialog bind:this={uploadFileForm} id="uploadFile" class="modal modal-bottom sm:modal-middle">
-		<form method="dialog" class="modal-box space-y-3" on:submit|preventDefault={uploadFile}>
+	<dialog bind:this={uploadFileModal} id="uploadFile" class="modal modal-bottom sm:modal-middle">
+		<form
+			bind:this={uploadFileForm}
+			method="dialog"
+			class="modal-box space-y-3"
+			on:submit|preventDefault={uploadFile}
+		>
 			<h3 class="font-bold text-lg">Upload a file</h3>
 			<input
 				type="text"
@@ -141,7 +217,51 @@
 					>Cancel</button
 				> -->
 				<br />
-				<button class="btn btn-primary" type="submit"> Upload </button>
+				{#if success}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 text-success"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+				{:else if failed}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 text-fail"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+				{:else if loading}
+					<span class="btn btn-primary" type="submit">
+						<span class="loading loading-spinner loading-xs" />
+					</span>
+				{:else}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						class="btn btn-primary"
+						on:click={() => {
+							uploadFileForm.requestSubmit();
+						}}
+					>
+						Upload
+					</span>
+				{/if}
 			</div>
 		</form>
 		<form method="dialog" class="modal-backdrop">
