@@ -85,7 +85,32 @@
 					</div>
 				{/if}
 			{:else if !$currentUser.isAgent}
-				<div />
+				{#if !file.client}
+					<div class="ml-3">
+						{#if $currentUser.expand.agent.profilePic}
+							<!-- <div class="avatar">
+								<div class="w-8 rounded-full">
+									<img
+										src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+											.expand.agent.profilePic}"
+										alt=""
+									/>
+								</div>
+							</div> -->
+							<div />
+						{:else}
+							<div class="avatar placeholder">
+								<div class="rounded-full bg-neutral-focus text-neutral-content w-8">
+									<span class="text-xs">
+										{$currentUser.expand.agent.fname[0]}{$currentUser.expand.agent.lname[0]}
+									</span>
+								</div>
+							</div>
+						{/if}
+					</div>
+				{:else}
+					<div />
+				{/if}
 			{/if}
 			<a
 				target="_blank"

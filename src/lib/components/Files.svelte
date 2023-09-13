@@ -95,10 +95,33 @@
 						{/if}
 					{:else if !$currentUser.isAgent}
 						<tr class="hover cursor-pointer py-6" onclick="c{file.id}.showModal()">
-							<td class="py-5">
+							<td class="py-5 flex flex-row justify-between items-center">
 								<div class="font-bold">
 									{file.name}
 								</div>
+								{#if !file.client}
+									<div class="flex flex-row justify-end items-center">
+										{#if $currentUser.expand.agent.profilePic}
+											<div class="avatar">
+												<div class="w-8 rounded-full">
+													<img
+														src="https://wjoseph0.cloud/api/files/_pb_users_auth_/{$currentUser.agent}/{$currentUser
+															.expand.agent.profilePic}"
+														alt=""
+													/>
+												</div>
+											</div>
+										{:else}
+											<div class="avatar placeholder">
+												<div class="rounded-full bg-neutral-focus text-neutral-content w-8">
+													<span class="text-md">
+														{$currentUser.expand.agent.fname[0]}{$currentUser.expand.agent.lname[0]}
+													</span>
+												</div>
+											</div>
+										{/if}
+									</div>
+								{/if}
 							</td>
 						</tr>
 					{/if}
