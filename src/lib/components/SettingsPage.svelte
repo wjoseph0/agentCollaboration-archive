@@ -5,6 +5,7 @@
 	import MyAgent from '$lib/components/MyAgent.svelte';
 	import MyProfile from '$lib/components/MyProfile.svelte';
 	import DeletionWizard from '$lib/components/DeletionWizard.svelte';
+	import SupportButton from '$lib/components/SupportButton.svelte';
 </script>
 
 <div class="container">
@@ -28,7 +29,9 @@
 		<br />
 		<MyAgent />
 	{/if}
-	<br /><br /><br />
+	<br><br><br>
+	<SupportButton/>
+	<br /><br /><br /><br>
 	<Signout />
 	<br /><br /><br />
 	<DeletionWizard />
