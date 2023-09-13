@@ -16,6 +16,15 @@
 
 		await pb.collection('files').update(file.id, data);
 	};
+
+	const viewFile = async () => {
+		// generate a file token
+		const fileToken = await pb.files.getToken();
+
+		// retrieve and go to the protected file url (will be valid ~5min)
+		const url = pb.files.getUrl(file, file.file, { token: fileToken });
+		window.location = url;
+	};
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
@@ -112,13 +121,8 @@
 					<div />
 				{/if}
 			{/if}
-			<a
-				target="_blank"
-				rel="noreferrer"
-				href="https://wjoseph0.cloud/api/{file.collectionName}/{file.collectionId}/{file.id}/{file.file}"
-			>
-				<span class="btn">View</span>
-			</a>
+
+			<span class="btn" on:click={viewFile}>View</span>
 		</div>
 	</form>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
