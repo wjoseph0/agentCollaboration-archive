@@ -36,7 +36,11 @@
 	Forgot Password?
 </p>
 
-<dialog bind:this={forgotPasswordModal} id="forgotPasswordModal" class="modal">
+<dialog
+	bind:this={forgotPasswordModal}
+	id="forgotPasswordModal"
+	class="modal modal-bottom sm:modal-middle"
+>
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">Forgot Password</h3>
 		<br />
