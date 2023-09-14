@@ -188,7 +188,7 @@
 					>
 				{/if}
 
-				<dialog id="contactInfo" class="modal">
+				<dialog id="contactInfo" class="modal modal-bottom sm:modal-middle">
 					<form method="dialog" class="modal-box">
 						<h3 class="font-bold text-lg">Contact Information</h3>
 
