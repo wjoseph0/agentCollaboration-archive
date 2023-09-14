@@ -70,7 +70,7 @@
 {#if failed}
 	<div class="toast toast-center">
 		<div class="alert alert-error">
-			<span>Login failed.</span>
+			<span>Failed to authenticate user</span>
 		</div>
 	</div>
 {/if}

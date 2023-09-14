@@ -233,7 +233,7 @@
 {#if failed}
 	<div class="toast toast-center">
 		<div class="alert alert-error">
-			<span>Sign up failed.</span>
+			<span>Failed to create account</span>
 		</div>
 	</div>
 {/if}
