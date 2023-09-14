@@ -6,6 +6,7 @@
 	let fileName = file.name;
 	let isPublic = file.isPublic;
 	let clientsOnly = file.clientsOnly;
+	let loading = false;
 
 	const updateFile = async () => {
 		const data = {
@@ -18,11 +19,13 @@
 	};
 
 	const viewFile = async () => {
+		loading = true;
 		// generate a file token
 		const fileToken = await pb.files.getToken();
 
 		// retrieve and go to the protected file url (will be valid ~5min)
 		const url = pb.files.getUrl(file, file.file, { token: fileToken });
+		loading = false;
 		window.location = url;
 	};
 </script>
@@ -30,6 +33,7 @@
 <!-- Open the modal using ID.showModal() method -->
 <dialog id="c{file.id}" class="modal">
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<form method="dialog" class="modal-box prose" on:click={updateFile}>
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -41,6 +45,7 @@
 		<div class="modal-action flex flex-row justify-between items-center">
 			{#if $currentUser.isAgent}
 				{#if file.isPublic}
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
 					<div
 						class="flex flex-row justify-end items-center cursor-pointer"
 						on:click={() => {
@@ -63,6 +68,7 @@
 						</svg>
 					</div>
 				{:else if !file.isPublic && !file.client}
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
 					<div
 						class="flex flex-row items-center cursor-pointer"
 						on:click={() => {
@@ -122,10 +128,16 @@
 				{/if}
 			{/if}
 
-			<span class="btn" on:click={viewFile}>View</span>
+			{#if loading}
+				<span class="btn"><span class="loading loading-spinner loading-xs"></span></span>
+			{:else}
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<span class="btn" on:click={viewFile}>View</span>
+			{/if}
 		</div>
 	</form>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<form method="dialog" class="modal-backdrop" on:click={updateFile}>
 		<button>close</button>
 	</form>
