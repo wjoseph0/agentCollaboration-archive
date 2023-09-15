@@ -26,9 +26,7 @@
 		// retrieve and go to the protected file url (will be valid ~5min)
 		const url = pb.files.getUrl(file, file.file, { token: fileToken });
 		loading = false;
-		window.setTimeout(() => {
-			window.location = url;
-		}, 0);
+		window.location = url;
 	};
 </script>
 
