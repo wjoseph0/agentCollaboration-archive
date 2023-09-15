@@ -23,10 +23,12 @@
 		formData.append('name', fileName);
 
 		if (path === '/files') {
-			if (publicFile) {
-				formData.append('isPublic', true);
-			} else if (clientsOnly) {
-				formData.append('clientsOnly', true);
+			if ($currentUser.isAgent) {
+				if (publicFile) {
+					formData.append('isPublic', true);
+				} else if (clientsOnly) {
+					formData.append('clientsOnly', true);
+				}
 			}
 		}
 
@@ -124,6 +126,7 @@
 					</span>
 				{:else}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
 					<span
 						class="btn btn-primary"
 						on:click={() => {
@@ -164,6 +167,7 @@
 				{#if $currentUser.isAgent}
 					{#if clientsOnly}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<div
 							class="flex flex-row items-center cursor-pointer"
 							on:click={() => {
@@ -187,6 +191,7 @@
 						</div>
 					{:else if publicFile}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<div
 							class="flex flex-row items-center cursor-pointer"
 							on:click={() => {
@@ -253,6 +258,7 @@
 					</span>
 				{:else}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
 					<span
 						class="btn btn-primary"
 						on:click={() => {
@@ -264,7 +270,17 @@
 				{/if}
 			</div>
 		</form>
-		<form method="dialog" class="modal-backdrop">
+		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<form
+			method="dialog"
+			class="modal-backdrop"
+			on:click={() => {
+				uploadFileForm.reset();
+				publicFile = false;
+				clientsOnly = true;
+			}}
+		>
 			<button>close</button>
 		</form>
 	</dialog>
