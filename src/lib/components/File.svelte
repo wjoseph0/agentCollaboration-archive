@@ -144,6 +144,6 @@
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<form method="dialog" class="modal-backdrop" on:click={updateFile}>
 		<button>close</button>
-		<a bind:this={fileLinkElement} href={url}>Invisible link</a>
 	</form>
 </dialog>
+<a bind:this={fileLinkElement} href={url} class="hidden">Invisible link</a>
