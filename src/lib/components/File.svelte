@@ -7,6 +7,8 @@
 	let isPublic = file.isPublic;
 	let clientsOnly = file.clientsOnly;
 	let loading = false;
+	let fileLinkElement;
+	let url = '';
 
 	const updateFile = async () => {
 		const data = {
@@ -24,9 +26,11 @@
 		const fileToken = await pb.files.getToken();
 
 		// retrieve and go to the protected file url (will be valid ~5min)
-		const url = pb.files.getUrl(file, file.file, { token: fileToken });
+		url = pb.files.getUrl(file, file.file, { token: fileToken });
 		loading = false;
-		window.location = url;
+		window.setTimeout(() => {
+			fileLinkElement.click();
+		}, 0);
 	};
 </script>
 
@@ -140,5 +144,6 @@
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<form method="dialog" class="modal-backdrop" on:click={updateFile}>
 		<button>close</button>
+		<a bind:this={fileLinkElement} href={url}>Invisible link</a>
 	</form>
 </dialog>
