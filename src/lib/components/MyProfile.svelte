@@ -1,5 +1,6 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
+	import Invite from '$lib/components/Invite.svelte';
 
 	let contact_email_input;
 	let contact_number_input;
@@ -137,6 +138,9 @@
 
 	<br /><br />
 	{#if $currentUser.isAgent}
+		<Invite />
+		<br /><br />
+
 		<div class="card border shadow-2xl xl:w-2/4 mx-auto">
 			<div class="card-body">
 				{#if $currentUser.contact_email || $currentUser.contact_number}

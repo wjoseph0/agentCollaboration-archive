@@ -20,18 +20,13 @@
 
 	<MyProfile />
 
-	{#if $currentUser.isAgent}
-		<br /><br /><br />
-		<Invite />
-	{/if}
-
 	{#if !$currentUser.isAgent}
 		<br />
 		<MyAgent />
 	{/if}
-	<br><br><br>
-	<SupportButton/>
-	<br /><br /><br /><br>
+	<br /><br /><br />
+	<SupportButton />
+	<br /><br /><br /><br />
 	<Signout />
 	<br /><br /><br />
 	<DeletionWizard />
