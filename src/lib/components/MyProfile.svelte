@@ -1,6 +1,7 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
 	import Invite from '$lib/components/Invite.svelte';
+	import PreferredVendors from './PreferredVendors.svelte';
 
 	let contact_email_input;
 	let contact_number_input;
@@ -266,6 +267,7 @@
 							{:else if loading}
 								<span class="loading loading-spinner loading-xs" />
 							{:else}
+								<!-- svelte-ignore a11y-no-static-element-interactions -->
 								<span class="btn" on:click={setContactInfo}>Save </span>
 							{/if}
 						</div>
@@ -280,5 +282,9 @@
 				</dialog>
 			</div>
 		</div>
+
+		<br /><br />
+
+		<PreferredVendors />
 	{/if}
 </div>

@@ -1,5 +1,6 @@
 <script>
 	import { currentUser } from '$lib/pocketbase';
+	import PreferredVendors from '$lib/components/PreferredVendors.svelte';
 </script>
 
 <div>
@@ -95,6 +96,9 @@
 						{/if}
 					</div>
 				</div>
+			</div>
+			<div class="mx-auto">
+				<PreferredVendors />
 			</div>
 			{#if $currentUser.expand.agent.teamLogo && $currentUser.expand.agent.brokerageLogo}
 				<div class="flex justify-center items-center gap-2 mt-5">
