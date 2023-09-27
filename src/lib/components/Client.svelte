@@ -101,10 +101,11 @@
 			{journey.expand.client.lname}
 		</h2>
 
-		<div class="divider" />
+		<br />
 
 		{#if journey.step === 1}
 			<BuyerConsultation {journey} />
+			<br /><br />
 		{:else if journey.step === 2}
 			<div class="flex flex-row gap-1">
 				<div class="w-1/2">
@@ -115,11 +116,11 @@
 					<OfferCheatSheet {journey} />
 				</div>
 			</div>
+			<br /><br />
 		{:else if journey.step === 3}
 			<AcceptedOffer {journey} />
+			<br /><br />
 		{/if}
-
-		<div class="divider" />
 
 		<div>
 			<div class="flex flex-row justify-between items-end">

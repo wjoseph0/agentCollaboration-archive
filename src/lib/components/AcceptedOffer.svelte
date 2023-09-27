@@ -51,7 +51,7 @@
 			class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
 			onclick="ao{journey.id}.close()">✕</span
 		>
-		<h3>Accepted Offer</h3>
+		<h3>Deadlines</h3>
 
 		<div class="form-control w-full max-w-xs">
 			<label class="label" for="earnest_money">
