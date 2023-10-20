@@ -90,15 +90,19 @@
 								{/if}
 							</figure>
 							<div class="card-body h-50">
-								<h2 class="card-title">{stage.name}</h2>
-								<div class="card-actions">
+								<h2 class="card-title mb-10">{stage.name}</h2>
+								<div class="mh-4">
 									{#if stage.step === 1 && journey.step >= 1}
 										<BuyerConsultation {journey} />
 									{:else if stage.step === 2 && journey.step >= 2}
 										<SearchProfile {journey} />
+										<br />
+										<br />
 										<OfferCheatSheet {journey} />
 									{:else if stage.step === 3 && journey.step >= 3}
-										<AcceptedOffer {journey} />
+										<a href="/deadlines"
+											><span class="btn btn-block btn-neutral btn-outline"> Deadlines </span></a
+										>
 									{/if}
 								</div>
 							</div>

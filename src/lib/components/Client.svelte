@@ -118,7 +118,8 @@
 			</div>
 			<br /><br />
 		{:else if journey.step === 3}
-			<AcceptedOffer {journey} />
+			<a href="/deadlines"><span class="btn btn-block btn-neutral btn-outline"> Deadlines </span></a
+			>
 			<br /><br />
 		{/if}
 

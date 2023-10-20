@@ -1,10 +1,9 @@
 <script>
-	import { pb, currentUser } from '$lib/pocketbase';
+	import { pb } from '$lib/pocketbase';
 
 	export let deadline;
 
 	let deadlineStatusSelector;
-	$: deadlineStatus = deadlineStatusSelector?.value;
 
 	let today = new Date();
 	let dd = String(today.getDate()).padStart(2, '0');
@@ -12,41 +11,15 @@
 	let yyyy = today.getFullYear();
 	today = new Date(`${yyyy + '-' + mm + '-' + dd}`);
 
-	let deadlineDate = new Date(`${deadline.date}`);
-
-	const diffTime = Math.abs(deadlineDate - today);
+	const diffTime = Math.abs(new Date(`${deadline.due_date}`) - today);
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-	const updateDeadlineStatus = async (value) => {
-		if (value === 'completed') {
-			deadline.isComplete = true;
-		} else if (value === 'created') {
-			deadline.isComplete = false;
-		}
-
-		if (deadline.type === 'Earnest Money' && value === 'completed') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { em_complete: true });
-		} else if (deadline.type === 'Earnest Money' && value === 'created') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { em_complete: false });
-		}
-
-		if (deadline.type === 'Inspection' && value === 'completed') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { i_complete: true });
-		} else if (deadline.type === 'Inspection' && value === 'created') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { i_complete: false });
-		}
-
-		if (deadline.type === 'Appraisal' && value === 'completed') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { a_complete: true });
-		} else if (deadline.type === 'Appraisal' && value === 'created') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { a_complete: false });
-		}
-
-		if (deadline.type === 'Loan Commitment' && value === 'completed') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { f_complete: true });
-		} else if (deadline.type === 'Loan Commitment' && value === 'created') {
-			await pb.collection('accepted_offers').update(deadline.parentID, { f_complete: false });
-		}
+	const updateDeadline = async () => {
+		const data = {
+			status: deadlineStatusSelector.value
+		};
+		await pb.collection('deadlines').update(deadline.id, data);
+		console.log(deadlineStatusSelector.value);
 	};
 </script>
 
@@ -56,33 +29,42 @@
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 
 		<div class="flex items-center">
-			{#if deadlineStatus === 'created'}
+			{#if deadline.status === 'created'}
 				<span class="badge badge-ghost badge-lg" />
-			{:else if deadlineStatus === 'completed'}
+			{:else if deadline.status === 'scheduled'}
+				<span class="badge badge-info badge-lg" />
+			{:else if deadline.status === 'complete'}
 				<span class="badge badge-success badge-lg" />
 			{/if}
 			<select
 				bind:this={deadlineStatusSelector}
 				class="select select-sm max-w-xs"
 				on:change={() => {
-					updateDeadlineStatus(deadlineStatusSelector.value);
-					deadlineStatus = deadlineStatusSelector.value;
+					updateDeadline();
 				}}
 			>
-				{#if !deadline.isComplete}
+				{#if deadline.status === 'created'}
 					<option value="created" selected>Created</option>
 				{:else}
 					<option value="created">Created</option>
 				{/if}
-				{#if deadline.isComplete}
-					<option value="completed" selected>Completed</option>
+				{#if deadline.status === 'scheduled'}
+					<option value="scheduled" selected>Scheduled</option>
 				{:else}
-					<option value="completed">Completed</option>
+					<option value="scheduled">Scheduled</option>
+				{/if}
+				{#if deadline.status === 'complete'}
+					<option value="complete" selected>Complete</option>
+				{:else}
+					<option value="complete">Complete</option>
 				{/if}
 			</select>
 		</div>
 		<br /><br />
-		<span class="italic">{deadline.clientFullName}</span>
+		<span class="italic"
+			>{deadline.expand.journey.expand.client.fname}
+			{deadline.expand.journey.expand.client.lname}</span
+		>
 
 		<div class="flex justify-between items-center">
 			<p class="font-bold text-xl">{deadline.type}</p>
@@ -146,10 +128,10 @@
 				</div>
 
 				<span>
-					{deadline.date.substring(5, 7)}/{deadline.date.substring(8, 10)}/{deadline.date.substring(
-						0,
-						4
-					)}
+					{deadline.due_date.substring(5, 7)}/{deadline.due_date.substring(
+						8,
+						10
+					)}/{deadline.due_date.substring(0, 4)}
 				</span>
 			</div>
 		{/if}
