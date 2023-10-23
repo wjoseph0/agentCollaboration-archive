@@ -4,6 +4,12 @@
 	export let deadline;
 
 	let deadlineStatusSelector;
+	let scheduled_date;
+
+	if (deadline.scheduled_date) {
+		scheduled_date =
+			deadline.scheduled_date.substring(0, 10) + 'T' + deadline.scheduled_date.substring(11, 16);
+	}
 
 	let today = new Date();
 	let dd = String(today.getDate()).padStart(2, '0');
@@ -16,10 +22,11 @@
 
 	const updateDeadline = async () => {
 		const data = {
-			status: deadlineStatusSelector.value
+			status: deadlineStatusSelector.value,
+			scheduled_date:
+				scheduled_date?.substring(0, 10) + ' ' + scheduled_date?.substring(11, 16) + ':00.000Z'
 		};
 		await pb.collection('deadlines').update(deadline.id, data);
-		console.log(deadlineStatusSelector.value);
 	};
 </script>
 
@@ -59,6 +66,18 @@
 					<option value="complete">Complete</option>
 				{/if}
 			</select>
+			{#if deadline.status === 'scheduled'}
+				<div>
+					<input
+						on:change={() => {
+							updateDeadline();
+						}}
+						bind:value={scheduled_date}
+						type="datetime-local"
+						class="input prose"
+					/>
+				</div>
+			{/if}
 		</div>
 		<br /><br />
 		<span class="italic"
