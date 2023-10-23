@@ -33,8 +33,6 @@
 <!-- Open the modal using ID.showModal() method -->
 <dialog id="c{deadline.id}" class="modal">
 	<form method="dialog" class="modal-box prose">
-		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-
 		<div class="flex items-center">
 			{#if deadline.status === 'created'}
 				<span class="badge badge-ghost badge-lg" />
@@ -74,7 +72,7 @@
 						}}
 						bind:value={scheduled_date}
 						type="datetime-local"
-						class="input prose"
+						class="input input-xs prose"
 					/>
 				</div>
 			{/if}
