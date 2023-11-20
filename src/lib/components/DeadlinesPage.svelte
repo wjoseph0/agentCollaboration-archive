@@ -100,6 +100,6 @@
 		</tbody>
 	</table>
 </div>
-{#if $currentUser.isAgent}
+{#if $currentUser.isAgent || $currentUser.isCoordinator}
 	<CreateDeadline {journeys} />
 {/if}

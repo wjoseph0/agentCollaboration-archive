@@ -4,7 +4,7 @@
 	import { currentUser } from '$lib/pocketbase';
 </script>
 
-{#if $currentUser}
+{#if $currentUser && !$currentUser.isCoordinator}
 	<AppNav />
 {/if}
 

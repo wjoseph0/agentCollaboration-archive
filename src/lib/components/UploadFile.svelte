@@ -18,7 +18,6 @@
 	const uploadFile = async () => {
 		loading = true;
 		const formData = new FormData();
-		formData.append('owner', $currentUser.id);
 		formData.append('file', newFile[0]);
 		formData.append('name', fileName);
 
@@ -33,11 +32,20 @@
 		}
 
 		if ($currentUser.isAgent) {
+			formData.append('owner', $currentUser.id);
 			formData.append('agent', $currentUser.id);
 			if (journey) {
 				formData.append('client', journey.client);
 			}
+			
+		} else if ($currentUser.isCoordinator) {
+			if (journey) {
+				formData.append('owner', journey.client);
+				formData.append('agent', journey.agent)
+				formData.append('client', journey.client)
+			}
 		} else if (!$currentUser.isAgent) {
+			formData.append('owner', $currentUser.id);
 			formData.append('agent', $currentUser.agent);
 			formData.append('client', $currentUser.id);
 		}
