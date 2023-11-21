@@ -62,11 +62,6 @@
 			<!-- head -->
 			<thead>
 				<tr>
-					<!-- <th>
-						<label>
-							<input type="checkbox" class="checkbox" />
-						</label>
-					</th> -->
 					<th>Name</th>
 					<th>Stage</th>
 				</tr>
@@ -77,11 +72,6 @@
 				{:else if journeys.length > 0}
 					{#each journeys as journey (journey.id)}
 						<tr onclick="c{journey.id}.showModal()" class="cursor-pointer">
-							<!-- <th>
-							<label>
-								<input type="checkbox" class="checkbox" />
-							</label>
-						</th> -->
 							<td>
 								<div class="flex items-center space-x-3">
 									<div class="avatar placeholder">
@@ -123,13 +113,7 @@
 					</tr>
 				{/if}
 			</tbody>
-			<!-- foot -->
-			<!-- <tfoot>
-				<tr>
-					<th>Name</th>
-					<th>Stage</th>
-				</tr>
-			</tfoot> -->
 		</table>
+		<br><br><br>
 	</div>
 </div>
