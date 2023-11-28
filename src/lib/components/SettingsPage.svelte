@@ -1,11 +1,10 @@
 <script>
 	import Signout from '$lib/components/Signout.svelte';
-	import { pb, currentUser } from '$lib/pocketbase';
-	import Invite from '$lib/components/Invite.svelte';
+	import { currentUser } from '$lib/pocketbase';
 	import MyAgent from '$lib/components/MyAgent.svelte';
 	import MyProfile from '$lib/components/MyProfile.svelte';
-	import DeletionWizard from '$lib/components/DeletionWizard.svelte';
 	import SupportButton from '$lib/components/SupportButton.svelte';
+	// import DeletionWizard from '$lib/components/DeletionWizard.svelte';
 </script>
 
 <div class="container">
@@ -29,6 +28,6 @@
 	<br /><br /><br /><br />
 	<Signout />
 	<br /><br /><br />
-	<DeletionWizard />
-	<br /><br /><br />
+	<!-- <DeletionWizard />
+	<br /><br /><br /> -->
 </div>

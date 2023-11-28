@@ -60,10 +60,10 @@
 		{:else}
 			<button class="btn btn-primary">Login</button>
 		{/if}
-		<p class="text-center text-sm">
+		<!-- <p class="text-center text-sm">
 			Don't have an account? <a href="/signup" class="link link-primary link-hover">Sign up</a> to create
 			one.
-		</p>
+		</p> -->
 	</form>
 </main>
 
