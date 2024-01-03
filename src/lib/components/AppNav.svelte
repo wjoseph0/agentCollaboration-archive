@@ -54,7 +54,7 @@
 		<span class="btm-nav-label">Calendar</span>
 	</button> -->
 
-	<button
+	<!-- <button
 		class={path === '/' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
 		on:click={() => {
 			goto('/');
@@ -75,7 +75,7 @@
 					/>
 				</svg>
 
-				<!-- <span class="btm-nav-label font-bold">Dashboard</span> -->
+				<span class="btm-nav-label font-bold">Dashboard</span>
 			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@
 					/>
 				</svg>
 
-				<!-- <span class="btm-nav-label">Dashboard</span> -->
+				<span class="btm-nav-label">Dashboard</span>
 			{/if}
 		{:else if !$currentUser.isAgent}
 			{#if path === '/'}
@@ -109,7 +109,7 @@
 					/>
 				</svg>
 
-				<!-- <span class="btm-nav-label font-bold">Journey</span> -->
+				<span class="btm-nav-label font-bold">Journey</span>
 			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@
 					/>
 				</svg>
 
-				<!-- <span class="btm-nav-label">Journey</span> -->
+				<span class="btm-nav-label">Journey</span>
 			{/if}
 		{/if}
 	</button>
@@ -155,7 +155,7 @@
 					/>
 				</svg>
 
-				<!-- <span class="btm-nav-label font-bold">Deadlines</span> -->
+				<span class="btm-nav-label font-bold">Deadlines</span>
 			{:else}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -172,10 +172,10 @@
 					/>
 				</svg>
 
-				<!-- <span class="btm-nav-label">Deadlines</span> -->
+				<span class="btm-nav-label">Deadlines</span>
 			{/if}
 		</button>
-	{/if}
+	{/if} -->
 
 	<button
 		class={path === '/files' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}

@@ -17,11 +17,5 @@
 </script>
 
 {#if $currentUser}
-	{#if $currentUser.isAgent}
-		<AgentDashboard />
-	{:else if $currentUser.isCoordinator}
-		<CoordinatorPortal/>
-	{:else}
-		<ClientRoadmap />
-	{/if}
+	<h1>Welcome Home</h1>
 {/if}
