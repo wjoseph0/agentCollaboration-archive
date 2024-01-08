@@ -16,14 +16,9 @@
 	export const login = async () => {
 		loading = true;
 		try {
-			await pb.collection('users').authWithPassword(
-				email.toLowerCase(),
-				password,
-				{},
-				{
-					expand: 'agent,clients,focusedClient'
-				}
-			);
+			await pb.collection('users').authWithPassword(email.toLowerCase(), password, {
+				expand: 'agent'
+			});
 			goto('/');
 		} catch (error) {
 			console.error(error);

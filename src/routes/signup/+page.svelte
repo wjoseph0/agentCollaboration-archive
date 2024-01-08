@@ -16,11 +16,9 @@
 	let password = '';
 	let agentLicenseNumber;
 	let agentLicenseNumberInput;
-	// let clientType = '';
 	let isClient = true;
 	let isAgent = false;
 	let licenseNumber = '';
-	// let brokerage = '';
 
 	let loading = false;
 	let failed = false;
@@ -51,24 +49,25 @@
 				passwordConfirm: password
 			};
 			if (isClient) {
-				// info.clientType = clientType;
 				info.agent = await validateAgent();
 			} else if (isAgent) {
 				info.isAgent = true;
 				info.licenseNumber = licenseNumber;
-				// info.brokerage = brokerage;
 			}
+			const newUser = await pb.collection('users').create(info);
+			if (isClient) {
+				const journeyData = {
+					agent: newUser.agent,
+					client: newUser.id,
+					step: 1
+				};
 
-			await pb.collection('users').create(info);
+				await pb.collection('journeys').create(journeyData);
+			}
 			await pb.collection('users').requestVerification(info.email);
-			await pb.collection('users').authWithPassword(
-				email.toLowerCase(),
-				password,
-				{},
-				{
-					expand: 'agent'
-				}
-			);
+			await pb.collection('users').authWithPassword(email.toLowerCase(), password, {
+				expand: 'agent'
+			});
 			goto('/');
 		} catch (err) {
 			console.error(err);

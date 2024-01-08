@@ -9,6 +9,6 @@
 	}
 </script>
 
-{#if $currentUser}
+{#if $currentUser && !$currentUser.isAgent}
 	<FilesPage />
 {/if}

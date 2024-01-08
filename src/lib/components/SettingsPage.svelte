@@ -9,16 +9,12 @@
 
 <div class="container">
 	<br />
-
 	<div class="prose text-center mx-auto">
 		<h1>My Account</h1>
 	</div>
-
 	<br />
 	<br />
-
 	<MyProfile />
-
 	{#if !$currentUser.isAgent}
 		<br />
 		<MyAgent />
