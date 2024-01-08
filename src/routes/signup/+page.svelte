@@ -58,10 +58,8 @@
 			if (isClient) {
 				const journeyData = {
 					agent: newUser.agent,
-					client: newUser.id,
-					step: 1
+					client: newUser.id
 				};
-
 				await pb.collection('journeys').create(journeyData);
 			}
 			await pb.collection('users').requestVerification(info.email);

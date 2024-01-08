@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import AgentDashboard from '$lib/components/AgentDashboard.svelte';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -13,6 +14,6 @@
 	});
 </script>
 
-{#if $currentUser}
-	<h1>Welcome Home</h1>
+{#if $currentUser && $currentUser.isAgent}
+	<AgentDashboard />
 {/if}
