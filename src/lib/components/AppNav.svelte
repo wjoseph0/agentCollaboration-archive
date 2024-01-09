@@ -78,7 +78,9 @@
 
 	{#if !$currentUser.isAgent}
 		<button
-			class={path === '/files' || path === '/files/' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
+			class={path === '/files' || path === '/files/'
+				? 'bg-secondary/10 rounded-md text-primary'
+				: 'text-primary'}
 			on:click={() => {
 				goto('/files');
 			}}
