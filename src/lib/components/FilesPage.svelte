@@ -1,8 +1,9 @@
 <script>
 	import PoweredBy from '$lib/components/PoweredBy.svelte';
+	import Resources from '$lib/components/Resources.svelte';
 	import FilesTable from '$lib/components/FilesTable.svelte';
 	import UploadFile from '$lib/components/UploadFile.svelte';
-	import { pb, currentUser } from '$lib/pocketbase';
+	import { pb } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
 
 	let files = [];
@@ -36,7 +37,7 @@
 		<h1 class="mb-4">Files</h1>
 		<PoweredBy />
 		<br />
-		<button class="btn">{$currentUser.expand.agent.fname}'s Resources</button>
+		<Resources />
 	</div>
 	<br />
 	<div class="mb-64">

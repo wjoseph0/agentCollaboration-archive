@@ -96,9 +96,9 @@
 	<button class="btn" onclick="client_resourcesModal.showModal()"
 		>{$currentUser.expand.agent.fname}'s Resources</button
 	>
-	<dialog id="client_preferredVendorsModal" class="modal modal-bottom sm:modal-middle">
+	<dialog id="client_resourcesModal" class="modal modal-bottom sm:modal-middle">
 		<div class="modal-box">
-			<h3 class="font-bold text-lg">Resources</h3>
+			<h3 class="font-bold text-lg">{$currentUser.expand.agent.fname}'s Resources</h3>
 			<br />
 			<table class="table my-6">
 				<thead>
@@ -111,7 +111,7 @@
 						{#each resources as resource (resource.id)}
 							<tr
 								class="hover:bg-base-200 cursor-pointer py-6"
-								onclick="c{resource.id}.showModal()"
+								onclick="resourceModal_{resource.id}.showModal()"
 							>
 								<td class="py-5 flex flex-row justify-between items-center">
 									<div class="font-bold">
@@ -119,7 +119,7 @@
 									</div>
 								</td>
 							</tr>
-							<Resource />
+							<Resource {resource} />
 						{/each}
 					{:else}
 						<tr>
