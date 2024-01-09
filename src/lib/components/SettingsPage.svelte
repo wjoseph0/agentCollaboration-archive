@@ -13,19 +13,12 @@
 		<div class="prose text-center mx-auto">
 			<h1>My Account</h1>
 		</div>
-		<!-- <br />
-		<br /> -->
 		<MyProfile />
 		{#if !$currentUser.isAgent}
-			<!-- <br /> -->
 			<MyAgent />
 		{/if}
-		<!-- <br /><br /><br /> -->
 		<SupportButton />
-		<!-- <br /><br /><br /><br /> -->
 		<Signout />
-		<!-- <br /><br /><br /> -->
-		<!-- <DeletionWizard />
-		<br /><br /><br /> -->
+		<!-- <DeletionWizard /> -->
 	</div>
 </div>

@@ -32,8 +32,7 @@
 </script>
 
 <div class="container">
-	<br />
-	<div class="prose text-center mx-auto">
+	<div class="prose text-center mx-auto mt-5">
 		<h1 class="mb-4">Files</h1>
 		<PoweredBy />
 		<br />

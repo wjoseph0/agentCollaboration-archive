@@ -78,12 +78,12 @@
 
 	{#if !$currentUser.isAgent}
 		<button
-			class={path === '/files' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
+			class={path === '/files' || path === '/files/' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
 			on:click={() => {
 				goto('/files');
 			}}
 		>
-			{#if path === '/files'}
+			{#if path === '/files' || path === '/files/'}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"

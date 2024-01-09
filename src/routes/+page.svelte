@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import AgentDashboard from '$lib/components/AgentDashboard.svelte';
+	import ClientDashboard from '$lib/components/ClientDashboard.svelte';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -16,4 +17,6 @@
 
 {#if $currentUser && $currentUser.isAgent}
 	<AgentDashboard />
+{:else if $currentUser && !$currentUser.isAgent}
+	<ClientDashboard />
 {/if}
