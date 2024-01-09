@@ -114,12 +114,14 @@
 	{/if}
 
 	<button
-		class={path === '/account' ? 'bg-secondary/10 rounded-md text-primary' : 'text-primary'}
+		class={path === '/account' || path === '/account/'
+			? 'bg-secondary/10 rounded-md text-primary'
+			: 'text-primary'}
 		on:click={() => {
 			goto('/account');
 		}}
 	>
-		{#if path === '/account'}
+		{#if path === '/account' || path === '/account/'}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"

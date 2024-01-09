@@ -8,7 +8,7 @@
 	onMount(async () => {
 		vendors = await pb.collection('preferred_vendors').getFullList();
 
-		pb.collection('preferred_vendors').subscribe('*', async function () {
+		pb.collection('preferred_vendors').subscribe('*', async () => {
 			vendors = await pb.collection('preferred_vendors').getFullList();
 		});
 	});
@@ -19,8 +19,9 @@
 </script>
 
 {#if $currentUser.isAgent}
-	<button class="btn btn-neutral w-full" onclick="agent_preferredVendorsModal.showModal()"
-		>Preferred Vendors</button
+	<button
+		class="btn btn-neutral w-full lg:w-3/4 xl:w-2/4 mx-auto"
+		onclick="agent_preferredVendorsModal.showModal()">Preferred Vendors</button
 	>
 	<dialog id="agent_preferredVendorsModal" class="modal modal-bottom sm:modal-middle">
 		<div class="modal-box">

@@ -7,7 +7,7 @@
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
-<div class="mx-auto xl:w-1/2">
+<div class="w-full mx-auto lg:w-3/4 xl:w-1/2">
 	<button class="btn btn-outline btn-error w-full mx-auto" onclick="confirmSignout.showModal()"
 		>Sign Out</button
 	>

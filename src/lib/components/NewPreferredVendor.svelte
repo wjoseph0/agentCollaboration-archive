@@ -82,7 +82,7 @@
 
 			<div class="form-control w-full">
 				<label class="label" for="licenseNumber">
-					<span class="label-text">Name</span>
+					<span class="label-text">Company Name</span>
 				</label>
 				<input
 					bind:value={vendorName}
@@ -95,7 +95,7 @@
 
 			<div class="form-control w-full">
 				<label class="label" for="licenseNumber">
-					<span class="label-text">Contact</span>
+					<span class="label-text">Contact Name</span>
 				</label>
 				<input
 					bind:value={vendorContact}

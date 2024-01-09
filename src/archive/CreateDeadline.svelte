@@ -60,9 +60,9 @@
 					{#if journeys}
 						{#each journeys as journey}
 							{#if journey.step === 3}
-							<option value={journey.id}
-								>{journey.expand.client.fname} {journey.expand.client.lname}</option
-							>
+								<option value={journey.id}
+									>{journey.expand.client.fname} {journey.expand.client.lname}</option
+								>
 							{/if}
 						{/each}
 					{/if}

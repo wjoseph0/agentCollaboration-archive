@@ -2,7 +2,7 @@
 	import { pb } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
 	import Client from '$lib/components/Client.svelte';
-    import Signout from '$lib/components/Signout.svelte'
+	import Signout from '$lib/components/Signout.svelte';
 
 	let journeys = [];
 	let files = [];
@@ -53,7 +53,7 @@
 </script>
 
 <div class="container">
-    <Signout/>
+	<Signout />
 	<br />
 	<div class="prose text-center sm:text-left">
 		<h1>Control Center</h1>

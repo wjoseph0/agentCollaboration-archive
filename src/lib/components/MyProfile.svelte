@@ -2,6 +2,7 @@
 	import { pb, currentUser } from '$lib/pocketbase';
 	import Invite from '$lib/components/Invite.svelte';
 	import PreferredVendors from './PreferredVendors.svelte';
+	import Resources from './Resources.svelte';
 
 	let contact_email_input;
 	let contact_number_input;
@@ -29,8 +30,8 @@
 	};
 </script>
 
-<div>
-	<div class="card border shadow-2xl xl:w-2/4 mx-auto">
+<div class="flex flex-col gap-10">
+	<div class="card border shadow-2xl lg:w-3/4 xl:w-2/4 mx-auto w-full">
 		<div class="card-body">
 			<div class="flex flex-col justify-center items-center gap-4">
 				{#if $currentUser.profilePic}
@@ -137,12 +138,14 @@
 		</div>
 	</div>
 
-	<br /><br />
 	{#if $currentUser.isAgent}
 		<Invite />
-		<br /><br />
 
-		<div class="card border shadow-2xl xl:w-2/4 mx-auto">
+		<Resources />
+
+		<PreferredVendors />
+
+		<div class="card border shadow-2xl lg:w-3/4 xl:w-2/4 mx-auto w-full">
 			<div class="card-body">
 				{#if $currentUser.contact_email || $currentUser.contact_number}
 					<div class="mx-auto">
@@ -282,9 +285,5 @@
 				</dialog>
 			</div>
 		</div>
-
-		<br /><br />
-
-		<PreferredVendors />
 	{/if}
 </div>
