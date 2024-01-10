@@ -4,7 +4,7 @@
 </script>
 
 <div>
-	<div class="card border shadow-2xl xl:w-2/4 mx-auto">
+	<div class="card border shadow-2xl lg:w-3/4 xl:w-2/4 mx-auto">
 		<div class="card-body">
 			<div class="badge badge-secondary badge-outline mx-auto mb-3">My Agent</div>
 			<div class="flex flex-col justify-center items-center gap-3">

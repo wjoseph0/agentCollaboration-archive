@@ -1,134 +1,58 @@
 <script>
 	import { pb } from '$lib/pocketbase';
 	import OfferCheatSheet from '$lib/components/OfferCheatSheet.svelte';
-	import SearchProfile from '$lib/components/SearchProfile.svelte';
-	import Files from './Files.svelte';
-	import UploadFile from './UploadFile.svelte';
-	import AcceptedOffer from './AcceptedOffer.svelte';
-	import BuyerConsultation from './BuyerConsultation.svelte';
-
+	import FilesTable from '$lib/components/FilesTable.svelte';
+	import UploadFile from '$lib/components/UploadFile.svelte';
+	export let loading;
 	export let journey;
 	export let files;
 
-	let stageSelector;
-	let clientStatusSelector;
-
 	$: filteredFiles = files.filter((file) => file.client === journey.client);
 
-	const updateStage = async (num) => {
-		await pb.collection('journeys').update(journey.id, { step: num });
-	};
+	let clientOrCustomerSelector;
 
-	const updateClientStatus = async (bool) => {
+	const setClientOrCustomer = async (bool) => {
 		await pb.collection('users').update(journey.client, { isClient: bool });
 	};
 </script>
 
-<!-- Open the modal using ID.showModal() method -->
 <dialog id="c{journey.id}" class="modal">
 	<form method="dialog" class="modal-box prose">
 		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div class="flex flex-row items-center">
-			{#if journey.step === 1}
-				<span class="badge badge-ghost badge-lg" />
-			{:else if journey.step === 2}
-				<span class="badge badge-secondary badge-lg" />
-			{:else if journey.step === 3}
-				<span class="badge badge-neutral badge-lg" />
-			{:else if journey.step === 4}
-				<span class="badge badge-primary badge-lg" />
-			{:else if journey.step === 5}
-				<span class="badge badge-success badge-lg" />
-			{/if}
 			<select
-				bind:this={stageSelector}
+				bind:this={clientOrCustomerSelector}
 				class="select select-sm max-w-xs"
 				on:change={() => {
-					updateStage(stageSelector.value);
+					setClientOrCustomer(clientOrCustomerSelector.value);
 				}}
 			>
-				{#if journey.step === 1}
-					<option value="1" selected> Preparation </option>
-				{:else}
-					<option value="1"> Preparation </option>
-				{/if}
-				{#if journey.step === 2}
-					<option value="2" selected>Searching</option>
-				{:else}
-					<option value="2">Searching</option>
-				{/if}
-				{#if journey.step === 3}
-					<option value="3" selected>Accepted Offer</option>
-				{:else}
-					<option value="3">Accepted Offer</option>
-				{/if}
-				{#if journey.step === 4}
-					<option value="4" selected>Closing</option>
-				{:else}
-					<option value="4">Closing</option>
-				{/if}
-				{#if journey.step === 5}
-					<option value="5" selected>Closed</option>
-				{:else}
-					<option value="5">Closed</option>
-				{/if}
-			</select>
-
-			<select
-				bind:this={clientStatusSelector}
-				class="select select-sm max-w-xs"
-				on:change={() => {
-					updateClientStatus(clientStatusSelector.value);
-				}}
-			>
-				{#if !journey.expand.client.isClient}
-					<option value="false" selected>Customer</option>
-				{:else}
-					<option value="false">Customer</option>
-				{/if}
 				{#if journey.expand.client.isClient}
+					<option value="false">Customer</option>
 					<option value="true" selected>Client</option>
 				{:else}
+					<option value="false" selected>Customer</option>
 					<option value="true">Client</option>
 				{/if}
 			</select>
 		</div>
 
-		<h2>
+		<h2 class="my-12">
 			{journey.expand.client.fname}
 			{journey.expand.client.lname}
 		</h2>
 
-		<br />
-
-		{#if journey.step === 1}
-			<BuyerConsultation {journey} />
-			<br /><br />
-		{:else if journey.step === 2}
-			<div class="flex flex-row gap-1">
-				<div class="w-1/2">
-					<SearchProfile {journey} />
-				</div>
-
-				<div class="w-1/2">
-					<OfferCheatSheet {journey} />
-				</div>
-			</div>
-			<br /><br />
-		{:else if journey.step === 3}
-			<a href="/deadlines"><span class="btn btn-block btn-neutral btn-outline"> Deadlines </span></a
-			>
-			<br /><br />
-		{/if}
+		<div class="mb-12">
+			<OfferCheatSheet {journey} />
+		</div>
 
 		<div>
-			<div class="flex flex-row justify-between items-end">
-				<h4>Files</h4>
+			<div class="flex flex-row items-center justify-between items-end">
+				<h4 class="my-0">Files</h4>
 				<UploadFile {journey} />
 			</div>
-			<Files files={filteredFiles} />
+			<FilesTable files={filteredFiles} {loading} />
 		</div>
 	</form>
 	<form method="dialog" class="modal-backdrop">

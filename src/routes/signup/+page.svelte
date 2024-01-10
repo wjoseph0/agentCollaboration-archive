@@ -16,11 +16,9 @@
 	let password = '';
 	let agentLicenseNumber;
 	let agentLicenseNumberInput;
-	let clientType = '';
 	let isClient = true;
 	let isAgent = false;
 	let licenseNumber = '';
-	let brokerage = '';
 
 	let loading = false;
 	let failed = false;
@@ -51,24 +49,23 @@
 				passwordConfirm: password
 			};
 			if (isClient) {
-				info.clientType = clientType;
 				info.agent = await validateAgent();
 			} else if (isAgent) {
 				info.isAgent = true;
 				info.licenseNumber = licenseNumber;
-				info.brokerage = brokerage;
 			}
-
-			await pb.collection('users').create(info);
+			const newUser = await pb.collection('users').create(info);
+			if (isClient) {
+				const journeyData = {
+					agent: newUser.agent,
+					client: newUser.id
+				};
+				await pb.collection('journeys').create(journeyData);
+			}
 			await pb.collection('users').requestVerification(info.email);
-			await pb.collection('users').authWithPassword(
-				email.toLowerCase(),
-				password,
-				{},
-				{
-					expand: 'agent'
-				}
-			);
+			await pb.collection('users').authWithPassword(email.toLowerCase(), password, {
+				expand: 'agent'
+			});
 			goto('/');
 		} catch (err) {
 			console.error(err);
@@ -138,7 +135,7 @@
 					}}>Agent</span
 				>
 			</div>
-			<div class="form-control w-full">
+			<!-- <div class="form-control w-full">
 				<label class="label" for="clientType">
 					<span class="label-text">Buying or Selling</span>
 				</label>
@@ -152,7 +149,7 @@
 					<option value="buyer">Buying</option>
 					<option value="seller">Selling</option>
 				</select>
-			</div>
+			</div> -->
 			<div class="form-control w-full">
 				<label class="label" for="agentLicenseNumberInput">
 					<span class="label-text">My Agent's License Number</span>
@@ -192,7 +189,7 @@
 					required
 				/>
 			</div>
-			<div class="form-control w-full">
+			<!-- <div class="form-control w-full">
 				<label class="label" for="brokerage">
 					<span class="label-text">Brokerage</span>
 				</label>
@@ -203,7 +200,7 @@
 					bind:value={brokerage}
 					required
 				/>
-			</div>
+			</div> -->
 		{/if}
 
 		<p class="text-center text-xs">

@@ -8,26 +8,17 @@
 </script>
 
 <div class="container">
-	<br />
-
-	<div class="prose text-center mx-auto">
-		<h1>My Account</h1>
+	<div class="flex flex-col gap-10 mt-5 mb-24">
+		<!-- <br /> -->
+		<div class="prose text-center mx-auto">
+			<h1>My Account</h1>
+		</div>
+		<MyProfile />
+		{#if !$currentUser.isAgent}
+			<MyAgent />
+		{/if}
+		<SupportButton />
+		<Signout />
+		<!-- <DeletionWizard /> -->
 	</div>
-
-	<br />
-	<br />
-
-	<MyProfile />
-
-	{#if !$currentUser.isAgent}
-		<br />
-		<MyAgent />
-	{/if}
-	<br /><br /><br />
-	<SupportButton />
-	<br /><br /><br /><br />
-	<Signout />
-	<br /><br /><br />
-	<!-- <DeletionWizard />
-	<br /><br /><br /> -->
 </div>

@@ -16,14 +16,9 @@
 	export const login = async () => {
 		loading = true;
 		try {
-			await pb.collection('users').authWithPassword(
-				email.toLowerCase(),
-				password,
-				{},
-				{
-					expand: 'agent,clients,focusedClient'
-				}
-			);
+			await pb.collection('users').authWithPassword(email.toLowerCase(), password, {
+				expand: 'agent'
+			});
 			goto('/');
 		} catch (error) {
 			console.error(error);
@@ -60,10 +55,10 @@
 		{:else}
 			<button class="btn btn-primary">Login</button>
 		{/if}
-		<!-- <p class="text-center text-sm">
+		<p class="text-center text-sm">
 			Don't have an account? <a href="/signup" class="link link-primary link-hover">Sign up</a> to create
 			one.
-		</p> -->
+		</p>
 	</form>
 </main>
 

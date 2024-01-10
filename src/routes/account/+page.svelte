@@ -10,7 +10,7 @@
 	}
 
 	onMount(async () => {
-		await pb.collection('users').authRefresh({}, { expand: 'agent,clients' });
+		await pb.collection('users').authRefresh({ expand: 'agent' });
 	});
 </script>
 

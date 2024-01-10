@@ -27,7 +27,6 @@
 		</h2>
 		<Clients />
 	</div>
-
 {/if}
 
 <style>
