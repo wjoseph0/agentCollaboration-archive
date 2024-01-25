@@ -34,8 +34,8 @@
 	<dialog id="my_modal_1" class="modal modal-open">
 		<div class="modal-box">
 			<stripe-pricing-table
-				pricing-table-id="prctbl_1OcXxOIeLs0cYwtvP0YHL1jQ"
-				publishable-key="pk_test_51Mk88hIeLs0cYwtvXKND9ZmGDII7n8OxVPHf4Bhs0vNr9y3S3qxDD9wl1jGp26QRV7mW8OZV9lrOdcLFW9rVsumh00UdhseTg3"
+				pricing-table-id="prctbl_1OcZq7IeLs0cYwtvz5OUDxC2"
+				publishable-key="pk_live_51Mk88hIeLs0cYwtvvqwIAm2amuK3iIeCWwGQjhPqlPG2W9WntS1KQIpOgr3wABU70YYQzywlxoikSbMSZAhVWAYB00TQAwkoL2"
 				customer-email={$currentUser.email}
 			>
 			</stripe-pricing-table>
