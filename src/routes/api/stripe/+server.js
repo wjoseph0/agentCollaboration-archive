@@ -28,11 +28,18 @@ export async function POST({ request }) {
 			const expirationDatePlusTwoDays = expirationDate.add(2, 'day').format();
 			const customer = await stripe.customers.retrieve(event.data.object.customer);
 			const user = await pb.collection('users').getFirstListItem(`email='${customer.email}'`);
-			// TODO: add conditional logic where it will either create or update record in subscribers collection
-			await pb
-				.collection('subscribers')
-				.create({ agent: user.id, expiration: expirationDatePlusTwoDays });
-
+			try {
+				const subscriber = await pb
+					.collection('subscribers')
+					.getFirstListItem(`agent='${user.id}'`);
+				await pb
+					.collection('subscribers')
+					.update(subscriber.id, { expiration: expirationDatePlusTwoDays });
+			} catch (err) {
+				await pb
+					.collection('subscribers')
+					.create({ agent: user.id, expiration: expirationDatePlusTwoDays });
+			}
 			break;
 	}
 	return new Response({}, { status: 200 });
