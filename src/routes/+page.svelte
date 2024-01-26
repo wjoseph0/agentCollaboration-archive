@@ -35,8 +35,8 @@
 	<dialog id="my_modal_1" class="modal modal-open">
 		<div class="modal-box">
 			<stripe-pricing-table
-				pricing-table-id={PUBLIC_PRICING_TABLE_ID}
-				publishable-key={PUBLIC_STRIPE_PUBLIC_KEY}
+				pricing-table-id="prctbl_1OcXxOIeLs0cYwtvP0YHL1jQ"
+				publishable-key="pk_test_51Mk88hIeLs0cYwtvXKND9ZmGDII7n8OxVPHf4Bhs0vNr9y3S3qxDD9wl1jGp26QRV7mW8OZV9lrOdcLFW9rVsumh00UdhseTg3"
 				customer-email={$currentUser.email}
 			>
 			</stripe-pricing-table>
