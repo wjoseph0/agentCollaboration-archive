@@ -42,5 +42,6 @@ export async function POST({ request }) {
 			}
 			break;
 	}
+	pb.authStore.clear();
 	return new Response({}, { status: 200 });
 }
