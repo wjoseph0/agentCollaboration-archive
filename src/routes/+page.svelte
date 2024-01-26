@@ -6,7 +6,7 @@
 	import AgentDashboard from '$lib/components/AgentDashboard.svelte';
 	import ClientDashboard from '$lib/components/ClientDashboard.svelte';
 	import dayjs from 'dayjs';
-	import { STRIPE_PUBLIC_KEY, PRICING_TABLE_ID } from '$env/static/public';
+	import { STRIPE_PUBLIC_KEY } from '$env/static/public';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
