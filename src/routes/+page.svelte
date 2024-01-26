@@ -6,6 +6,7 @@
 	import AgentDashboard from '$lib/components/AgentDashboard.svelte';
 	import ClientDashboard from '$lib/components/ClientDashboard.svelte';
 	import dayjs from 'dayjs';
+	import { STRIPE_PUBLIC_KEY, PRICING_TABLE_ID } from '$env/static/public';
 
 	$: if (browser && !$currentUser) {
 		goto('/login');
@@ -34,8 +35,8 @@
 	<dialog id="my_modal_1" class="modal modal-open">
 		<div class="modal-box">
 			<stripe-pricing-table
-				pricing-table-id="prctbl_1OcZq7IeLs0cYwtvz5OUDxC2"
-				publishable-key="pk_live_51Mk88hIeLs0cYwtvvqwIAm2amuK3iIeCWwGQjhPqlPG2W9WntS1KQIpOgr3wABU70YYQzywlxoikSbMSZAhVWAYB00TQAwkoL2"
+				pricing-table-id={PRICING_TABLE_ID}
+				publishable-key={STRIPE_PUBLIC_KEY}
 				customer-email={$currentUser.email}
 			>
 			</stripe-pricing-table>
