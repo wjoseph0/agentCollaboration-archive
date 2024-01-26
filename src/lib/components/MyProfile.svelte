@@ -3,11 +3,32 @@
 	import Invite from '$lib/components/Invite.svelte';
 	import PreferredVendors from './PreferredVendors.svelte';
 	import Resources from './Resources.svelte';
+	import { onMount } from 'svelte';
+	import dayjs from 'dayjs';
+	import { goto } from '$app/navigation';
 
 	let contact_email_input;
 	let contact_number_input;
 	let loading = false;
 	let success = false;
+	let isSubscriber;
+	let encodedEmail;
+	let billingURL;
+
+	onMount(async () => {
+		if ($currentUser.isAgent) {
+			try {
+				let subscription = await pb
+					.collection('subscribers')
+					.getFirstListItem(`agent="${$currentUser.id}"`);
+				isSubscriber = dayjs().isBefore(dayjs(subscription.expiration));
+				encodedEmail = encodeURIComponent($currentUser.email);
+				billingURL = `https://billing.stripe.com/p/login/cN2bJ62XecH90Vi000?prefilled_email=${encodedEmail}`;
+			} catch (error) {
+				isSubscriber = false;
+			}
+		}
+	});
 
 	const setContactInfo = async () => {
 		const data = {
@@ -285,5 +306,15 @@
 				</dialog>
 			</div>
 		</div>
+		{#if isSubscriber}
+			<div class="lg:w-3/4 xl:w-2/4 mx-auto w-full">
+				<button
+					class="btn btn-outline w-full"
+					on:click={() => {
+						goto(billingURL);
+					}}>Manage Subscription</button
+				>
+			</div>
+		{/if}
 	{/if}
 </div>
