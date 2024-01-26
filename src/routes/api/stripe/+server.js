@@ -9,7 +9,6 @@ import {
 import dayjs from 'dayjs';
 
 const pb = new Pocketbase('https://wjoseph0.cloud');
-await pb.admins.authWithPassword(POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD);
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 const endpointSecret = STRIPE_WEBHOOK_SECRET;
 
@@ -19,6 +18,7 @@ export async function POST({ request }) {
 	let event;
 	try {
 		event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+		await pb.admins.authWithPassword(POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD);
 	} catch (err) {
 		return new Response({}, { status: 400 });
 	}
