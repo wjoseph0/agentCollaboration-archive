@@ -1,11 +1,10 @@
 <script>
 	import '../app.css';
-	import AppNav from '$lib/components/AppNav.svelte';
 	import { currentUser } from '$lib/pocketbase';
+	import AppNav from '$lib/components/AppNav.svelte';
 </script>
 
-{#if $currentUser && !$currentUser.isCoordinator}
+{#if $currentUser}
 	<AppNav />
 {/if}
-
 <slot />
