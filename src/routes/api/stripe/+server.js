@@ -1,7 +1,11 @@
 import Pocketbase from 'pocketbase';
 import Stripe from 'stripe';
-import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from '$env/static/private';
-import { env } from '$env/dynamic/private';
+import {
+	POCKETBASE_ADMIN_EMAIL,
+	POCKETBASE_ADMIN_PASSWORD,
+	STRIPE_SECRET_KEY,
+	STRIPE_WEBHOOK_SECRET
+} from '$env/static/private';
 import dayjs from 'dayjs';
 
 export async function POST({ request }) {
@@ -17,7 +21,7 @@ export async function POST({ request }) {
 		const event = await stripe.webhooks.constructEventAsync(payload, sig, endpointSecret);
 		switch (event.type) {
 			case 'invoice.paid': {
-				await pb.admins.authWithPassword(env.POCKETBASE_ADMIN_EMAIL, env.POCKETBASE_ADMIN_PASSWORD);
+				await pb.admins.authWithPassword(POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD);
 				const expirationDate = dayjs.unix(event.data.object.lines.data[0].period.end);
 				const expirationDatePlusTwoDays = expirationDate.add(2, 'day').format();
 				const customer = await stripe.customers.retrieve(event.data.object.customer);
