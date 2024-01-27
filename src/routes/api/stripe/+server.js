@@ -14,6 +14,7 @@ export async function POST({ request }) {
 		if (!sig) {
 			return new Response('', 400);
 		}
+		return new Response('', 200);
 		const event = await stripe.webhooks.constructEventAsync(
 			payload,
 			sig,
