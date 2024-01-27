@@ -38,5 +38,5 @@ export async function POST({ request }) {
 			}
 			break;
 	}
-	return new Response(null, { status: 200 });
+	return new Response({}, { status: 200 });
 }
