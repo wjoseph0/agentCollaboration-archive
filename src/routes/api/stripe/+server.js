@@ -14,7 +14,6 @@ export async function POST({ request }) {
 		if (!sig) {
 			return new Response('', { status: 400 });
 		}
-		return new Response('', { status: 200 });
 		const event = await stripe.webhooks.constructEventAsync(payload, sig, endpointSecret);
 		switch (event.type) {
 			case 'invoice.paid': {
