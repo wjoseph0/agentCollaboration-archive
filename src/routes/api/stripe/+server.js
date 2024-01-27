@@ -14,7 +14,13 @@ export async function POST({ request }) {
 		if (!sig) {
 			return new Response('', 400);
 		}
-		const event = await stripe.webhooks.constructEventAsync(payload, sig, endpointSecret);
+		const event = await stripe.webhooks.constructEventAsync(
+			payload,
+			sig,
+			endpointSecret,
+			undefined,
+			Stripe.createSubtleCryptoProvider()
+		);
 		switch (event.type) {
 			case 'invoice.paid': {
 				await pb.admins.authWithPassword(env.POCKETBASE_ADMIN_EMAIL, env.POCKETBASE_ADMIN_PASSWORD);
