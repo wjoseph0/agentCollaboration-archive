@@ -1,14 +1,11 @@
 import Pocketbase from 'pocketbase';
 import Stripe from 'stripe';
-import {
-	STRIPE_SECRET_KEY,
-	STRIPE_WEBHOOK_SECRET,
-	POCKETBASE_ADMIN_EMAIL,
-	POCKETBASE_ADMIN_PASSWORD
-} from '$env/static/private';
+import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import dayjs from 'dayjs';
 
 const pb = new Pocketbase('https://wjoseph0.cloud');
+await pb.admins.authWithPassword(env.POCKETBASE_ADMIN_EMAIL, env.POCKETBASE_ADMIN_PASSWORD);
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 const endpointSecret = STRIPE_WEBHOOK_SECRET;
 
@@ -18,7 +15,6 @@ export async function POST({ request }) {
 	let event;
 	try {
 		event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-		await pb.admins.authWithPassword(POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD);
 	} catch (err) {
 		return new Response({}, { status: 400 });
 	}
@@ -42,6 +38,5 @@ export async function POST({ request }) {
 			}
 			break;
 	}
-	pb.authStore.clear();
 	return new Response({}, { status: 200 });
 }
