@@ -14,7 +14,7 @@ export async function POST({ request }) {
 	const sig = request.headers.get('stripe-signature');
 	let event;
 	try {
-		event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+		event = await stripe.webhooks.constructEventAsync(payload, sig, endpointSecret);
 	} catch (err) {
 		return new Response(`${err}`, { status: 400 });
 	}
