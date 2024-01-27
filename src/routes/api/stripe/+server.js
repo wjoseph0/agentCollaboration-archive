@@ -12,16 +12,10 @@ export async function POST({ request }) {
 	const sig = request.headers.get('stripe-signature');
 	try {
 		if (!sig) {
-			return new Response('', 400);
+			return new Response('', { status: 400 });
 		}
-		return new Response('', 200);
-		const event = await stripe.webhooks.constructEventAsync(
-			payload,
-			sig,
-			endpointSecret,
-			undefined,
-			Stripe.createSubtleCryptoProvider()
-		);
+		return new Response('', { status: 200 });
+		const event = await stripe.webhooks.constructEventAsync(payload, sig, endpointSecret);
 		switch (event.type) {
 			case 'invoice.paid': {
 				await pb.admins.authWithPassword(env.POCKETBASE_ADMIN_EMAIL, env.POCKETBASE_ADMIN_PASSWORD);
@@ -47,8 +41,8 @@ export async function POST({ request }) {
 			default:
 				break;
 		}
-		return new Response('', 200);
+		return new Response('', { status: 200 });
 	} catch (err) {
-		return new Response(`${err}`, 400);
+		return new Response(`${err}`, { status: 400 });
 	}
 }
