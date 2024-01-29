@@ -62,6 +62,7 @@
 				};
 				await pb.collection('journeys').create(journeyData);
 			}
+			await fetch('/api/trial', { method: 'POST', body: `${newUser.id}` });
 			await pb.collection('users').requestVerification(info.email);
 			await pb.collection('users').authWithPassword(email.toLowerCase(), password, {
 				expand: 'agent'
