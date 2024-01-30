@@ -1,3 +1,3 @@
 # Agentpad
 
-Collaboration software for real estate agents and their clients.
+Collaboration software for real estate buyers, sellers, and agents.
