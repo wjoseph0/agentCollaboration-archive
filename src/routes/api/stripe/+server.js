@@ -32,7 +32,7 @@ export async function POST({ request }) {
 						.getFirstListItem(`agent='${user.id}'`);
 					await pb
 						.collection('subscribers')
-						.update(subscriber.id, { expiration: expirationDatePlusTwoDays });
+						.update(subscriber.id, { expiration: expirationDatePlusTwoDays, trial: false });
 				} catch (err) {
 					await pb
 						.collection('subscribers')
