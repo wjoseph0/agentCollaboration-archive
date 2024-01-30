@@ -308,12 +308,7 @@
 		</div>
 		{#if isSubscriber}
 			<div class="lg:w-3/4 xl:w-2/4 mx-auto w-full">
-				<button
-					class="btn btn-outline w-full"
-					on:click={() => {
-						goto(billingURL);
-					}}>Manage Subscription</button
-				>
+				<a class="btn btn-outline w-full" href={billingURL}>Manage Subscription</a>
 			</div>
 		{/if}
 	{/if}
