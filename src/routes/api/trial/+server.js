@@ -8,7 +8,9 @@ export async function POST({ request }) {
 		const trialEnd = dayjs().add(7, 'day');
 		const pb = new Pocketbase('https://wjoseph0.cloud');
 		await pb.admins.authWithPassword(POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD);
-		await pb.collection('subscribers').create({ agent: agentId, expiration: trialEnd });
+		await pb
+			.collection('subscribers')
+			.create({ agent: agentId, expiration: trialEnd, trial: true });
 		pb.authStore.clear();
 		return new Response('', { status: 200 });
 	} catch (error) {

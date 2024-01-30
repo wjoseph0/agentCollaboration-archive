@@ -22,6 +22,9 @@
 					.collection('subscribers')
 					.getFirstListItem(`agent="${$currentUser.id}"`);
 				isSubscriber = dayjs().isBefore(dayjs(subscription.expiration));
+				if (subscription.trial) {
+					isSubscriber = false;
+				}
 				encodedEmail = encodeURIComponent($currentUser.email);
 				billingURL = `https://billing.stripe.com/p/login/cN2bJ62XecH90Vi000?prefilled_email=${encodedEmail}`;
 			} catch (error) {
