@@ -3,11 +3,14 @@
 	import OfferCheatSheet from '$lib/components/OfferCheatSheet.svelte';
 	import FilesTable from '$lib/components/FilesTable.svelte';
 	import UploadFile from '$lib/components/UploadFile.svelte';
+	import Deadlines from '$lib/components/Deadlines.svelte';
 	export let loading;
 	export let journey;
+	export let deadlines;
 	export let files;
 
 	$: filteredFiles = files.filter((file) => file.client === journey.client);
+	$: filteredDeadlines = deadlines.filter((deadline) => deadline.journey === journey.id);
 
 	let clientOrCustomerSelector;
 
@@ -42,6 +45,10 @@
 			{journey.expand.client.fname}
 			{journey.expand.client.lname}
 		</h2>
+
+		<div>
+			<Deadlines {journey} deadlines={filteredDeadlines} {loading} />
+		</div>
 
 		<div class="mb-12">
 			<OfferCheatSheet {journey} />
