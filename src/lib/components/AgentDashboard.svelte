@@ -5,6 +5,7 @@
 	import Invite from '$lib/components/Invite.svelte';
 
 	let journeys = [];
+	let deadlines = [];
 	let files = [];
 	let loading = false;
 
@@ -20,7 +21,14 @@
 				expand: 'client'
 			});
 		});
-
+		deadlines = await pb.collection('deadlines').getFullList({
+			sort: '+due_date'
+		});
+		pb.collection('deadlines').subscribe('*', async function () {
+			deadlines = await pb.collection('deadlines').getFullList({
+				sort: '+due_date'
+			});
+		});
 		files = await pb.collection('files').getFullList(200, {
 			sort: '-updated'
 		});
@@ -34,6 +42,7 @@
 
 	onDestroy(async () => {
 		pb.collection('journeys').unsubscribe();
+		pb.collection('deadlines').unsubscribe();
 		pb.collection('files').unsubscribe();
 	});
 </script>
@@ -77,7 +86,7 @@
 								</div>
 							</td>
 						</tr>
-						<Client {journey} {files} {loading} />
+						<Client {journey} {deadlines} {files} {loading} />
 					{/each}
 				{:else}
 					<tr>
