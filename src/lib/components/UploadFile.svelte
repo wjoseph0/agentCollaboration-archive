@@ -46,8 +46,17 @@
 </script>
 
 {#if path === '/'}
-	<span class="btn btn-primary btn-sm" onclick="uploadFileModal{journey.id}.showModal()"
-		>Upload</span
+	<span class="btn btn-neutral btn-xs rounded" onclick="uploadFileModal{journey.id}.showModal()"
+		><svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="currentColor"
+			class="w-5 h-5"
+		>
+			<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+		</svg></span
 	>
 	<dialog
 		bind:this={uploadFileModal}
@@ -61,13 +70,13 @@
 			on:submit|preventDefault={uploadFile}
 		>
 			<h3 class="font-bold text-lg">Upload a file</h3>
-			<input
-				type="text"
-				class="input input-bordered"
-				bind:value={fileName}
-				placeholder="File Name"
-				required
-			/>
+			<div class="form-control w-full">
+				<label class="label" for="date">
+					<span class="label-text">Name</span>
+				</label>
+				<input type="text" class="input input-bordered" bind:value={fileName} required />
+			</div>
+
 			<input type="file" class="file-input" bind:files={newFile} required />
 			<div class="modal-action">
 				{#if success}
@@ -106,7 +115,7 @@
 					</span>
 				{:else}
 					<span
-						class="btn btn-primary"
+						class="btn btn-primary w-full"
 						on:click={() => {
 							uploadFileForm.requestSubmit();
 						}}

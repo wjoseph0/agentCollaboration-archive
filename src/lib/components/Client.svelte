@@ -46,12 +46,12 @@
 			{journey.expand.client.lname}
 		</h2>
 
-		<div>
-			<Deadlines {journey} deadlines={filteredDeadlines} {loading} />
+		<div class="mb-5">
+			<OfferCheatSheet {journey} />
 		</div>
 
 		<div class="mb-12">
-			<OfferCheatSheet {journey} />
+			<Deadlines {journey} deadlines={filteredDeadlines} {loading} />
 		</div>
 
 		<div>

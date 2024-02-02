@@ -1,10 +1,9 @@
 <script>
 	import { pb } from '$lib/pocketbase';
 
-	export let journeys;
+	export let journey;
 
 	let createDeadlineForm;
-	let journey;
 	let type;
 	let date;
 
@@ -16,9 +15,8 @@
 		loading = true;
 
 		const data = {
-			journey: journey,
+			journey: journey.id,
 			type: type,
-			status: 'created',
 			due_date: date
 		};
 
@@ -37,38 +35,28 @@
 
 		loading = false;
 		createDeadlineForm.reset();
-		journey = -1;
 		type = -1;
 	};
 </script>
 
-<button
-	class="btn btn-primary w-full sm:mx-auto sm:w-3/4 fixed inset-x-0 bottom-16 z-40"
-	onclick="createDeadlineModal.showModal()">Create Deadline</button
+<span class="btn btn-neutral btn-sm rounded" onclick="{journey.id}_createDeadlineModal.showModal()"
+	><svg
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		stroke-width="1.5"
+		stroke="currentColor"
+		class="w-5 h-5"
+	>
+		<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+	</svg></span
 >
-<dialog id="createDeadlineModal" class="modal modal-bottom sm:modal-middle">
+
+<dialog id="{journey.id}_createDeadlineModal" class="modal modal-bottom sm:modal-middle">
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">New Deadline</h3>
 		<br />
 		<form bind:this={createDeadlineForm} on:submit|preventDefault={createDeadline}>
-			<div class="form-control w-full">
-				<label class="label" for="journey">
-					<span class="label-text">Client</span>
-				</label>
-				<select bind:value={journey} name="journey" class="select select-bordered w-full" required>
-					<option disabled selected></option>
-					{#if journeys}
-						{#each journeys as journey}
-							{#if journey.step === 3}
-								<option value={journey.id}
-									>{journey.expand.client.fname} {journey.expand.client.lname}</option
-								>
-							{/if}
-						{/each}
-					{/if}
-				</select>
-			</div>
-
 			<div class="form-control w-full">
 				<label class="label" for="type">
 					<span class="label-text">Type</span>

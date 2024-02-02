@@ -1,4 +1,6 @@
 <script>
+	import { currentUser } from '$lib/pocketbase';
+	import CreateDeadline from '$lib/components/CreateDeadline.svelte';
 	import dayjs from 'dayjs';
 	import RelativeTime from 'dayjs/plugin/relativeTime';
 	import utc from 'dayjs/plugin/UTC';
@@ -9,11 +11,18 @@
 	dayjs.extend(utc);
 </script>
 
-<span class="btn btn-primary" onclick="{journey.id}_deadlinesModal.showModal()">Deadlines</span>
+<span class="btn btn-primary w-full" onclick="{journey.id}_deadlinesModal.showModal()"
+	>Deadlines</span
+>
 
 <dialog id="{journey.id}_deadlinesModal" class="modal">
 	<div class="modal-box">
-		<h3 class="text-center font-bold text-2xl">Deadlines</h3>
+		<div class="flex justify-between items-center">
+			<h3 class="text-center font-bold text-2xl m-0">Deadlines</h3>
+			{#if $currentUser.isAgent}
+				<CreateDeadline {journey} />
+			{/if}
+		</div>
 		<table class="table my-6">
 			<thead>
 				<tr />
@@ -25,7 +34,7 @@
 					{#each deadlines as deadline (deadline.id)}
 						<tr>
 							<td class="py-6 flex flex-row justify-between items-center prose">
-								<div class="text-lg">
+								<div class="text-md">
 									{deadline.type}
 								</div>
 								{#if dayjs.utc().isBefore(dayjs.utc(deadline.due_date), 'day')}
