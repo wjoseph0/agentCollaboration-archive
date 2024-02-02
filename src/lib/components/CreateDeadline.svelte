@@ -1,5 +1,6 @@
 <script>
 	import { pb } from '$lib/pocketbase';
+	import dayjs from '$lib/dayjs';
 
 	export let journey;
 
@@ -13,6 +14,8 @@
 
 	const createDeadline = async () => {
 		loading = true;
+
+		date = dayjs.utc(date).set('hour', dayjs.utc().hour()).set('minute', dayjs.utc().minute());
 
 		const data = {
 			journey: journey.id,

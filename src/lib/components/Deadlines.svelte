@@ -1,14 +1,11 @@
 <script>
 	import { pb, currentUser } from '$lib/pocketbase';
 	import CreateDeadline from '$lib/components/CreateDeadline.svelte';
-	import dayjs from 'dayjs';
-	import RelativeTime from 'dayjs/plugin/relativeTime';
-	import utc from 'dayjs/plugin/UTC';
+	import dayjs from '$lib/dayjs';
+
 	export let loading = false;
 	export let journey;
 	export let deadlines = [];
-	dayjs.extend(RelativeTime);
-	dayjs.extend(utc);
 
 	async function deleteDeadline(deadline) {
 		await pb.collection('deadlines').delete(deadline.id);
