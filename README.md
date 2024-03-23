@@ -1,3 +1,3 @@
-# Agentpad
+# Openagent
 
-Real estate collaboration software for buyers and agents.
+Software to help you buy a house without a real estate agent.
